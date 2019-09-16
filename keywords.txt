@@ -1,0 +1,107 @@
+#######################################
+# Syntax Coloring Map For WHSR
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+WHSR	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+Init	KEYWORD2
+InitSerial	KEYWORD2
+InitLeds	KEYWORD2
+InitADC	KEYWORD2
+InitEngine	KEYWORD2
+InitEnginePWM	KEYWORD2
+InitSwitches	KEYWORD2
+InitSensors	KEYWORD2
+SetADMUX	KEYWORD2
+ADCStartNext	KEYWORD2
+ADCStart	KEYWORD2
+ADCWaitForConversion	KEYWORD2
+DoCheckADCMode	KEYWORD2
+
+readReferenz	KEYWORD2
+readBattery	KEYWORD2
+readVref	KEYWORD2
+readLinesensor	KEYWORD2
+readACS	KEYWORD2
+readLDR	KEYWORD2
+setStatusLED	KEYWORD2
+shiftStatusLED	KEYWORD2
+setFrontLED	KEYWORD2
+setIRLeds	KEYWORD2
+RPMLeft	KEYWORD2
+RPMLeftISR	KEYWORD2
+RPMRight	KEYWORD2
+RPMRightISR	KEYWORD2
+setMotorDirectionLeft	KEYWORD2
+setMotorDirectionRight	KEYWORD2
+setMotorDirection	KEYWORD2
+setMotorSpeedLeft	KEYWORD2
+setMotorSpeedRight	KEYWORD2
+setMotorSpeed	KEYWORD2
+GetRPMSensorCount	KEYWORD2
+GetRPMSensorCount	KEYWORD2
+readSwitches	KEYWORD2
+switchAvailable	KEYWORD2
+switchInterruptOn	KEYWORD2
+switchInterruptOff	KEYWORD2
+switchInterrupt	KEYWORD2
+SwitchISR	KEYWORD2
+TimerOverflowISR	KEYWORD2
+TimerSet	KEYWORD2
+TimerStart	KEYWORD2
+TimerStop	KEYWORD2
+TimerOverflow	KEYWORD2
+readOdometry	KEYWORD2
+readOdometry	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+BAUDRATE	LITERAL1
+BLUETOOTH_BAUDRATE	LITERAL1
+STANDARD_SWITCH_FACTOR	LITERAL1
+STANDARD_RESISTOR_OBEN	LITERAL1
+STANDARD_RESISTOR_UNTEN	LITERAL1
+STANDARD_INTERNAL_REFERENCE_VOLTAGE	LITERAL1
+MaxADCChannels	LITERAL1
+ADCMode_None	LITERAL1
+ADCMode_Block	LITERAL1
+LED_Status_Pegel_On	LITERAL1
+LED_Status_Pegel_Off	LITERAL1
+Color_Off	LITERAL1
+Color_On	LITERAL1
+Color_White	LITERAL1
+Color_Black	LITERAL1
+Color_Red	LITERAL1
+Color_Green	LITERAL1
+Color_Blue	LITERAL1
+Color_Yellow	LITERAL1
+Color_Magenta	LITERAL1
+Color_Cyan	LITERAL1
+SwitchState_None	LITERAL1
+SwitchState_Idle	LITERAL1
+SwitchState_Wait	LITERAL1
+SwitchState_Do	LITERAL1
+LED_Sensor_Pegel_On	LITERAL1
+LED_Sensor_Pegel_Off	LITERAL1
+Sensor_Left	LITERAL1
+Sensor_Right	LITERAL1
+LEDOn	LITERAL1
+LEDOff	LITERAL1
+EngineDirForward_Pegel	LITERAL1
+EngineDirBackward_Pegel	LITERAL1
+EngineDirForward	LITERAL1
+FWD	LITERAL1
+EngineDirBackward	LITERAL1
+BWD	LITERAL1
+RWD	LITERAL1
+MAX_SPEED	LITERAL1

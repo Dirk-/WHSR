@@ -42,7 +42,7 @@ void Robot::setStatusLED(unsigned char color)
 		
 	
 	// Pin Map LED D5 - D7... PD5 - PD7
-	//Write Port Alternative Möglichkeit - schnellere Operation
+	//Write Port Alternative Moeglichkeit - schnellere Operation
 	//PORTD = PORTD | color << 5; // B10101000;
 }
 
@@ -57,7 +57,7 @@ void Robot::shiftStatusLED(void)
 }
 
 //
-//	Diese Funktion Schaltet die Front LED (LED für den Linienfolger) ein oder aus
+//	Diese Funktion Schaltet die Front LED (LED fuer den Linienfolger) ein oder aus
 //
 void Robot::setFrontLED(unsigned char status)
 {
@@ -69,7 +69,7 @@ void Robot::setFrontLED(unsigned char status)
 }
 
 //
-//	Diese Funktion Schaltet die ACS's LEDs (LED für die Frühwarnung) ein oder aus
+//	Diese Funktion Schaltet die ACS's LEDs (LED fuer die Fruehwarnung) ein oder aus
 //
 void Robot::setIRLeds(unsigned char status)
 {

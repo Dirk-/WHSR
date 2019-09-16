@@ -55,7 +55,7 @@ float Robot::readBattery(void)
 
 /* ******************************************************************************************
  * 
- * Diese Funktionen Lesen den Lienienfolger aus
+ * Diese Funktionen lesen den Lienienfolger aus
  * 
  * ****************************************************************************************** */
 
@@ -156,7 +156,7 @@ unsigned int Robot::readACS(char Side)
 
 /* ******************************************************************************************
  * 
- * Diese Funktionen Lesen die beiden Lichtsensoren aus
+ * Diese Funktionen lesen die beiden Lichtsensoren aus
  * 
  * ****************************************************************************************** */
 
