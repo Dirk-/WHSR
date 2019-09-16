@@ -1,6 +1,6 @@
 
-#include <Robot.h>
-Robot robo = Robot();
+#include <WHSR.h>
+WHSR robo = WHSR();
 
 unsigned long sum = 0;
 unsigned long counter = 0;

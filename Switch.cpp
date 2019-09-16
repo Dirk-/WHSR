@@ -1,10 +1,10 @@
 
-#include "Robot.h"
+#include "WHSR.h"
 
 //
 // Initialisiert die Kolisionserkennung
 //
-void Robot::InitSwitches(void)
+void WHSR::InitSwitches(void)
 {
 	DBSerial_print(F("Init Switches"));
 	
@@ -17,7 +17,7 @@ void Robot::InitSwitches(void)
 //
 // Liest die Taster für die Kolisionserkennung aus
 //
-unsigned char Robot::readSwitches(void)
+unsigned char WHSR::readSwitches(void)
 {
 	if(switchInterruptAktiv == 2)
 	{
@@ -34,7 +34,7 @@ unsigned char Robot::readSwitches(void)
 //
 // Turn On the PinChange Interrupt
 //
-void Robot::switchInterruptOn(void)
+void WHSR::switchInterruptOn(void)
 {
 	digitalWrite(Switch_On_Interrupt, HIGH);
 	//delay(1);
@@ -53,7 +53,7 @@ void Robot::switchInterruptOn(void)
 //
 // Turn Off the PinChange Interrupt
 //
-void Robot::switchInterruptOff(void)
+void WHSR::switchInterruptOff(void)
 {
 	//pinMode(Switch_On_Interrupt, OUTPUT);
 	digitalWrite(Switch_On_Interrupt, LOW);
@@ -67,7 +67,7 @@ void Robot::switchInterruptOff(void)
 //
 //	Return true if Switch was pressed
 //
-bool Robot::switchAvailable()
+bool WHSR::switchAvailable()
 {
 	return switchInterruptAktiv == 2 ? true : false;
 }
@@ -75,7 +75,7 @@ bool Robot::switchAvailable()
 //
 // Pin Change Interrupt Vector
 //
-void Robot::switchInterrupt(void)
+void WHSR::switchInterrupt(void)
 {
 	Serial.print(F("."));
 	// Interrupt verhindern wenn

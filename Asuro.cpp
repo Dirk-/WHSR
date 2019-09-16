@@ -1,12 +1,12 @@
 
-#include "Robot.h"
+#include "WHSR.h"
 
-void Robot::readOdometry(int *data)
+void WHSR::readOdometry(int *data)
 {
 	GetRPMSensorCount(data);
 }
 
-unsigned long Robot::readOdometry(char Side)
+unsigned long WHSR::readOdometry(char Side)
 {
 	return GetRPMSensorCount(Side);
 }

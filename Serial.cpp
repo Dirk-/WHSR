@@ -1,12 +1,12 @@
 
-#include "Robot.h"
+#include "WHSR.h"
 
 //
 //	Initialisiert die Serielle Schnittstelle
 //	RobotSerial - Bluetooth Serial
 //	DBSerial - Debug Serial
 //
-void Robot::InitSerial()
+void WHSR::InitSerial()
 {
 	RobotSerial.begin(BLUETOOTH_BAUDRATE);
 	

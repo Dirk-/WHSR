@@ -1,7 +1,7 @@
 
-#include <Robot.h>
+#include <WHSR.h>
 
-Robot robo = Robot();
+WHSR robo = WHSR();
 
 void setup()
 {

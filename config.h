@@ -1,6 +1,6 @@
 
-#ifndef ROBOTCONFIG_H
-	#define ROBOTONFIG_H
+#ifndef WHSRCONFIG_H
+	#define WHSRCONFIG_H
 
 	//
 	// Serial 

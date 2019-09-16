@@ -1,6 +1,6 @@
 
-#ifndef ROBOT_H
-	#define ROBOT_H
+#ifndef WHSR_H
+	#define WHSR_H
 
 	#include "Pin_Config.h"
 	#include "Config.h"
@@ -26,7 +26,7 @@
 	#endif
 	
 	// Robot Class
-	class Robot
+	class WHSR
 	{			
 		private:
 			/* ************************************************************************************
@@ -90,7 +90,7 @@
 			void (*TimerISRfunction)();
 
 		public:	
-			static Robot * MyRobot;
+			static WHSR * myRobot;
 			/* ************************************************************************************
 			 *
 			 *	Variablen
@@ -126,15 +126,15 @@
 			void ADCInterrupt(void);
 			static void ADCInterruptISR(void)
 			{
-				if (MyRobot != NULL)
-					MyRobot->ADCInterrupt();
+				if (myRobot != NULL)
+					myRobot->ADCInterrupt();
 			}
 			
 			static void ADCInterruptBlockISR(void)
 			{
-				if (MyRobot != NULL)
+				if (myRobot != NULL)
 				{
-					if(MyRobot->ADCMode == ADCMode_Block)
+					if(myRobot->ADCMode == ADCMode_Block)
 						ADCSRA |= (1<<ADSC);
 				}
 			}
@@ -181,15 +181,15 @@
 			void RPMLeft(void);
 			static void RPMLeftISR(void)
 			{
-				if (MyRobot != NULL)
-					MyRobot->RPMLeft();
+				if (myRobot != NULL)
+					myRobot->RPMLeft();
 			}
 			
 			void RPMRight(void);
 			static void RPMRightISR(void)
 			{
-				if (MyRobot != NULL)
-					MyRobot->RPMRight();
+				if (myRobot != NULL)
+					myRobot->RPMRight();
 			}
 
 			void setMotorDirectionLeft(char dir);
@@ -227,8 +227,8 @@
 			
 			static void SwitchISR(void)
 			{
-				if (MyRobot != NULL)
-					MyRobot->switchInterrupt();
+				if (myRobot != NULL)
+					myRobot->switchInterrupt();
 			}
 			/* ************************************************************************************
 			 *
@@ -238,8 +238,8 @@
 			
 			static void TimerOverflowISR(void)
 			{
-				if (MyRobot != NULL)
-					MyRobot->TimerOverflow();
+				if (myRobot != NULL)
+					myRobot->TimerOverflow();
 			}
 			
 			void TimerSet(unsigned long ms, void (*isrfunction)());

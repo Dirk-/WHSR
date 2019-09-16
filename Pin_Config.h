@@ -1,6 +1,6 @@
 
-#ifndef ROBOTPINS_H
-	#define ROBOTPINS_H
+#ifndef WHSRPINS_H
+	#define WHSRPINS_H
 	
 	//
 	//	Bluetooth Komunikation

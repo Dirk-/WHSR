@@ -1,10 +1,10 @@
 
-#include "Robot.h"
+#include "WHSR.h"
 
 //
 //	Initialisiert die beiden H-Brücken
 //
-void Robot::InitEngine()
+void WHSR::InitEngine()
 {
 	DBSerial_print(F("Init Motor"));
 	//
@@ -43,7 +43,7 @@ void Robot::InitEngine()
 //	
 //	Wird auch für den ADC im Block Modus verwendet!!!
 //
-void Robot::InitEnginePWM()
+void WHSR::InitEnginePWM()
 {
 	TIMSK1 &= ~(1<<OCIE1A);	// Timer Interrupt abschalten
 
@@ -69,7 +69,7 @@ void Robot::InitEnginePWM()
 //
 //	Funktion für die Abhandlung der ISR
 //
-void Robot::RPMLeft(void)
+void WHSR::RPMLeft(void)
 {
 	++RPMSensorCountLeft;
 }
@@ -77,7 +77,7 @@ void Robot::RPMLeft(void)
 //
 //	Funktion für die Abhandlung der ISR
 //
-void Robot::RPMRight(void)
+void WHSR::RPMRight(void)
 {
 	++RPMSensorCountRight;
 }
@@ -90,7 +90,7 @@ void Robot::RPMRight(void)
  * ****************************************************************************************** */
 
 
-void Robot::GetRPMSensorCount(int *data)
+void WHSR::GetRPMSensorCount(int *data)
 {
 	data[Sensor_Left] = RPMSensorCountLeft;
 	data[Sensor_Right] = RPMSensorCountRight;
@@ -99,7 +99,7 @@ void Robot::GetRPMSensorCount(int *data)
 	RPMSensorCountRight = 0;
 }
 
-unsigned long Robot::GetRPMSensorCount(char Side)
+unsigned long WHSR::GetRPMSensorCount(char Side)
 {
 	unsigned long tmp;
 	
@@ -123,7 +123,7 @@ unsigned long Robot::GetRPMSensorCount(char Side)
  * 
  * ****************************************************************************************** */
 
-void Robot::setMotorDirectionLeft(char dir)
+void WHSR::setMotorDirectionLeft(char dir)
 {
 	if(dir == 1)
 		digitalWrite(Engine_Dir_Left, EngineDirForward_Pegel);
@@ -131,7 +131,7 @@ void Robot::setMotorDirectionLeft(char dir)
 		digitalWrite(Engine_Dir_Left, EngineDirBackward_Pegel);
 }
 
-void Robot::setMotorDirectionRight(char dir)
+void WHSR::setMotorDirectionRight(char dir)
 {
 	if(dir == 1)
 		digitalWrite(Engine_Dir_Right, EngineDirForward_Pegel);
@@ -140,7 +140,7 @@ void Robot::setMotorDirectionRight(char dir)
 }
 
 
-void Robot::setMotorDirection (char left, char right)
+void WHSR::setMotorDirection (char left, char right)
 {
 	setMotorDirectionLeft(left);
 	setMotorDirectionRight(right);
@@ -152,7 +152,7 @@ void Robot::setMotorDirection (char left, char right)
  * 
  * ****************************************************************************************** */
 
-void Robot::setMotorSpeedLeft(int pwm, bool ChangeDirection = false)
+void WHSR::setMotorSpeedLeft(int pwm, bool ChangeDirection = false)
 {
 	char tmp = constrain(abs(pwm), 0, 255);
 	OCR1A = tmp;
@@ -167,7 +167,7 @@ void Robot::setMotorSpeedLeft(int pwm, bool ChangeDirection = false)
 	}
 }
 
-void Robot::setMotorSpeedRight(int pwm, bool ChangeDirection = false)
+void WHSR::setMotorSpeedRight(int pwm, bool ChangeDirection = false)
 {
 	char tmp = constrain(abs(pwm), 0, 255);
 	OCR1B = tmp;
@@ -182,7 +182,7 @@ void Robot::setMotorSpeedRight(int pwm, bool ChangeDirection = false)
 	}
 }
 
-void Robot::setMotorSpeed (int left, int right, bool ChangeDirection = false)
+void WHSR::setMotorSpeed (int left, int right, bool ChangeDirection = false)
 {
 	setMotorSpeedLeft(left, ChangeDirection);
 	setMotorSpeedRight(right, ChangeDirection);

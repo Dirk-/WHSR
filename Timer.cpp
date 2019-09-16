@@ -1,7 +1,7 @@
 
-#include "Robot.h"
+#include "WHSR.h"
 
-void Robot::TimerSet(unsigned long ms, void (*isrfunction)())
+void WHSR::TimerSet(unsigned long ms, void (*isrfunction)())
 {
 	TimerISRfunction = isrfunction;
 	TimerWaitTime = (ms == 0 ? 1 : ms);
@@ -36,19 +36,19 @@ void Robot::TimerSet(unsigned long ms, void (*isrfunction)())
 	#endif	
 }
 
-void Robot::TimerStart()
+void WHSR::TimerStart()
 {
 	TimerCount = 0;
 	TCNT2 = TimerTcnt2;
 	TIMSK2 |= (1<<TOIE2);
 }
 
-void Robot::TimerStop()
+void WHSR::TimerStop()
 {
 	TIMSK2 &= ~(1<<TOIE2);
 }
 
-void Robot::TimerOverflow()
+void WHSR::TimerOverflow()
 {
 	TCNT2 = TimerTcnt2;
 	TimerCount += 1;

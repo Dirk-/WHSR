@@ -1,10 +1,10 @@
 
-#include "Robot.h"
+#include "WHSR.h"
 
 //
 //	Diese Funktion initialisiert die RGB LED
 //
-void Robot::InitLeds(void)
+void WHSR::InitLeds(void)
 {
     DBSerial_print(F("Init LEDS"));
 	
@@ -23,7 +23,7 @@ void Robot::InitLeds(void)
 //
 //	MitHilfe dieser Funkion kan die Status LED auf eine Farbe gesetzt werden
 //
-void Robot::setStatusLED(unsigned char color)
+void WHSR::setStatusLED(unsigned char color)
 {
 	DBSerial_print(F("Color: "));
 	DBSerial_println(color, BIN);
@@ -50,7 +50,7 @@ void Robot::setStatusLED(unsigned char color)
 //	Diese Funktion setzt die Status LED auf die verschiedenen Farben
 //	Feste reinfolge
 //
-void Robot::shiftStatusLED(void)
+void WHSR::shiftStatusLED(void)
 {
 	static unsigned char pos = 0;
 	setStatusLED(pos++);
@@ -59,7 +59,7 @@ void Robot::shiftStatusLED(void)
 //
 //	Diese Funktion Schaltet die Front LED (LED fuer den Linienfolger) ein oder aus
 //
-void Robot::setFrontLED(unsigned char status)
+void WHSR::setFrontLED(unsigned char status)
 {
 	if(status == LEDOn)
 		digitalWrite(LineFollower_LED, LED_Sensor_Pegel_On);
@@ -71,7 +71,7 @@ void Robot::setFrontLED(unsigned char status)
 //
 //	Diese Funktion Schaltet die ACS's LEDs (LED fuer die Fruehwarnung) ein oder aus
 //
-void Robot::setIRLeds(unsigned char status)
+void WHSR::setIRLeds(unsigned char status)
 {
 	if(status == LEDOn)
 		digitalWrite(ACS_IrLed, LED_Sensor_Pegel_On);

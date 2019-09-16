@@ -1,5 +1,5 @@
 
-#include "Robot.h"
+#include "WHSR.h"
 
 /* ************************************************************************************
  *
@@ -10,7 +10,7 @@
 //
 //	Init ADC
 //
-void Robot::InitADC(void)
+void WHSR::InitADC(void)
 {
 	DBSerial_print(F("Init ADC"));
 	
@@ -38,7 +38,7 @@ void Robot::InitADC(void)
 // ADC Start Next
 //		Sobald ein Channel gelesen wurde wird der nächste gestartet
 //
-void Robot::ADCStartNext(void)
+void WHSR::ADCStartNext(void)
 {
 	++ADCPos;
 	if((SwitchStateInterrupt & 0b1) == 0 && ADCPos == Switch)
@@ -63,7 +63,7 @@ void Robot::ADCStartNext(void)
 // ADC Start
 //		Lese Channel X
 //
-void Robot::ADCStart(char Channel)
+void WHSR::ADCStart(char Channel)
 {
 	ADCPos = Channel; // % MaxADCChannels;
 	SetADMUX(ADCPos);
@@ -77,7 +77,7 @@ void Robot::ADCStart(char Channel)
 //		Warte bis der Komplette Block gelesen wurde
 //		Block => Alle 9 Kanäle
 //
-bool Robot::ADCWaitForBlock(void)
+bool WHSR::ADCWaitForBlock(void)
 {
 	if(ADCBlockPassed)
 	{
@@ -92,7 +92,7 @@ bool Robot::ADCWaitForBlock(void)
 // ADC Wait For Conversion
 //		Für einzellesungen warten bis ADC beendet ist
 //
-void Robot::ADCWaitForConversion(void)
+void WHSR::ADCWaitForConversion(void)
 {
 	while (bit_is_set(ADCSRA, ADSC));
 }
@@ -101,7 +101,7 @@ void Robot::ADCWaitForConversion(void)
 // ADC Interrupt Routine
 //		Für einzellesungen Warten bis ADC beendet ist
 //
-void Robot::ADCInterrupt(void)
+void WHSR::ADCInterrupt(void)
 {	
 	mySensorValues[ADCPos] = ADC;
 	/*
@@ -119,7 +119,7 @@ void Robot::ADCInterrupt(void)
 //
 //
 //
-void Robot::SetADMUX(char pin)
+void WHSR::SetADMUX(char pin)
 {	
 	if(pin == 8) pin = 14;
 
@@ -131,7 +131,7 @@ void Robot::SetADMUX(char pin)
 //
 //
 
-void Robot::DoCheckADCMode(char channel)
+void WHSR::DoCheckADCMode(char channel)
 {
 	if(ADCMode == ADCMode_None)
 	{

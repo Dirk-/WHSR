@@ -1,7 +1,7 @@
 
-#include "Robot.h"
+#include "WHSR.h"
 
-void Robot::InitSensors(void)
+void WHSR::InitSensors(void)
 {
 	pinMode(LineFollower_LED, OUTPUT);
 	digitalWrite(LineFollower_LED, LED_Sensor_Pegel_Off);
@@ -17,13 +17,13 @@ void Robot::InitSensors(void)
  * 
  * ****************************************************************************************** */
 
-unsigned int Robot::readReferenz(void)
+unsigned int WHSR::readReferenz(void)
 {
 	DoCheckADCMode(Referenz);
 	return mySensorValues[Referenz];
 }
 
-float Robot::readVref(void)
+float WHSR::readVref(void)
 {
 	float result = (InternalReferenceVoltage * (1023.0 / readReferenz())) / 1000;
 	
@@ -34,7 +34,7 @@ float Robot::readVref(void)
 	return result;
 }
 
-float Robot::readBattery(void)
+float WHSR::readBattery(void)
 {
 	float vref = readVref();
 	
@@ -59,7 +59,7 @@ float Robot::readBattery(void)
  * 
  * ****************************************************************************************** */
 
-void Robot::readLinesensor(int *data, unsigned char LightStatus)
+void WHSR::readLinesensor(int *data, unsigned char LightStatus)
 {
 	if(LightStatus == LEDOn)
 	{
@@ -71,7 +71,7 @@ void Robot::readLinesensor(int *data, unsigned char LightStatus)
 
 	setFrontLED(LEDOff);
 }
-void Robot::readLinesensor(int *data)
+void WHSR::readLinesensor(int *data)
 {
 	DoCheckADCMode(LineFollower_Left);
 	DoCheckADCMode(LineFollower_Right);
@@ -80,7 +80,7 @@ void Robot::readLinesensor(int *data)
 	data[Sensor_Right] = mySensorValues[LineFollower_Right];
 }
 
-unsigned int Robot::readLinesensor(char Side, unsigned char LightStatus)
+unsigned int WHSR::readLinesensor(char Side, unsigned char LightStatus)
 {
 	int data[2];
 	readLinesensor(*data, LightStatus);
@@ -91,7 +91,7 @@ unsigned int Robot::readLinesensor(char Side, unsigned char LightStatus)
 		return mySensorValues[LineFollower_Right];
 }
 
-unsigned int Robot::readLinesensor(char Side)
+unsigned int WHSR::readLinesensor(char Side)
 {
 	int data[2];
 	readLinesensor(*data);
@@ -108,7 +108,7 @@ unsigned int Robot::readLinesensor(char Side)
  * 
  * ****************************************************************************************** */
 
-void Robot::readACS(int *data, unsigned char LightStatus)
+void WHSR::readACS(int *data, unsigned char LightStatus)
 {
 	if(LightStatus == LEDOn)
 	{
@@ -121,7 +121,7 @@ void Robot::readACS(int *data, unsigned char LightStatus)
 	setIRLeds(LEDOff);
 }
 
-void Robot::readACS(int *data)
+void WHSR::readACS(int *data)
 {	
 	DoCheckADCMode(ACS_Left);
 	DoCheckADCMode(ACS_Right);
@@ -131,7 +131,7 @@ void Robot::readACS(int *data)
 }
 
 
-unsigned int Robot::readACS(char Side, unsigned char LightStatus)
+unsigned int WHSR::readACS(char Side, unsigned char LightStatus)
 {
 	int data[2];
 	readACS(*data, LightStatus);
@@ -142,7 +142,7 @@ unsigned int Robot::readACS(char Side, unsigned char LightStatus)
 		return mySensorValues[ACS_Right];
 }
 
-unsigned int Robot::readACS(char Side)
+unsigned int WHSR::readACS(char Side)
 {	
 	int data[2];
 	readACS(*data);
@@ -160,7 +160,7 @@ unsigned int Robot::readACS(char Side)
  * 
  * ****************************************************************************************** */
 
-void Robot::readLDR(int *data)
+void WHSR::readLDR(int *data)
 {
 	DoCheckADCMode(LDR_Left);
 	DoCheckADCMode(LDR_Right);
@@ -169,7 +169,7 @@ void Robot::readLDR(int *data)
 	data[Sensor_Right] = mySensorValues[LDR_Right];
 }
 
-unsigned int Robot::readLDR(char Side)
+unsigned int WHSR::readLDR(char Side)
 {
 	if(Side == Sensor_Left)
 	{
