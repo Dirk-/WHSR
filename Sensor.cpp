@@ -6,8 +6,8 @@ void WHSR::InitSensors(void)
 	pinMode(LineFollower_LED, OUTPUT);
 	digitalWrite(LineFollower_LED, LED_Sensor_Pegel_Off);
 	
-	pinMode(ACS_IrLed, OUTPUT);
-	digitalWrite(ACS_IrLed, LED_Sensor_Pegel_Off);
+	pinMode(ACS_IrLED, OUTPUT);
+	digitalWrite(ACS_IrLED, LED_Sensor_Pegel_Off);
 }
 
 /* ******************************************************************************************
@@ -112,13 +112,13 @@ void WHSR::readACS(int *data, unsigned char LightStatus)
 {
 	if(LightStatus == LEDOn)
 	{
-		setIRLeds(LightStatus);
+		setIrLEDs(LightStatus);
 		delay(100);
 	}
 	
 	readACS(data);
 	
-	setIRLeds(LEDOff);
+	setIrLEDs(LEDOff);
 }
 
 void WHSR::readACS(int *data)

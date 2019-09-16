@@ -38,7 +38,7 @@
 	#define SwitchISRPin A2 // -> A3
 
 	// Anti Collision System
-	#define ACS_IrLed  4
+	#define ACS_IrLED  4
 	#define ACS_Left  1 // -> A0
 	#define ACS_Right 6 // -> A5
 

@@ -69,14 +69,12 @@ void WHSR::setFrontLED(unsigned char status)
 }
 
 //
-//	Diese Funktion Schaltet die ACS's LEDs (LED fuer die Fruehwarnung) ein oder aus
+//	Diese Funktion Schaltet die ACS LEDs (LED fuer die Fruehwarnung) ein oder aus
 //
-void WHSR::setIRLeds(unsigned char status)
+void WHSR::setIrLEDs(unsigned char status)
 {
 	if(status == LEDOn)
-		digitalWrite(ACS_IrLed, LED_Sensor_Pegel_On);
+		digitalWrite(ACS_IrLED, LED_Sensor_Pegel_On);
 	else
-		digitalWrite(ACS_IrLed, LED_Sensor_Pegel_Off);
-	
-	
+		digitalWrite(ACS_IrLED, LED_Sensor_Pegel_Off);
 }
