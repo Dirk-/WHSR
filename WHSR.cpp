@@ -1,4 +1,3 @@
-
 #include "WHSR.h"
 
 WHSR * WHSR::myRobot = NULL;

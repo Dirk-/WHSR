@@ -1,4 +1,3 @@
-
 #include "WHSR.h"
 
 void WHSR::TimerSet(unsigned long ms, void (*isrfunction)())
