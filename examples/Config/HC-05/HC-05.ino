@@ -1,10 +1,13 @@
 
-#define BaudRate 9600
-#define NewName "HM10_01"
+// Baud rate for configuration
+#define INIT_BAUDRATE 9600
+
+// New name for device (should be unique in your hood)
+#define NewName "HC05_01"
 
 void setup()
 {
-  Serial.begin(Baudrate);
+  Serial.begin(INIT_BAUDRATE);
   Serial.println("Config HC-05");
   Serial.println("Remember that both devices, the Arduino and the HC-05 need to use the same baud rate.");
   Serial.println();

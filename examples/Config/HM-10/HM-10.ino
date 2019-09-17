@@ -1,10 +1,13 @@
 
-#define BaudRate 9600
+// Baud rate for configuration
+#define INIT_BAUDRATE 9600
+
+// New name for device (should be unique in your hood)
 #define NewName "HM10_01"
 
 void setup()
 {
-  Serial.begin(Baudrate);
+  Serial.begin(INIT_BAUDRATE);
   Serial.println("Config HM-10");
   Serial.println("Remember that both devices, the Arduino and the HM-10 need to use the same baud rate.");
   Serial.println();
@@ -23,7 +26,7 @@ void setup()
                                   // 7 – 1200
                                   // 8 – 230400
 
-  Serial.println("AT+BAUDX"); // x is a value from 0 to 8.
+  Serial.println("AT+BAUD4"); // x is a value from 0 to 8.
 }
 
 void loop()
