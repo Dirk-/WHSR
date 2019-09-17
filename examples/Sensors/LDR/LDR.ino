@@ -14,7 +14,7 @@ void loop()
 	int data[2];
 	
 	// Get Sensor Werte
-	robo.readLDR(data);
+	robo.readAmbientLight(data);
 	Serial.print("LDR"));
 	Serial.print("Left: ");
 	Serial.println(data[Sensor_Left]);
@@ -24,9 +24,9 @@ void loop()
 	// Get Sensor Werte
 	Serial.print("LDR");
 	Serial.print("Left: ");
-	Serial.println(robo.readLDR(Sensor_Left));
+	Serial.println(robo.readAmbientLight(Sensor_Left));
 	Serial.print("Right: ");
-	Serial.println(robo.readLDR(Sensor_Right));
+	Serial.println(robo.readAmbientLight(Sensor_Right));
 		
 	
 	delay(1000);

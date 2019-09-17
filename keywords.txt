@@ -31,7 +31,7 @@ readBattery	KEYWORD2
 readVref	KEYWORD2
 readLinesensor	KEYWORD2
 readACS	KEYWORD2
-readLDR	KEYWORD2
+readAmbientLight	KEYWORD2
 setStatusLED	KEYWORD2
 shiftStatusLED	KEYWORD2
 setFrontLED	KEYWORD2

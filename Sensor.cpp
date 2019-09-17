@@ -160,7 +160,7 @@ unsigned int WHSR::readACS(char Side)
  * 
  * ****************************************************************************************** */
 
-void WHSR::readLDR(int *data)
+void WHSR::readAmbientLight(int *data)
 {
 	DoCheckADCMode(LDR_Left);
 	DoCheckADCMode(LDR_Right);
@@ -169,7 +169,7 @@ void WHSR::readLDR(int *data)
 	data[Sensor_Right] = mySensorValues[LDR_Right];
 }
 
-unsigned int WHSR::readLDR(char Side)
+unsigned int WHSR::readAmbientLight(char Side)
 {
 	if(Side == Sensor_Left)
 	{

@@ -162,8 +162,8 @@ public:
 	unsigned int readACS(char Side, unsigned char LightStatus);
 	unsigned int readACS(char Side);
 
-	void readLDR(int *data);
-	unsigned int readLDR(char Side);
+	void readAmbientLight(int *data);
+	unsigned int readAmbientLight(char Side);
 
 	/* ************************************************************************************
 	 *
@@ -231,7 +231,7 @@ public:
 		if (myRobot != NULL)
 			myRobot->switchInterrupt();
 	}
-	
+
 	/* ************************************************************************************
 	 *
 	 *	Timer

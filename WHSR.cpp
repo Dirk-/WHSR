@@ -12,7 +12,7 @@ void WHSR::Init(void)
 	InitADC();
 	
 	InitSwitches();
-	InitLeds();
+	InitLEDs();
 	InitSensors();
 	InitEngine();
 }
