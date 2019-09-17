@@ -13,7 +13,8 @@ void setup()
   Serial.println();
   Serial.println();
 
-  Serial.println("AT+NAME=" + NewName);
+  Serial.print("AT+NAME");
+  Serial.println(NewName);
   Serial.println("AT+UART=115200,1,0"); // New baud rate: 115200, 1 stop bit, 0 parity enter
 }
 

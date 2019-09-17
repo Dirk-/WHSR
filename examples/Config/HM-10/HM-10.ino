@@ -14,7 +14,8 @@ void setup()
   Serial.println();
 
 
-  Serial.println("AT+NAME" + NewName);
+  Serial.print("AT+NAME");
+  Serial.println(NewName);
   //Serial.println("AT+BAUD"); // Returns the value 0-8, for example, OK+Get:0 
                                   // 0 – 9600 default
                                   // 1 – 19200
