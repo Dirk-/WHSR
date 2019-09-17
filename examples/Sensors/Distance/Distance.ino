@@ -17,7 +17,7 @@ void loop()
 	// Read distance sensors, IR LEDs on
 	robo.readDistance(data, LEDOn);
 
-	Serial.print("ACS; Light On: ");
+	Serial.println("---------- Distance sensors, IR LEDs on -------------");
 	Serial.print("Left: ");
 	Serial.println(data[Sensor_Left]);
 	Serial.print("Right: ");
@@ -27,7 +27,7 @@ void loop()
 	// Read distance sensors, IR LEDs off
 	robo.readDistance(data, LEDOff); 
 
-	Serial.print("ACS; Light Off ");
+	Serial.println("---------- Distance sensors, IR LEDs off -------------");
 	Serial.print("Left: ");
 	Serial.println(data[Sensor_Left]);
 	Serial.print("Right: ");

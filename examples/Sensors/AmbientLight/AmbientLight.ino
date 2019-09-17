@@ -18,7 +18,7 @@ void loop()
 	robo.readAmbientLight(data);
 
 	// Communicate results
-	Serial.print("Ambient Light");
+	Serial.println("---------- Ambient Light ---------");
 	Serial.print("Left: ");
 	Serial.println(data[Sensor_Left]);
 	Serial.print("Right: ");
