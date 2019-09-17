@@ -4,9 +4,9 @@
 //
 //	Diese Funktion initialisiert die RGB LED
 //
-void WHSR::InitLeds(void)
+void WHSR::InitLEDs(void)
 {
-    DBSerial_print(F("Init LEDS"));
+    DebugSerial_print(F("Init LEDS"));
 	
 	pinMode(LED_Blue, OUTPUT);
 	digitalWrite(LED_Blue, LED_Status_Pegel_Off);
@@ -17,7 +17,7 @@ void WHSR::InitLeds(void)
 	pinMode(LED_Red, OUTPUT);
 	digitalWrite(LED_Red, LED_Status_Pegel_Off);
 	
-    DBSerial_println(" - Finsihed"); 
+    DebugSerial_println(" - Finished"); 
 }
 
 //
@@ -25,8 +25,8 @@ void WHSR::InitLeds(void)
 //
 void WHSR::setStatusLED(unsigned char color)
 {
-	DBSerial_print(F("Color: "));
-	DBSerial_println(color, BIN);
+	DebugSerial_print(F("Color: "));
+	DebugSerial_println(color, BIN);
 	
 	digitalWrite(LED_Red, (color & Color_Red) > 0 ?
 							LED_Status_Pegel_On :

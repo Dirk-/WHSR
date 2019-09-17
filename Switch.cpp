@@ -6,12 +6,12 @@
 //
 void WHSR::InitSwitches(void)
 {
-	DBSerial_print(F("Init Switches"));
+	DebugSerial_print(F("Init Switches"));
 	
 	pinMode(Switch_On_Interrupt, OUTPUT);
 	digitalWrite(Switch_On_Interrupt, LOW);
 	
-	DBSerial_println(F(" - Finsihed"));
+	DebugSerial_println(F(" - Finsihed"));
 }
 
 //
@@ -102,6 +102,6 @@ void WHSR::switchInterrupt(void)
 	switchInterruptOn();	
 	
 	++switchInterruptAktiv;
-	DBSerial_println(F("Switch Pressed"));
+	DebugSerial_println(F("Switch Pressed"));
 	interrupts();
 }

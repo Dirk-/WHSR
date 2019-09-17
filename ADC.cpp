@@ -12,7 +12,7 @@
 //
 void WHSR::InitADC(void)
 {
-	DBSerial_print(F("Init ADC"));
+	DebugSerial_print(F("Init ADC"));
 	
 	ADCPos = 0;
 	ADMUX = (0<<REFS1) | (1<<REFS0) | 	// ReferenzSpannung 01 -> Extern
@@ -31,7 +31,7 @@ void WHSR::InitADC(void)
 	
 	//ADCSRA |= (1<<ADSC);				// Start ADC
 	
-	DBSerial_println(F(" - Finsihed"));
+	DebugSerial_println(F(" - Finsihed"));
 }
 
 //
@@ -105,9 +105,9 @@ void WHSR::ADCInterrupt(void)
 {	
 	mySensorValues[ADCPos] = ADC;
 	/*
-	DBSerial_print(ADCPos, DEC);
-	DBSerial_print(F(" "));
-	DBSerial_println(mySensorValues[ADCPos]);
+	DebugSerial_print(ADCPos, DEC);
+	DebugSerial_print(F(" "));
+	DebugSerial_println(mySensorValues[ADCPos]);
 	*/
 	if(ADCPos == Switch)
 		SwitchStateInterrupt = SwitchState_Idle;
@@ -138,11 +138,11 @@ void WHSR::DoCheckADCMode(char channel)
 		ADCStart(channel);
 		ADCWaitForConversion();
 		
-		DBSerial_print(F(" "));
-		DBSerial_print(channel, DEC);
-		DBSerial_print(F(": "));
-		DBSerial_print(mySensorValues[channel]);
-		DBSerial_print(F(". "));
+		DebugSerial_print(F(" "));
+		DebugSerial_print(channel, DEC);
+		DebugSerial_print(F(": "));
+		DebugSerial_print(mySensorValues[channel]);
+		DebugSerial_print(F(". "));
 	}
 }
 

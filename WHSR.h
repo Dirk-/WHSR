@@ -6,16 +6,23 @@
 #include "Config.h"
 #include <Arduino.h>
 
-#define SHOWDEBUG false
+// If we had a board with several Serial ports, we could redefine this to Serial1, Serial2, ...
 #define RobotSerial Serial
 
-#if SHOWDEBUG == true
-#define DBSerial Serial
-#define DBSerial_print(...) DBSerial.print(__VA_ARGS__)
-#define DBSerial_println(...) DBSerial.println(__VA_ARGS__)
+// Set this to true if you want debug information from the library or if you want
+// to use DebugSerial_print and DebugSerial_println in your own sketches.
+// You can leave these calls in your final sketch, if you set DEBUG to false,
+// they will not send anything.
+#define DEBUG false
+
+#if DEBUG == true
+// Use the regular Serial port
+#define DebugSerial Serial
+#define DebugSerial_print(...) DebugSerial.print(__VA_ARGS__)
+#define DebugSerial_println(...) DebugSerial.println(__VA_ARGS__)
 #else
-#define DBSerial_print(...)
-#define DBSerial_println(...)
+#define DebugSerial_print(...)
+#define DebugSerial_println(...)
 #endif
 
 // Robot Class
@@ -28,8 +35,9 @@ private:
 	 *	einzelnen Teilbereiche
 	 *
 	 * ************************************************************************************ */
+
 	void InitSerial(void);
-	void InitLeds(void);
+	void InitLEDs(void);
 	void InitADC(void);
 	void InitEngine(void);
 	void InitEnginePWM(void);
@@ -42,6 +50,7 @@ private:
 	 *	Switches
 	 *
 	 * ************************************************************************************ */
+
 	volatile unsigned char SwitchStateInterrupt = SwitchState_None;
 	volatile unsigned char switchValue = 0;
 	volatile unsigned char switchInterruptAktiv = 0;
@@ -51,6 +60,7 @@ private:
 	 *	Battery, ADC
 	 *
 	 * ************************************************************************************ */
+
 	void SetADMUX(char pin);
 
 	void ADCStartNext(void);
@@ -67,6 +77,7 @@ private:
 	 *	Motor
 	 *
 	 * ************************************************************************************ */
+
 	volatile unsigned long RPMSensorCountRight = 0;
 	volatile unsigned long RPMSensorCountLeft = 0;
 
@@ -75,6 +86,7 @@ private:
 	 *	Timer
 	 *
 	 * ************************************************************************************ */
+
 	volatile unsigned long TimerCount = 0;
 	volatile unsigned int TimerOverflowCount = 0;
 	volatile unsigned int TimerTcnt2 = 0;
@@ -109,6 +121,7 @@ public:
 	 *	ADC - Batterie, Referenz, Temperatur
 	 *
 	 * ************************************************************************************ */
+
 	char ADCMode = ADCMode_None;
 	volatile int mySensorValues[9];
 
@@ -134,6 +147,7 @@ public:
 	 *	Sensors
 	 *
 	 * ************************************************************************************ */
+
 	unsigned int readReferenz(void);
 	float readBattery(void);
 	float readVref(void);
@@ -156,6 +170,7 @@ public:
 	 *	StatusLED
 	 *
 	 * ************************************************************************************ */
+
 	void setStatusLED(unsigned char color);
 	void shiftStatusLED(void);
 	void setFrontLED(unsigned char status);
@@ -166,6 +181,7 @@ public:
 	 *	Engine
 	 *
 	 * ************************************************************************************ */
+
 	void RPMLeft(void);
 	static void RPMLeftISR(void)
 	{
@@ -215,6 +231,7 @@ public:
 		if (myRobot != NULL)
 			myRobot->switchInterrupt();
 	}
+	
 	/* ************************************************************************************
 	 *
 	 *	Timer

@@ -4,17 +4,17 @@
 //
 //	Initialisiert die Serielle Schnittstelle
 //	RobotSerial - Bluetooth Serial
-//	DBSerial - Debug Serial
+//	DebugSerial - Debug Serial
 //
 void WHSR::InitSerial()
 {
-	RobotSerial.begin(BLUETOOTH_BAUDRATE);
+	RobotSerial.begin(REGULAR_BAUDRATE);
 	
-	#if DBSerial != RobotSerial
-		DBSerial.begin(USB_BAUDRATE);
+	#if DebugSerial != RobotSerial
+		DebugSerial.begin(DEBUG_BAUDRATE);
 	#endif
 	
-	DBSerial_print(F("Init Kommunikation"));
-	DBSerial_println(F(" - Finsihed"));
+	DebugSerial_print(F("Init Kommunikation"));
+	DebugSerial_println(F(" - Finished"));
 }
 

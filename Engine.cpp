@@ -6,7 +6,7 @@
 //
 void WHSR::InitEngine()
 {
-	DBSerial_print(F("Init Motor"));
+	DebugSerial_print(F("Init Motor"));
 	//
 	// Motor Dir Init
 	//
@@ -34,7 +34,7 @@ void WHSR::InitEngine()
 	
 	EIMSK = (1 << INT1) | (1 << INT0); // Enable Interrupt
 	
-	DBSerial_println(F(" - Finsihed"));
+	DebugSerial_println(F(" - Finsihed"));
 }
 
 //

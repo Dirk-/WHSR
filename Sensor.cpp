@@ -27,9 +27,9 @@ float WHSR::readVref(void)
 {
 	float result = (InternalReferenceVoltage * (1023.0 / readReferenz())) / 1000;
 	
-	DBSerial_print(" Vref: ");
-	DBSerial_print(result);
-	DBSerial_print(F("; "));
+	DebugSerial_print(" Vref: ");
+	DebugSerial_print(result);
+	DebugSerial_print(F("; "));
 	
 	return result;
 }
@@ -42,13 +42,13 @@ float WHSR::readBattery(void)
 	float VAdc = (vref/1023) * mySensorValues[Batterie];
 	float result = VAdc * ((ResistorOben + ResistorUnten)/ResistorUnten); 
 	
-	DBSerial_print(F(" B1: "));
-	DBSerial_print(mySensorValues[Batterie]);
-	DBSerial_print(F(" B2: "));
-	DBSerial_print(VAdc);
-	DBSerial_print(F(" ->: "));
-	DBSerial_print(result);
-	DBSerial_print(F("; "));
+	DebugSerial_print(F(" B1: "));
+	DebugSerial_print(mySensorValues[Batterie]);
+	DebugSerial_print(F(" B2: "));
+	DebugSerial_print(VAdc);
+	DebugSerial_print(F(" ->: "));
+	DebugSerial_print(result);
+	DebugSerial_print(F("; "));
 	
 	return (result);
 }

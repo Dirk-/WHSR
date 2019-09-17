@@ -5,8 +5,12 @@
 //
 // Serial
 //
-#define USB_BAUDRATE 9600			// BaudRate für die Debug-Komunikation
-#define BLUETOOTH_BAUDRATE 115200 	// BaudRate für das Bluetooth-Modul
+
+// Baudrate für die Debug-Komunikation
+#define DEBUG_BAUDRATE 9600	
+
+// Baudrate für die normale Kommunikation, z.B. über USB oder Bluetooth-Modul
+#define REGULAR_BAUDRATE 115200 		
 
 //
 // Switch
