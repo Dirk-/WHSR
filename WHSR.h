@@ -154,13 +154,9 @@ public:
 
 	void readLinesensor(int *data, unsigned char LightStatus);
 	void readLinesensor(int *data);
-	unsigned int readLinesensor(char Side, unsigned char LightStatus);
-	unsigned int readLinesensor(char Side);
 
 	void readDistance(int *data, unsigned char LightStatus);
 	void readDistance(int *data);
-	unsigned int readDistance(char Side, unsigned char LightStatus);
-	unsigned int readDistance(char Side);
 
 	void readAmbientLight(int *data);
 	unsigned int readAmbientLight(char Side);

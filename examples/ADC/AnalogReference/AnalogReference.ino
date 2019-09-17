@@ -6,7 +6,7 @@ WHSR robo = WHSR();
 void setup()
 {
 	robo.Init();
-	Serial.println("Analog Referenz Test");
+	Serial.println("Analog Reference Test");
 }
 
 void loop()

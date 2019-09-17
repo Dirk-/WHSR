@@ -80,27 +80,6 @@ void WHSR::readLinesensor(int *data)
 	data[Sensor_Right] = mySensorValues[LineFollower_Right];
 }
 
-unsigned int WHSR::readLinesensor(char Side, unsigned char LightStatus)
-{
-	int data[2];
-	readLinesensor(*data, LightStatus);
-		
-	if(Side == Sensor_Left)
-		return mySensorValues[LineFollower_Left];
-	else
-		return mySensorValues[LineFollower_Right];
-}
-
-unsigned int WHSR::readLinesensor(char Side)
-{
-	int data[2];
-	readLinesensor(*data);
-		
-	if(Side == Sensor_Left)
-		return mySensorValues[LineFollower_Left];
-	else
-		return mySensorValues[LineFollower_Right];
-}
 
 /* ******************************************************************************************
  * 
@@ -131,32 +110,10 @@ void WHSR::readDistance(int *data)
 }
 
 
-unsigned int WHSR::readDistance(char Side, unsigned char LightStatus)
-{
-	int data[2];
-	readDistance(*data, LightStatus);
-		
-	if(Side == Sensor_Left)
-		return mySensorValues[ACS_Left];
-	else
-		return mySensorValues[ACS_Right];
-}
-
-unsigned int WHSR::readDistance(char Side)
-{	
-	int data[2];
-	readDistance(*data);
-		
-	if(Side == Sensor_Left)
-		return mySensorValues[ACS_Left];
-	else
-		return mySensorValues[ACS_Right];
-}
-
 
 /* ******************************************************************************************
  * 
- * Diese Funktionen lesen die beiden Lichtsensoren aus
+ * Diese Funktion liest die beiden Lichtsensoren aus
  * 
  * ****************************************************************************************** */
 
@@ -169,16 +126,3 @@ void WHSR::readAmbientLight(int *data)
 	data[Sensor_Right] = mySensorValues[LDR_Right];
 }
 
-unsigned int WHSR::readAmbientLight(char Side)
-{
-	if(Side == Sensor_Left)
-	{
-		DoCheckADCMode(LDR_Left);
-		return mySensorValues[LDR_Left];
-	}
-	else
-	{
-		DoCheckADCMode(LDR_Right);
-		return mySensorValues[LDR_Right];
-	}
-}

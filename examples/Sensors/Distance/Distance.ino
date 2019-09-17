@@ -6,50 +6,31 @@ WHSR robo = WHSR();
 void setup()
 {
 	robo.Init();
-	Serial.println(F("ACS Test"));
+	Serial.println("Distance Test");
 }
 
 void loop()
 {
+	// Array for sensor results (left, right)
 	int data[2];
 	
-	// Get Sensor Werte, Light On
+	// Read distance sensors, IR LEDs on
 	robo.readDistance(data, LEDOn);
-	Serial.print(F("ACS; Light On: "));
-	Serial.print(F("Left: "));
+
+	Serial.print("ACS; Light On: ");
+	Serial.print("Left: ");
 	Serial.println(data[Sensor_Left]);
-	Serial.print(F("Right: "));
+	Serial.print("Right: ");
 	Serial.println(data[Sensor_Right]);
 	delay(1000);
 	
-	// Get Sensor Werte, Light Off
-	//robo.readDistance(data, LEDOff); // Je nachdem ob die IRLeds an
-	robo.readDistance(data);			 // ist oder nicht
-	Serial.print(F("ACS; Light Off "));
-	Serial.print(F("Left: "));
+	// Read distance sensors, IR LEDs off
+	robo.readDistance(data, LEDOff); 
+
+	Serial.print("ACS; Light Off ");
+	Serial.print("Left: ");
 	Serial.println(data[Sensor_Left]);
-	Serial.print(F("Right: "));
+	Serial.print("Right: ");
 	Serial.println(data[Sensor_Right]);
 	delay(1000);
-	
-	/*
-	// Get Sensor Werte, Light On
-	Serial.print(F("ACS; Light On: "));
-	Serial.print(F("Left: "));
-	Serial.println(robo.readDistance(Sensor_Left, LEDOn));
-	Serial.print(F("Right: "));
-	Serial.println(robo.readDistance(Sensor_Right, LEDOn));
-	delay(1000);
-	
-	// Get Sensor Werte, Light Off
-	Serial.print(F("ACS; Light Off: "));
-	Serial.print(F("Left: "));
-	//Serial.println(robo.readDistance(Sensor_Left, LEDOff)); // Siehe oben
-	Serial.println(robo.readDistance(Sensor_Left));
-	Serial.print(F("Right: "));
-	//Serial.println(robo.readDistance(Sensor_Right, LEDOff)); // Siehe oben
-	Serial.println(robo.readDistance(Sensor_Right));
-	delay(1000);*/
-	
-	
 }
