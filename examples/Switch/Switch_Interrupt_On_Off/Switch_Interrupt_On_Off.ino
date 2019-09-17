@@ -7,7 +7,7 @@ void setup()
 {
 	robo.Init();
 	robo.switchInterruptOn();
-	Serial.println(F("Switch Interrupt Test - On _ Off"));
+	Serial.println("Switch Interrupt Test - On _ Off");
 }
 
 void loop()
@@ -19,13 +19,13 @@ void loop()
 		wait = true;
 		
 		robo.switchInterruptOff();
-		Serial.println(F("Interrupt - Turn Off"));
+		Serial.println("Interrupt - Turn Off");
 	}
 	
 	if(wait)
 	{
 		delay(60000);
 		robo.switchInterruptOn();
-		Serial.println(F("Interrupt - Turn On"));
+		Serial.println("Interrupt - Turn On");
 	}
 }

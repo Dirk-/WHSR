@@ -7,7 +7,7 @@ void setup()
 {
 	robo.Init();
 	robo.switchInterruptOn();
-	Serial.println(F("Switch Interrupt Test"));
+	Serial.println("Switch Interrupt Test");
 }
 
 void loop()

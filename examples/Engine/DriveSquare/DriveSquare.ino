@@ -6,7 +6,7 @@ WHSR robo = WHSR();
 void setup()
 {
 	robo.Init();
-	Serial.println(F("Engine drive Square"));
+	Serial.println("Engine drive Square");
 }
 
 void loop()

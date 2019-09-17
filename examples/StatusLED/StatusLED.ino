@@ -6,7 +6,7 @@ WHSR robo = WHSR();
 void setup()
 {
 	robo.Init();
-	Serial.println(F("StatusLED Test"));
+	Serial.println("StatusLED Test");
 }
 
 void loop()

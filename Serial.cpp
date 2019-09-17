@@ -11,7 +11,7 @@ void WHSR::InitSerial()
 	RobotSerial.begin(BLUETOOTH_BAUDRATE);
 	
 	#if DBSerial != RobotSerial
-		DBSerial.begin(BaudRate);
+		DBSerial.begin(USB_BAUDRATE);
 	#endif
 	
 	DBSerial_print(F("Init Kommunikation"));

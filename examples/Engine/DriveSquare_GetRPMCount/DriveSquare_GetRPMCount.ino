@@ -6,7 +6,7 @@ WHSR robo = WHSR();
 void setup()
 {
 	robo.Init();
-	Serial.println(F("Engine drive Square; Get RPM Count"));
+	Serial.println("Engine drive Square; Get RPM Count");
 }
 
 void loop()
@@ -25,9 +25,9 @@ void loop()
     	delay (timeForOneEdge);
 
 		robo.GetRPMSensorCount(data);
-		Serial.print(F("Left: "));
+		Serial.print("Left: ");
 		Serial.print(data[Sensor_Left]);
-		Serial.print(F("; Right: "));
+		Serial.print("; Right: ");
 		Serial.println(data[Sensor_Right]);
 		
     	// Turn right
@@ -36,9 +36,9 @@ void loop()
     	delay (timeForTurning);
 		
 		robo.GetRPMSensorCount(data);
-		Serial.print(F("Left: "));
+		Serial.print("Left: ");
 		Serial.print(data[Sensor_Left]);
-		Serial.print(F("; Right: "));
+		Serial.print("; Right: ");
 		Serial.println(data[Sensor_Right]);
 		
 		Serial.println();

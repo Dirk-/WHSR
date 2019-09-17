@@ -6,7 +6,7 @@ WHSR robo = WHSR();
 void setup()
 {
 	robo.Init();
-	Serial.println(F("Engine drive Circular"));
+	Serial.println("Engine drive Circular");
 }
 
 void loop()

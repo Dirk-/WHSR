@@ -11,7 +11,7 @@ void setup()
 	robo.ADCMode = ADCMode_Block;
 	robo.Init();
 		
-	Serial.println(F("Block Mode Test"));
+	Serial.println("Block Mode Test");
 }
 
 void loop()
@@ -25,13 +25,13 @@ void loop()
 		
 		Serial.println(robo.readReferenz());
 		
-		Serial.print(F("AVG: "));
+		Serial.print("AVG: ");
 		Serial.println((int)avg);
     
-		Serial.print(F(" sum: "));
+		Serial.print(" sum: ");
 		Serial.println(sum);
 		
-		Serial.print(F(" Counter: "));
+		Serial.print(" Counter: ");
 		Serial.println(counter);
 				
 		sum = 0;

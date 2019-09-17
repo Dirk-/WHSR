@@ -6,7 +6,7 @@ WHSR robo = WHSR();
 void setup()
 {
 	robo.Init();
-	Serial.println(F("LDR Test"));
+	Serial.println("LDR Test");
 }
 
 void loop()
@@ -15,17 +15,17 @@ void loop()
 	
 	// Get Sensor Werte
 	robo.readLDR(data);
-	Serial.print(F("LDR"));
-	Serial.print(F("Left: "));
+	Serial.print("LDR"));
+	Serial.print("Left: ");
 	Serial.println(data[Sensor_Left]);
-	Serial.print(F("Right: "));
+	Serial.print("Right: ");
 	Serial.println(data[Sensor_Right]);
 	
 	// Get Sensor Werte
-	Serial.print(F("LDR"));
-	Serial.print(F("Left: "));
+	Serial.print("LDR");
+	Serial.print("Left: ");
 	Serial.println(robo.readLDR(Sensor_Left));
-	Serial.print(F("Right: "));
+	Serial.print("Right: ");
 	Serial.println(robo.readLDR(Sensor_Right));
 		
 	
