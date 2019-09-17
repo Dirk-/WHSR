@@ -23,7 +23,7 @@ void loop()
 		
 		float avg = sum / counter;
 		
-		Serial.println(robo.readReferenz());
+		Serial.println(robo.readVreference());
 		
 		Serial.print("AVG: ");
 		Serial.println((int)avg);
@@ -40,7 +40,7 @@ void loop()
   
 	if(robo.ADCWaitForBlock())
 	{
-		sum += robo.readReferenz();
+		sum += robo.readVreference();
 		++counter;
 	}
 }

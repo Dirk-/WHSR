@@ -26,11 +26,11 @@ ADCStart	KEYWORD2
 ADCWaitForConversion	KEYWORD2
 DoCheckADCMode	KEYWORD2
 
-readReferenz	KEYWORD2
+readVreference	KEYWORD2
 readBattery	KEYWORD2
 readVref	KEYWORD2
 readLinesensor	KEYWORD2
-readACS	KEYWORD2
+readDistance	KEYWORD2
 readAmbientLight	KEYWORD2
 setStatusLED	KEYWORD2
 shiftStatusLED	KEYWORD2

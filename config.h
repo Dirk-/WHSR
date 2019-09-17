@@ -28,7 +28,7 @@
 //
 #define STANDARD_INTERNAL_REFERENCE_VOLTAGE 1069L // in mV
 												  // Kann gemessen/berechnet werden:
-												  //( Vcc / 1024 ) * Asuro::readReferenz(void)
+												  //( Vcc / 1024 ) * Asuro::readVreference(void)
 
 
 /* ####################################################################################

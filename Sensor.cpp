@@ -17,15 +17,15 @@ void WHSR::InitSensors(void)
  * 
  * ****************************************************************************************** */
 
-unsigned int WHSR::readReferenz(void)
+unsigned int WHSR::readVreference(void)
 {
-	DoCheckADCMode(Referenz);
-	return mySensorValues[Referenz];
+	DoCheckADCMode(REFERENCE_PIN);
+	return mySensorValues[REFERENCE_PIN];
 }
 
 float WHSR::readVref(void)
 {
-	float result = (InternalReferenceVoltage * (1023.0 / readReferenz())) / 1000;
+	float result = (InternalReferenceVoltage * (1023.0 / readVreference())) / 1000;
 	
 	DebugSerial_print(" Vref: ");
 	DebugSerial_print(result);
@@ -38,12 +38,12 @@ float WHSR::readBattery(void)
 {
 	float vref = readVref();
 	
-	DoCheckADCMode(Batterie);
-	float VAdc = (vref/1023) * mySensorValues[Batterie];
+	DoCheckADCMode(BATTERY_PIN);
+	float VAdc = (vref/1023) * mySensorValues[BATTERY_PIN];
 	float result = VAdc * ((ResistorOben + ResistorUnten)/ResistorUnten); 
 	
 	DebugSerial_print(F(" B1: "));
-	DebugSerial_print(mySensorValues[Batterie]);
+	DebugSerial_print(mySensorValues[BATTERY_PIN]);
 	DebugSerial_print(F(" B2: "));
 	DebugSerial_print(VAdc);
 	DebugSerial_print(F(" ->: "));
@@ -104,11 +104,11 @@ unsigned int WHSR::readLinesensor(char Side)
 
 /* ******************************************************************************************
  * 
- * Diese Funktionen lesen den ACS aus (Kolisionsfrühwarnung)
+ * Diese Funktionen lesen den ACS aus (Kollisionsfrühwarnung)
  * 
  * ****************************************************************************************** */
 
-void WHSR::readACS(int *data, unsigned char LightStatus)
+void WHSR::readDistance(int *data, unsigned char LightStatus)
 {
 	if(LightStatus == LEDOn)
 	{
@@ -116,12 +116,12 @@ void WHSR::readACS(int *data, unsigned char LightStatus)
 		delay(100);
 	}
 	
-	readACS(data);
+	readDistance(data);
 	
 	setIrLEDs(LEDOff);
 }
 
-void WHSR::readACS(int *data)
+void WHSR::readDistance(int *data)
 {	
 	DoCheckADCMode(ACS_Left);
 	DoCheckADCMode(ACS_Right);
@@ -131,10 +131,10 @@ void WHSR::readACS(int *data)
 }
 
 
-unsigned int WHSR::readACS(char Side, unsigned char LightStatus)
+unsigned int WHSR::readDistance(char Side, unsigned char LightStatus)
 {
 	int data[2];
-	readACS(*data, LightStatus);
+	readDistance(*data, LightStatus);
 		
 	if(Side == Sensor_Left)
 		return mySensorValues[ACS_Left];
@@ -142,10 +142,10 @@ unsigned int WHSR::readACS(char Side, unsigned char LightStatus)
 		return mySensorValues[ACS_Right];
 }
 
-unsigned int WHSR::readACS(char Side)
+unsigned int WHSR::readDistance(char Side)
 {	
 	int data[2];
-	readACS(*data);
+	readDistance(*data);
 		
 	if(Side == Sensor_Left)
 		return mySensorValues[ACS_Left];

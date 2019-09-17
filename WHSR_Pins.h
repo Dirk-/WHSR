@@ -30,7 +30,7 @@
 	//
 	// Sensors
 	//
-	#define Batterie 7	// -> A2
+	#define BATTERY_PIN 7	// -> A2
 
 	// Button
 	#define Switch_On_Interrupt 11
@@ -51,5 +51,5 @@
 	#define LineFollower_Right 5 // -> A1
 	#define LineFollower_Left 0 // -> A6
 
-	#define Referenz 8 // -> A14
+	#define REFERENCE_PIN 8 // -> A14
 #endif

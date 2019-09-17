@@ -11,6 +11,6 @@ void setup()
 
 void loop()
 {
-	Serial.println(robo.readReferenz());
+	Serial.println(robo.readVreference());
 	delay(100);
 }
