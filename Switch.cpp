@@ -11,7 +11,7 @@ void WHSR::InitSwitches(void)
 	pinMode(Switch_On_Interrupt, OUTPUT);
 	digitalWrite(Switch_On_Interrupt, LOW);
 	
-	DebugSerial_println(F(" - Finsihed"));
+	DebugSerial_println(F(" - Finished"));
 }
 
 //
@@ -77,7 +77,7 @@ bool WHSR::switchAvailable()
 //
 void WHSR::switchInterrupt(void)
 {
-	Serial.print(F("."));
+	DebugSerial_print(F("."));
 	// Interrupt verhindern wenn
 	if(switchInterruptAktiv == 3 && digitalRead(SwitchISRPin) == HIGH)
 	{
