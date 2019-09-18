@@ -23,6 +23,8 @@ void loop()
 		speed++;
 	} else
 	{
+		robo.setMotorSpeed(0, 0);
+		delay(250);
 		speed = 100;
 		directionSwitch = directionSwitch * (-1);
 		robo.setMotorDirection(FWD * directionSwitch, RWD * directionSwitch);
