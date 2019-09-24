@@ -8,6 +8,15 @@ int directionSwitch;
 void setup()
 {
 	robo.Init();
+
+	// Wait some time to give the user opportunity to program the robot before it starts moving
+	robo.setStatusLED(Color_Red);
+	delay(500);
+	robo.setStatusLED(Color_Yellow);
+	delay(500);
+	robo.setStatusLED(Color_Green);
+	delay(500);
+
 	speed = 100;
 	directionSwitch = 1;
 	robo.setMotorDirection(FWD, RWD);
