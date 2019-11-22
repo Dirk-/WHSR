@@ -4,7 +4,7 @@
 void setup()
 {
   Serial.begin(BaudRate);
-  Serial.println("Cech Internal Voltage");
+  Serial.println("Check Internal Voltage");
   Serial.println();
   
   analogReference(INTERNAL);
