@@ -6,7 +6,16 @@ WHSR robo = WHSR();
 void setup()
 {
 	robo.Init();
-	Serial.println("Engine drive Square");
+
+	// Wait some time to give the user opportunity to program the robot before it starts moving
+	robo.setStatusLED(Color_Red);
+	delay(1000);
+	robo.setStatusLED(Color_Yellow);
+	delay(1000);
+	robo.setStatusLED(Color_Green);
+	delay(1000);
+
+	Serial.println("Engine drive square");
 }
 
 void loop()

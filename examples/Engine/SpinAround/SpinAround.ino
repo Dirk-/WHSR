@@ -2,8 +2,9 @@
 #include <WHSR.h>
 
 WHSR robo = WHSR();
-int speed;
-int directionSwitch;
+
+int speed;				// Current speed of the motors (0 <= speed <= MAX_SPEED)
+int directionSwitch;	// +1 or -1 to flip direction
 
 void setup()
 {
@@ -11,26 +12,30 @@ void setup()
 
 	// Wait some time to give the user opportunity to program the robot before it starts moving
 	robo.setStatusLED(Color_Red);
-	delay(500);
+	delay(1000);
 	robo.setStatusLED(Color_Yellow);
-	delay(500);
+	delay(1000);
 	robo.setStatusLED(Color_Green);
-	delay(500);
+	delay(1000);
 
+	// Start with minimum speed of 100, so that the motors actually turn the wheels
 	speed = 100;
 	directionSwitch = 1;
+
+	// One wheel forward, the other one backward
 	robo.setMotorDirection(FWD, RWD);
+
 	Serial.println("Spin around");
 }
 
 void loop()
 {
-	if (speed < MAX_SPEED)
+	if (speed < MAX_SPEED)	// Accellerate
 	{
 		robo.setMotorSpeed(speed, speed);
 		delay(25);
 		speed++;
-	} else
+	} else					// Switch direction
 	{
 		robo.setMotorSpeed(0, 0);
 		delay(250);
