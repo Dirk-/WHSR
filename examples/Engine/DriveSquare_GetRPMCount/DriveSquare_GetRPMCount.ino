@@ -7,7 +7,7 @@ void setup()
 {
 	robo.Init();
 
-	// Wait some time to give the user opportunity to program the robot before it starts moving
+	// Wait some time to give the user a chance to program the robot before it starts moving
 	robo.setStatusLED(Color_Red);
 	delay(1000);
 	robo.setStatusLED(Color_Yellow);
@@ -32,6 +32,7 @@ void loop()
     	setMotorDirection (FWD, FWD);
     	delay (timeForOneEdge);
 
+		// Get rotational sensor values
 		robo.GetRPMSensorCount(data);
 		Serial.print("Left: ");
 		Serial.print(data[Sensor_Left]);
@@ -43,6 +44,7 @@ void loop()
     	setMotorDirection (FWD, RWD);
     	delay (timeForTurning);
 		
+		// Get rotational sensor values
 		robo.GetRPMSensorCount(data);
 		Serial.print("Left: ");
 		Serial.print(data[Sensor_Left]);

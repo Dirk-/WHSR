@@ -84,7 +84,7 @@ void WHSR::RPMRight(void)
 
 /* ******************************************************************************************
  * 
- * Diese Funktionen geben den aktuellen RPM Sensor wert zurück
+ * Diese Funktionen geben den aktuellen RPM Sensorwert zurück
  * Im Anschluss werden diese beiden wieder zurückgesetzt
  * 
  * ****************************************************************************************** */

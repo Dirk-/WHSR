@@ -10,7 +10,7 @@ void setup()
 {
 	robo.Init();
 
-	// Wait some time to give the user opportunity to program the robot before it starts moving
+	// Wait some time to give the user a chance to program the robot before it starts moving
 	robo.setStatusLED(Color_Red);
 	delay(1000);
 	robo.setStatusLED(Color_Yellow);

@@ -99,7 +99,7 @@ void WHSR::ADCWaitForConversion(void)
 
 //
 // ADC Interrupt Routine
-//		Für einzellesungen Warten bis ADC beendet ist
+//		Für Einzellesungen warten bis ADC beendet ist
 //
 void WHSR::ADCInterrupt(void)
 {	
