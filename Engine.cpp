@@ -82,14 +82,8 @@ void WHSR::RPMRight(void)
 	++RPMSensorCountRight;
 }
 
-/* ******************************************************************************************
- * 
- * Diese Funktionen geben den aktuellen RPM Sensorwert zurück
- * Im Anschluss werden diese beiden wieder zurückgesetzt
- * 
- * ****************************************************************************************** */
-
-
+/// Returns the rotational sensor count for both wheels
+/// @param data int array which contains the two sensor values upon return
 void WHSR::GetRPMSensorCount(int *data)
 {
 	data[Sensor_Left] = RPMSensorCountLeft;
@@ -99,6 +93,8 @@ void WHSR::GetRPMSensorCount(int *data)
 	RPMSensorCountRight = 0;
 }
 
+/// Returns the rotational sensor count for the given wheel
+/// @param Side Sensor_Left or Sensor_Right
 unsigned long WHSR::GetRPMSensorCount(char Side)
 {
 	unsigned long tmp;
