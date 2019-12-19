@@ -16,4 +16,7 @@ void loop()
 	{
 		Serial.println(robo.readSwitches(), BIN);
 	}
+
+	// Simulate busy behaviour (but interrupt will be registered)
+	delay(2000);
 }

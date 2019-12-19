@@ -2,7 +2,7 @@
 #include "WHSR.h"
 
 //
-// Initialisiert die Kolisionserkennung
+// Initialisiert die Kollisionserkennung
 //
 void WHSR::InitSwitches(void)
 {
@@ -15,7 +15,7 @@ void WHSR::InitSwitches(void)
 }
 
 //
-// Liest die Taster für die Kolisionserkennung aus
+// Liest die Taster für die Kollisionserkennung aus
 //
 unsigned char WHSR::readSwitches(void)
 {

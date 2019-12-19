@@ -6,11 +6,11 @@ void WHSR::Init(void)
 {
 	myRobot = this;
 	
-	sei();
+	sei();	// Start Interrupts
 	
+	// Init the WHSR parts
 	InitSerial();
 	InitADC();
-	
 	InitSwitches();
 	InitLEDs();
 	InitSensors();
@@ -18,14 +18,12 @@ void WHSR::Init(void)
 }
 
 
+// Attach the default Interrupt Service Routines to the interrupts
 ISR(ADC_vect) { WHSR::ADCInterruptISR(); }
 ISR(TIMER1_OVF_vect) { WHSR::ADCInterruptBlockISR(); }
-
 ISR(INT0_vect) { WHSR::RPMLeftISR(); }
 ISR(INT1_vect) { WHSR::RPMRightISR(); }
-
 ISR(TIMER2_OVF_vect) { WHSR::TimerOverflowISR(); }
-
 ISR (PCINT1_vect) { WHSR::SwitchISR(); }
 
 

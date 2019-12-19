@@ -55,6 +55,6 @@ void loop()
 	}
 
 	// Pause for two seconds
-    setMotorSpeed(0, 0);
+    robo.setMotorSpeed(0, 0);
 	delay (2000);
 }
