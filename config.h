@@ -1,27 +1,26 @@
 
+/** 
+ * config.h
+ * 
+ * This file contains defines you can change in your code as well as internal defines
+ *  
+ */
 #ifndef WHSRCONFIG_H
 #define WHSRCONFIG_H
 
-//
-// Serial
-//
-
-// Baudrate für die Debug-Komunikation
+// Baud rate for debug comunication
 #define DEBUG_BAUDRATE 9600	
 
-// Baudrate für die normale Kommunikation, z.B. über USB oder Bluetooth-Modul
+// Baud rate for regular communication, e.g. via USB or Bluetooth
 #define REGULAR_BAUDRATE 115200 		
 
-//
-// Switch
-//
+// Factor used in calculation of the switch value in order to get a binary 
+// representation of pressed switches
 #define STANDARD_SWITCH_FACTOR 65L
 
-//
-//	Batterie
-//
-#define STANDARD_RESISTOR_OBEN 33000.0  // Verbaute Widerstände
-#define STANDARD_RESISTOR_UNTEN 10000.0 // um die Batterie spannung herunterzuteilen
+// Resistor values for battery voltage devider
+#define STANDARD_RESISTOR_OBEN 33000.0  // top resistor
+#define STANDARD_RESISTOR_UNTEN 10000.0 // bottom resistor
 
 //
 // Internal Analog Referenz
@@ -33,7 +32,7 @@
 
 /* ####################################################################################
  *
- * Ab hier nix mehr ändern
+ * Don't change any values from here on
  *
  * #################################################################################### */
 
@@ -63,12 +62,12 @@
 #define Color_Cyan 0b011
 
 //
-// Switch
+// Interrupt states of the switches
 //
-#define SwitchState_None 0b01 // 0x1
-#define SwitchState_Idle 0x00 // 0x0
-#define SwitchState_Wait 0x10 // 0x2
-#define SwitchState_Do 0x11   // 0x3
+#define SwitchState_None 0b01 // 1
+#define SwitchState_Idle 0b00 // 0
+#define SwitchState_Wait 0b10 // 2
+#define SwitchState_Do 0b11   // 3
 
 //
 // Sensor

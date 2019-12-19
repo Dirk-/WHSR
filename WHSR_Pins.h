@@ -1,4 +1,10 @@
 
+/** 
+ * WHSR_Pins.h
+ * 
+ * This file contains defines for IO pins, motor directions and LEDs
+ *  
+ */
 #ifndef WHSRPINS_H
 	#define WHSRPINS_H
 	

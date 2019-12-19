@@ -16,8 +16,8 @@ void WHSR::InitADC(void)
 	
 	ADCPos = 0;
 	ADMUX = (0<<REFS1) | (1<<REFS0) | 	// ReferenzSpannung 01 -> Extern
-			(0<<ADLAR) |				// Bit Orientirung 10 Bit in 2 Byte -> Right
-			(0<<MUX3)  | (0<<MUX2) |	// Bits zum selecttieren des Channels
+			(0<<ADLAR) |				// Bit Orientierung 10 Bit in 2 Byte -> Right
+			(0<<MUX3)  | (0<<MUX2) |	// Bits zum Selektieren des Channels
 			(0<<MUX1)  | (0<<MUX0);		// Channel 0
 	
 	ADCSRA = (1<<ADEN)  | 				// Enables ADC
@@ -25,13 +25,13 @@ void WHSR::InitADC(void)
 			 (0<<ADATE) |				// Enable Edge Rise Interrupt
 			 (0<<ADIF)  |				// Flag Conversion Finished
 			 (1<<ADIE)  | 				// Enables Interrupt
-			 (1<<ADPS2) | (1<<ADPS1) |	// Select Precaleer
+			 (1<<ADPS2) | (1<<ADPS1) |	// Select Prescaler
 			 (1<<ADPS0); 				// 111 -> 128
-										// 50KHz < FCPU / Prescaller < 200Khz
+										// 50KHz < FCPU / Prescaler < 200Khz
 	
 	//ADCSRA |= (1<<ADSC);				// Start ADC
 	
-	DebugSerial_println(F(" - Finsihed"));
+	DebugSerial_println(F(" - Finished"));
 }
 
 //
@@ -74,7 +74,7 @@ void WHSR::ADCStart(char Channel)
 
 //
 // ADC Wait for Block
-//		Warte bis der Komplette Block gelesen wurde
+//		Warte bis der komplette Block gelesen wurde
 //		Block => Alle 9 Kanäle
 //
 bool WHSR::ADCWaitForBlock(void)
@@ -90,7 +90,7 @@ bool WHSR::ADCWaitForBlock(void)
 
 //
 // ADC Wait For Conversion
-//		Für einzellesungen warten bis ADC beendet ist
+//		Für Einzellesungen warten bis ADC beendet ist
 //
 void WHSR::ADCWaitForConversion(void)
 {

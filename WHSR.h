@@ -1,4 +1,10 @@
 
+/** 
+ * WHSR.h
+ * 
+ * This file contains the declarations you need for using the library from Arduino
+ *  
+ */
 #ifndef WHSR_H
 #define WHSR_H
 
