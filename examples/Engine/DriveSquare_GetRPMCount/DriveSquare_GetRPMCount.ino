@@ -29,8 +29,8 @@ void loop()
 	for (int i=0; i<4; i++)	// Drive a square
 	{	
     	// Drive forward
-    	setMotorDirection (FWD, FWD);
-    	setMotorSpeed(speed, speed);
+    	robo.setMotorDirection (FWD, FWD);
+    	robo.setMotorSpeed(speed, speed);
     	delay (timeForOneEdge);
 
 		// Get rotational sensor values
@@ -43,8 +43,8 @@ void loop()
       	robo.setMotorSpeed(0, 0);
 
     	// Turn right
-    	setMotorDirection (FWD, RWD);
-    	setMotorSpeed(speed, speed);
+    	robo.setMotorDirection (FWD, RWD);
+    	robo.setMotorSpeed(speed, speed);
     	delay (timeForTurning);
 		
 		// Get rotational sensor values
