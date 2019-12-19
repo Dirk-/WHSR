@@ -14,6 +14,7 @@ void setup()
 	delay(1000);
 	robo.setStatusLED(Color_Green);
 	delay(1000);
+  	robo.setStatusLED(Color_Off);
 
 	Serial.println("Engine drive Square; Get RPM Count");
 }
@@ -21,15 +22,15 @@ void setup()
 void loop()
 {
 	int data[2];
-	int timeForTurning = 200;	// Estimated time for making a right turn in full speed
+	int timeForTurning = 800;	// Estimated time for making a right turn
 	int timeForOneEdge = 3000;	// Drive straight on for three seconds
-	int speed = 200;
+	int speed = 120;
 	
 	for (int i=0; i<4; i++)	// Drive a square
 	{	
     	// Drive forward
-    	setMotorSpeed(speed, speed);
     	setMotorDirection (FWD, FWD);
+    	setMotorSpeed(speed, speed);
     	delay (timeForOneEdge);
 
 		// Get rotational sensor values
@@ -39,9 +40,11 @@ void loop()
 		Serial.print("; Right: ");
 		Serial.println(data[Sensor_Right]);
 		
+      	robo.setMotorSpeed(0, 0);
+
     	// Turn right
-    	setMotorSpeed(MAX_SPEED, MAX_SPEED);
     	setMotorDirection (FWD, RWD);
+    	setMotorSpeed(speed, speed);
     	delay (timeForTurning);
 		
 		// Get rotational sensor values
