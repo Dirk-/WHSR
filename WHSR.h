@@ -8,9 +8,72 @@
 #ifndef WHSR_H
 #define WHSR_H
 
-#include "WHSR_Pins.h"
-#include "Config.h"
 #include <Arduino.h>
+
+
+// _____________________________________ Library Defines _____________________________________
+// Values that you can use when calling WHRS library functions
+
+//
+// ADC
+//
+#define MaxADCChannels 9
+#define ADCMode_None 0
+#define ADCMode_Block 1
+
+//
+// LED States
+//
+#define LED_Status_Pegel_On HIGH
+#define LED_Status_Pegel_Off LOW
+
+#define Color_Off 0b000
+#define Color_On 0b111
+
+#define Color_White Color_On
+#define Color_Black Color_Off
+#define Color_Red 0b100
+#define Color_Green 0b010
+#define Color_Blue 0b001
+#define Color_Yellow 0b110
+#define Color_Magenta 0b101
+#define Color_Cyan 0b011
+
+//
+// Interrupt states of the switches
+//
+#define SwitchState_None 0b01 // 1
+#define SwitchState_Idle 0b00 // 0
+#define SwitchState_Wait 0b10 // 2
+#define SwitchState_Do 0b11   // 3
+
+//
+// Sensor
+//
+#define LED_Sensor_Pegel_On HIGH
+#define LED_Sensor_Pegel_Off LOW
+#define Sensor_Left 0
+#define Sensor_Right 1
+#define LEDOn LED_Sensor_Pegel_On
+#define LEDOff LED_Sensor_Pegel_Off
+
+//
+// Directions
+//
+#define EngineDirForward_Pegel LOW
+#define EngineDirBackward_Pegel HIGH
+
+#define EngineDirForward 1
+#define FWD EngineDirForward
+
+#define EngineDirBackward -1
+#define BWD EngineDirBackward
+#define EngineDirReward EngineDirBackward
+#define RWD EngineDirBackward
+
+#define MAX_SPEED 255
+
+// _____________________________________ Serial Communication _____________________________________
 
 // If we had a board with several Serial ports, we could redefine this to Serial1, Serial2, ...
 #define RobotSerial Serial
@@ -31,7 +94,86 @@
 #define DebugSerial_println(...)
 #endif
 
-// Robot Class
+// Baud rate for debug comunication
+#define DEBUG_BAUDRATE 9600	
+
+// Baud rate for regular communication, e.g. via USB or Bluetooth
+#define REGULAR_BAUDRATE 115200 		
+
+// _____________________________________ WHSR-board specific values _____________________________________
+
+
+// Factor used in calculation of the switch value in order to get a binary 
+// representation of pressed switches
+#define STANDARD_SWITCH_FACTOR 65L
+
+// Resistor values for battery voltage devider
+#define STANDARD_RESISTOR_OBEN 33000.0  // top resistor
+#define STANDARD_RESISTOR_UNTEN 10000.0 // bottom resistor
+
+//
+// Internal Analog Referenz
+//
+#define STANDARD_INTERNAL_REFERENCE_VOLTAGE 1069L // in mV
+												  // Kann gemessen/berechnet werden:
+												  //( Vcc / 1024 ) * Asuro::readVreference(void)
+
+
+// _____________________________________ IO Pins _____________________________________
+
+//
+//	Bluetooth Komunikation
+//
+#define Serial_RX 0
+#define Serial_TX 1
+
+//
+//	Engine, H-Bridge, Odometry
+//
+#define Revolution_Speed_Left 2
+#define Revolution_Speed_Right 3
+
+#define Engine_PWM_Left 9
+#define Engine_PWM_Right 10
+
+#define Engine_Dir_Left 13
+#define Engine_Dir_Right 12
+
+//
+// LED
+//
+#define LED_Blue 7
+#define LED_Green 5
+#define LED_Red 6
+
+//
+// Sensors
+//
+#define BATTERY_PIN 7 // -> A2
+
+// Button
+#define Switch_On_Interrupt 11
+#define Switch 2		// -> A3
+#define SwitchISRPin A2 // -> A3
+
+// Anti Collision System
+#define ACS_IrLED 4
+#define ACS_Left 1  // -> A0
+#define ACS_Right 6 // -> A5
+
+// LDR - Light Sensing
+#define LDR_Left 3  // -> A7
+#define LDR_Right 4 // -> A4
+
+// Line Follower
+#define LineFollower_LED 8
+#define LineFollower_Right 5 // -> A1
+#define LineFollower_Left 0  // -> A6
+
+#define REFERENCE_PIN 8 // -> A14
+
+
+// ___________________________ Robot Class ____________________________________
 class WHSR
 {
 private:
