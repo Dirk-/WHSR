@@ -144,11 +144,11 @@ void WHSR::setMotorDirection (char left, char right)
 
 /* ******************************************************************************************
  * 
- * Mit diesen Funktionen kam man die Motorengeschwindigkeit einstellen
+ * Mit diesen Funktionen kam man die Motorgeschwindigkeit einstellen
  * 
  * ****************************************************************************************** */
 
-void WHSR::setMotorSpeedLeft(int pwm, bool ChangeDirection = false)
+void WHSR::setMotorSpeedLeft(int pwm, bool ChangeDirection)
 {
 	char tmp = constrain(abs(pwm), 0, 255);
 	OCR1A = tmp;
@@ -163,7 +163,7 @@ void WHSR::setMotorSpeedLeft(int pwm, bool ChangeDirection = false)
 	}
 }
 
-void WHSR::setMotorSpeedRight(int pwm, bool ChangeDirection = false)
+void WHSR::setMotorSpeedRight(int pwm, bool ChangeDirection)
 {
 	char tmp = constrain(abs(pwm), 0, 255);
 	OCR1B = tmp;
@@ -178,7 +178,7 @@ void WHSR::setMotorSpeedRight(int pwm, bool ChangeDirection = false)
 	}
 }
 
-void WHSR::setMotorSpeed (int left, int right, bool ChangeDirection = false)
+void WHSR::setMotorSpeed (int left, int right, bool ChangeDirection)
 {
 	setMotorSpeedLeft(left, ChangeDirection);
 	setMotorSpeedRight(right, ChangeDirection);
