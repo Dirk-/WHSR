@@ -95,7 +95,7 @@ void WHSR::switchInterrupt(void)
 	switchInterruptOff();
 
 	switchValue = 0;
-	//unsigned long startMillis = millis(); //Aktueller Zeitstempel speichern
+	//unsigned long startMillis = millis(); //Aktuellen Zeitstempel speichern
 	//while (switchValue == 0 && (millis() - startMillis < 1000)) 
 		switchValue = readSwitches();
 

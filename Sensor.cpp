@@ -1,6 +1,10 @@
 
 #include "WHSR.h"
 
+/**
+ * @brief Prepares the sensors of the WHSR
+ * 
+ */
 void WHSR::InitSensors(void)
 {
 	pinMode(LineFollower_LED, OUTPUT);
@@ -10,19 +14,22 @@ void WHSR::InitSensors(void)
 	digitalWrite(ACS_IrLED, LED_Sensor_Pegel_Off);
 }
 
-/* ******************************************************************************************
+/**
+ * @brief Reads the raw adc value of the reference voltage
  * 
- * Diese Funktionen beschäftigen sich mit dem Einlesen
- * der Batteriespannung und der Referenzspannung
- * 
- * ****************************************************************************************** */
-
+ * @return reference voltage (0..1023)
+ */
 unsigned int WHSR::readVreference(void)
 {
 	DoCheckADCMode(REFERENCE_PIN);
 	return mySensorValues[REFERENCE_PIN];
 }
 
+/**
+ * @brief Reads the reference voltage in Volt
+ * 
+ * @return reference voltage [V]
+ */
 float WHSR::readVref(void)
 {
 	float result = (InternalReferenceVoltage * (1023.0 / readVreference())) / 1000;
@@ -34,6 +41,11 @@ float WHSR::readVref(void)
 	return result;
 }
 
+/**
+ * @brief Reads the battery voltage
+ * 
+ * @return battery voltage [V] 
+ */
 float WHSR::readBattery(void)
 {
 	float vref = readVref();
@@ -53,12 +65,12 @@ float WHSR::readBattery(void)
 	return (result);
 }
 
-/* ******************************************************************************************
+/**
+ * @brief Reads out the two line sensors at the bottom of the WHSR, optionally turning on the IR LED
  * 
- * Diese Funktionen lesen den Lienienfolger aus
- * 
- * ****************************************************************************************** */
-
+ * @param data array with two elements, left and right sensor values (0..1023)
+ * @param LightStatus LEDOn or LEDOff
+ */
 void WHSR::readLinesensor(int *data, unsigned char LightStatus)
 {
 	if(LightStatus == LEDOn)
@@ -71,6 +83,12 @@ void WHSR::readLinesensor(int *data, unsigned char LightStatus)
 
 	setFrontLED(LEDOff);
 }
+
+/**
+ * @brief Reads out the two line sensors at the bottom of the WHSR
+ * 
+ * @param data array with two elements, left and right sensor values (0..1023)
+ */
 void WHSR::readLinesensor(int *data)
 {
 	DoCheckADCMode(LineFollower_Left);
@@ -80,13 +98,12 @@ void WHSR::readLinesensor(int *data)
 	data[Sensor_Right] = mySensorValues[LineFollower_Right];
 }
 
-
-/* ******************************************************************************************
+/**
+ * @brief Reads out the two distance sensors in the front of the WHSR, optionally turning on the IR LEDs
  * 
- * Diese Funktionen lesen den ACS aus (Kollisionsfrühwarnung)
- * 
- * ****************************************************************************************** */
-
+ * @param data array with two elements, left and right sensor values (0..1023)
+ * @param LightStatus LEDOn or LEDOff
+ */
 void WHSR::readDistance(int *data, unsigned char LightStatus)
 {
 	if(LightStatus == LEDOn)
@@ -100,6 +117,11 @@ void WHSR::readDistance(int *data, unsigned char LightStatus)
 	setIrLEDs(LEDOff);
 }
 
+/**
+ * @brief Reads out the two distance sensors in the front of the WHSR
+ * 
+ * @param data array with two elements, left and right sensor values (0..1023)
+ */
 void WHSR::readDistance(int *data)
 {	
 	DoCheckADCMode(ACS_Left);
@@ -109,14 +131,11 @@ void WHSR::readDistance(int *data)
 	data[Sensor_Right] = mySensorValues[ACS_Right];
 }
 
-
-
-/* ******************************************************************************************
+/**
+ * @brief Reads out the two photo cells in the front of the WHSR
  * 
- * Diese Funktion liest die beiden Lichtsensoren aus
- * 
- * ****************************************************************************************** */
-
+ * @param data array with two elements, left and right sensor values (0..1023)
+ */
 void WHSR::readAmbientLight(int *data)
 {
 	DoCheckADCMode(LDR_Left);

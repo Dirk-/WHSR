@@ -26,25 +26,25 @@
 #define LED_Status_Pegel_On HIGH
 #define LED_Status_Pegel_Off LOW
 
-#define Color_Off 0b000
-#define Color_On 0b111
+#define Color_Off       0b000
+#define Color_On        0b111
 
-#define Color_White Color_On
-#define Color_Black Color_Off
-#define Color_Red 0b100
-#define Color_Green 0b010
-#define Color_Blue 0b001
-#define Color_Yellow 0b110
-#define Color_Magenta 0b101
-#define Color_Cyan 0b011
+#define Color_White     Color_On
+#define Color_Black     Color_Off
+#define Color_Red       0b100
+#define Color_Green     0b010
+#define Color_Blue      0b001
+#define Color_Yellow    0b110
+#define Color_Magenta   0b101
+#define Color_Cyan      0b011
 
 //
 // Interrupt states of the switches
 //
-#define SwitchState_None 0b01 // 1
-#define SwitchState_Idle 0b00 // 0
-#define SwitchState_Wait 0b10 // 2
-#define SwitchState_Do 0b11   // 3
+#define SwitchState_None    0b01 // 1
+#define SwitchState_Idle    0b00 // 0
+#define SwitchState_Wait    0b10 // 2
+#define SwitchState_Do      0b11 // 3
 
 //
 // Sensor
@@ -67,7 +67,6 @@
 
 #define EngineDirBackward -1
 #define BWD EngineDirBackward
-#define EngineDirReward EngineDirBackward
 #define RWD EngineDirBackward
 
 #define MAX_SPEED 255
@@ -106,8 +105,8 @@
 #define STANDARD_SWITCH_FACTOR 65L
 
 // Resistor values for battery voltage devider
-#define STANDARD_RESISTOR_OBEN 33000.0  // top resistor
-#define STANDARD_RESISTOR_UNTEN 10000.0 // bottom resistor
+#define STANDARD_RESISTOR_OBEN 33000.0  // top resistor (R6)
+#define STANDARD_RESISTOR_UNTEN 10000.0 // bottom resistor (R7)
 
 //
 // Internal Analog Referenz
@@ -175,15 +174,15 @@ class WHSR
 public:
     /* ************************************************************************************
 	 *
-	 *	Variablen
+	 *	You can alter the values of these variables to suit your board
 	 *
 	 * ************************************************************************************ */
 
     long SwitchFactor = STANDARD_SWITCH_FACTOR;
     long InternalReferenceVoltage = STANDARD_INTERNAL_REFERENCE_VOLTAGE;
 
-    double ResistorOben = STANDARD_RESISTOR_OBEN;
-    double ResistorUnten = STANDARD_RESISTOR_UNTEN;
+    double ResistorOben = STANDARD_RESISTOR_OBEN;       // R6
+    double ResistorUnten = STANDARD_RESISTOR_UNTEN;     // R7
 
     /* ************************************************************************************
 	 *
@@ -200,7 +199,6 @@ public:
 	 * ************************************************************************************ */
 
     char ADCMode = ADCMode_None;
-    volatile int mySensorValues[9];
 
     bool ADCWaitForBlock(void);
     void ADCInterrupt(void);
@@ -333,6 +331,7 @@ public:
 
 private:
     static WHSR *myRobot;
+    volatile int mySensorValues[9];
 
     /* ************************************************************************************
 	 *
