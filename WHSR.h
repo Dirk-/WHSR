@@ -111,7 +111,7 @@
 //
 // Internal Analog Referenz
 //
-#define STANDARD_INTERNAL_REFERENCE_VOLTAGE 1069L // in mV                           \
+#define STANDARD_INTERNAL_REFERENCE_VOLTAGE 4459L // in mV                           \
                                                   // Kann gemessen/berechnet werden: \
                                                   //( Vcc / 1024 ) * Asuro::readVreference(void)
 

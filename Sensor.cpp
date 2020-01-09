@@ -32,7 +32,7 @@ unsigned int WHSR::readVreference(void)
  */
 float WHSR::readVref(void)
 {
-	float result = (InternalReferenceVoltage * (1023.0 / readVreference())) / 1000;
+	float result = (InternalReferenceVoltage * (readVreference() / 1023.0)) / 1000;
 	
 	DebugSerial_print(" Vref: ");
 	DebugSerial_print(result);

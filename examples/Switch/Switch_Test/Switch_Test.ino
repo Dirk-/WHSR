@@ -12,6 +12,12 @@ void setup()
 
 void loop()
 {
-  Serial.println(robo.readSwitches(), BIN);
+  int switchvalue = robo.readSwitches();
+
+  Serial.print(switchvalue, BIN);
+  Serial.print(" (");
+  Serial.print(switchvalue);
+  Serial.println(")");
+  
   delay(100);
 }
