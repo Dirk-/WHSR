@@ -10,8 +10,8 @@ void WHSR::InitSensors(void)
 	pinMode(LineFollower_LED, OUTPUT);
 	digitalWrite(LineFollower_LED, LED_Sensor_Pegel_Off);
 	
-	pinMode(ACS_IrLED, OUTPUT);
-	digitalWrite(ACS_IrLED, LED_Sensor_Pegel_Off);
+	pinMode(ACS_IR_LED_PIN, OUTPUT);
+	digitalWrite(ACS_IR_LED_PIN, LED_Sensor_Pegel_Off);
 }
 
 /**
@@ -50,12 +50,12 @@ float WHSR::readBattery(void)
 {
 	float vref = readVref();
 	
-	DoCheckADCMode(BATTERY_PIN);
-	float VAdc = (vref/1023) * mySensorValues[BATTERY_PIN];
+	DoCheckADCMode(BATTERY_ADC);
+	float VAdc = (vref/1023) * mySensorValues[BATTERY_ADC];
 	float result = VAdc * ((ResistorOben + ResistorUnten)/ResistorUnten); 
 	
 	DebugSerial_print(F(" B1: "));
-	DebugSerial_print(mySensorValues[BATTERY_PIN]);
+	DebugSerial_print(mySensorValues[BATTERY_ADC]);
 	DebugSerial_print(F(" B2: "));
 	DebugSerial_print(VAdc);
 	DebugSerial_print(F(" ->: "));
@@ -124,11 +124,11 @@ void WHSR::readDistance(int *data, unsigned char LightStatus)
  */
 void WHSR::readDistance(int *data)
 {	
-	DoCheckADCMode(ACS_Left);
-	DoCheckADCMode(ACS_Right);
+	DoCheckADCMode(ACS_LEFT_ADC);
+	DoCheckADCMode(ACS_RIGHT_ADC);
 	
-	data[Sensor_Left] = mySensorValues[ACS_Left];
-	data[Sensor_Right] = mySensorValues[ACS_Right];
+	data[Sensor_Left] = mySensorValues[ACS_LEFT_ADC];
+	data[Sensor_Right] = mySensorValues[ACS_RIGHT_ADC];
 }
 
 /**

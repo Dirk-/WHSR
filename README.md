@@ -9,7 +9,7 @@ The Library works for the plain Arduino Nano board (avr), Arduino Nano 33 BLE (m
 
 - Select `Download ZIP` from the GitHub `Code` button. Unzip the archive if it isn't already. You will end up with a folder `WHSR-master` in your download folder. 
 - Rename that folder to `WHSR`.
-- Move it to Arduino/libraries in your documents folder.
+- Move it to `Arduino/libraries` in your documents folder.
 - Restart Arduino IDE.
 
 For Arduino Nano:

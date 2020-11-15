@@ -136,26 +136,26 @@
 #define Engine_Dir_Right 12
 
 //
-// LED
+// LED-Ports
 //
-#define LED_Blue 7
-#define LED_Green 5
-#define LED_Red 6
+#define LED_Green   PD5
+#define LED_Red     PD6
+#define LED_Blue    PD7
 
 //
 // Sensors
 //
-#define BATTERY_PIN 7 // -> A2
+#define BATTERY_ADC 7 // 7. ADC-Kanal
 
-// Button
+// Buttons
 #define Switch_On_Interrupt 11
-#define Switch 2        // -> A3
-#define SwitchISRPin A2 // -> A3
+#define SWITCH_ADC 2        // 2. ADC-Kanal
+#define SWITCH_PIN A2       // A2 = D16 = ADC[2]
 
 // Anti Collision System
-#define ACS_IrLED 4
-#define ACS_Left 1  // -> A0
-#define ACS_Right 6 // -> A5
+#define ACS_IR_LED_PIN PD4
+#define ACS_LEFT_ADC 1 // 1. ADC-Kanal
+#define ACS_RIGHT_ADC 6    // 6. ADC-Kanal
 
 // LDR - Light Sensing
 #define LDR_Left 3  // -> A7
@@ -201,7 +201,7 @@ public:
     char ADCMode = ADCMode_None;
 
     bool ADCWaitForBlock(void);
-    
+
     void ADCInterrupt(void);
 
     static void ADCInterruptISR(void)

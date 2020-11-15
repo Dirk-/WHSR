@@ -1,6 +1,10 @@
 
 #include "WHSR.h"
 
+// Hier wird der ADC-Wert gespeichert, wenn wir die Arduino-Routinen für Nano 33 BLE nutzen
+// (Aquivalent zum ADC-Register des Nano)
+int ADCvalue = 0;
+
 /* ************************************************************************************
  *
  *	Init + Interrupt
@@ -44,7 +48,7 @@ void WHSR::InitADC(void)
 void WHSR::ADCStartNext(void)
 {
 	++ADCPos;
-	if((SwitchStateInterrupt & 0b1) == 0 && ADCPos == Switch)
+	if((SwitchStateInterrupt & 0b1) == 0 && ADCPos == SWITCH_ADC)
 		++ADCPos;
 
 	if(ADCPos >= MaxADCChannels)
@@ -75,6 +79,7 @@ void WHSR::ADCStart(char Channel)
 #if defined(ARDUINO_AVR_NANO)
     ADCSRA |= (1 << ADSC); // Start ADC
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
+    ADCvalue = analogRead(ADCPos);  // Direkt auslesen
 #endif
 }
 
@@ -104,6 +109,7 @@ void WHSR::ADCWaitForConversion(void)
     while (bit_is_set(ADCSRA, ADSC)) // ADC Status Register ADC Start Conversion ist 1 während Umwandlung
         ;
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
+    // Direkt zurückkommen
 #endif
 }
 
@@ -113,9 +119,11 @@ void WHSR::ADCWaitForConversion(void)
 //
 void WHSR::ADCInterrupt(void)
 {
+    // Ergebnis der Wandlung im Sensor-Array speichern
 #if defined(ARDUINO_AVR_NANO)
-    mySensorValues[ADCPos] = ADC;   // Ergebnis der Wandlung im Sensor-Array speichern
+    mySensorValues[ADCPos] = ADC;
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
+    mySensorValues[ADCPos] = ADCvalue;
 #endif
 
     /*
@@ -123,7 +131,7 @@ void WHSR::ADCInterrupt(void)
 	DebugSerial_print(F(" "));
 	DebugSerial_println(mySensorValues[ADCPos]);
 	*/
-    if(ADCPos == Switch)
+    if(ADCPos == SWITCH_ADC)
 		SwitchStateInterrupt = SwitchState_Idle;
 	
 	if(ADCMode == ADCMode_Block)

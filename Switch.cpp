@@ -26,8 +26,8 @@ unsigned char WHSR::readSwitches(void)
 	}
 	else
 	{
-		DoCheckADCMode(Switch);
-		return (unsigned char)(( ( 10160000L / mySensorValues[Switch] - 10000L ) * SwitchFactor + 5000L ) / 10000);
+		DoCheckADCMode(SWITCH_ADC);
+		return (unsigned char)(( ( 10160000L / mySensorValues[SWITCH_ADC] - 10000L ) * SwitchFactor + 5000L ) / 10000);
 	}
 }
 
@@ -43,7 +43,7 @@ void WHSR::switchInterruptOn(void)
 	delay(2);
 
 #if defined(ARDUINO_AVR_NANO)
-    byte pin = SwitchISRPin;
+    byte pin = SWITCH_PIN;
     *digitalPinToPCMSK(pin) |= bit (digitalPinToPCMSKbit(pin));  // enable pin
     PCIFR  |= bit (digitalPinToPCICRbit(pin)); // clear any outstanding interrupt
     PCICR  |= bit (digitalPinToPCICRbit(pin)); // enable interrupt for the group
@@ -63,7 +63,7 @@ void WHSR::switchInterruptOff(void)
 	delay(2);
 
 #if defined(ARDUINO_AVR_NANO)
-    byte pin = SwitchISRPin;
+    byte pin = SWITCH_PIN;
     PCICR  &= ~bit (digitalPinToPCICRbit(pin)); // disable interrupt for the group
 	SwitchStateInterrupt = SwitchState_None;
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
@@ -85,14 +85,14 @@ void WHSR::switchInterrupt(void)
 {
 	DebugSerial_print(F("."));
 	// Interrupt verhindern wenn
-	if(switchInterruptAktiv == 3 && digitalRead(SwitchISRPin) == HIGH)
+	if(switchInterruptAktiv == 3 && digitalRead(SWITCH_PIN) == HIGH)
 	{
 		switchInterruptAktiv = 0;
 		return; 
 	}
 	
 	if(switchInterruptAktiv != 0 ||					// schon einmal ein Button degrückt wurde
-	   digitalRead(SwitchISRPin) == HIGH)	// Wenn kein Button gedrückt wurde
+	   digitalRead(SWITCH_PIN) == HIGH)	// Wenn kein Button gedrückt wurde
 		return;
 	
 	++switchInterruptAktiv;

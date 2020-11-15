@@ -74,7 +74,7 @@ void WHSR::setFrontLED(unsigned char status)
 void WHSR::setIrLEDs(unsigned char status)
 {
 	if(status == LEDOn)
-		digitalWrite(ACS_IrLED, LED_Sensor_Pegel_On);
+		digitalWrite(ACS_IR_LED_PIN, LED_Sensor_Pegel_On);
 	else
-		digitalWrite(ACS_IrLED, LED_Sensor_Pegel_Off);
+		digitalWrite(ACS_IR_LED_PIN, LED_Sensor_Pegel_Off);
 }
