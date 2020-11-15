@@ -26,15 +26,18 @@ void WHSR::InitEngine()
 	//
 	// Init Drehzahl
 	//
-	
-	EICRA = (0 << ISC11) | // Interrupt 0 & 1
-			(1 << ISC10) | // Trigger on any logical Change
-			(0 << ISC01) |
-			(1 << ISC00);
-	
-	EIMSK = (1 << INT1) | (1 << INT0); // Enable Interrupt
-	
-	DebugSerial_println(F(" - Finsihed"));
+
+#if defined(ARDUINO_AVR_NANO)
+    EICRA = (0 << ISC11) | // Interrupt 0 & 1
+            (1 << ISC10) | // Trigger on any logical Change
+            (0 << ISC01) |
+            (1 << ISC00);
+
+    EIMSK = (1 << INT1) | (1 << INT0); // Enable Interrupt
+#elif defined(ARDUINO_ARDUINO_NANO33BLE)
+#endif
+
+    DebugSerial_println(F(" - Finsihed"));
 }
 
 //
@@ -45,9 +48,10 @@ void WHSR::InitEngine()
 //
 void WHSR::InitEnginePWM()
 {
-	TIMSK1 &= ~(1<<OCIE1A);	// Timer Interrupt abschalten
+#if defined(ARDUINO_AVR_NANO)
+    TIMSK1 &= ~(1 << OCIE1A); // Timer Interrupt abschalten
 
-	TCCR1A = (1 << WGM10) |	// Timer 1 - 8bit PWM Mode
+    TCCR1A = (1 << WGM10) |	// Timer 1 - 8bit PWM Mode
 
 			 (1 << COM1A1) |// Clear OC1A/OC1B on Compare Match when up-counting.
 			 (1 << COM1B1);	// Set OC1A/OC1B on Compare Match when down-counting.
@@ -64,6 +68,8 @@ void WHSR::InitEnginePWM()
 	OCR1B = 0;
 	
 	TIMSK1 |= (1 << TOIE1);
+#elif defined(ARDUINO_ARDUINO_NANO33BLE)
+#endif
 }
 
 //
@@ -151,9 +157,12 @@ void WHSR::setMotorDirection (char left, char right)
 void WHSR::setMotorSpeedLeft(int pwm, bool ChangeDirection)
 {
 	char tmp = constrain(abs(pwm), 0, 255);
-	OCR1A = tmp;
-	
-	if(ChangeDirection)
+#if defined(ARDUINO_AVR_NANO)
+    OCR1A = tmp;
+#elif defined(ARDUINO_ARDUINO_NANO33BLE)
+#endif
+
+    if(ChangeDirection)
 	{
 		if(pwm < 0)
 			setMotorDirectionLeft(EngineDirForward);
@@ -166,9 +175,12 @@ void WHSR::setMotorSpeedLeft(int pwm, bool ChangeDirection)
 void WHSR::setMotorSpeedRight(int pwm, bool ChangeDirection)
 {
 	char tmp = constrain(abs(pwm), 0, 255);
-	OCR1B = tmp;
-	
-	if(ChangeDirection)
+#if defined(ARDUINO_AVR_NANO)
+    OCR1B = tmp;
+#elif defined(ARDUINO_ARDUINO_NANO33BLE)
+#endif
+
+    if(ChangeDirection)
 	{
 		if(pwm < 0)
 			setMotorDirectionRight(EngineDirForward);

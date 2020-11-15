@@ -13,8 +13,9 @@
 void WHSR::InitADC(void)
 {
 	DebugSerial_print(F("Init ADC"));
-	
-	ADCPos = 0;
+
+#if defined(ARDUINO_AVR_NANO)
+    ADCPos = 0;
 	ADMUX = (0<<REFS1) | (1<<REFS0) | 	// ReferenzSpannung 01 -> Extern
 			(0<<ADLAR) |				// Bit Orientierung 10 Bit in 2 Byte -> Right
 			(0<<MUX3)  | (0<<MUX2) |	// Bits zum Selektieren des Channels
@@ -30,8 +31,10 @@ void WHSR::InitADC(void)
 										// 50KHz < FCPU / Prescaler < 200Khz
 	
 	//ADCSRA |= (1<<ADSC);				// Start ADC
-	
-	DebugSerial_println(F(" - Finished"));
+#elif defined(ARDUINO_ARDUINO_NANO33BLE)
+#endif
+
+    DebugSerial_println(F(" - Finished"));
 }
 
 //
@@ -69,7 +72,10 @@ void WHSR::ADCStart(char Channel)
 	SetADMUX(ADCPos);
 	
 	delayMicroseconds(100);
-	ADCSRA |= (1<<ADSC); // Start ADC
+#if defined(ARDUINO_AVR_NANO)
+    ADCSRA |= (1 << ADSC); // Start ADC
+#elif defined(ARDUINO_ARDUINO_NANO33BLE)
+#endif
 }
 
 //
@@ -94,7 +100,11 @@ bool WHSR::ADCWaitForBlock(void)
 //
 void WHSR::ADCWaitForConversion(void)
 {
-	while (bit_is_set(ADCSRA, ADSC));
+#if defined(ARDUINO_AVR_NANO)
+    while (bit_is_set(ADCSRA, ADSC)) // ADC Status Register ADC Start Conversion ist 1 während Umwandlung
+        ;
+#elif defined(ARDUINO_ARDUINO_NANO33BLE)
+#endif
 }
 
 //
@@ -102,14 +112,18 @@ void WHSR::ADCWaitForConversion(void)
 //		Für Einzellesungen warten bis ADC beendet ist
 //
 void WHSR::ADCInterrupt(void)
-{	
-	mySensorValues[ADCPos] = ADC;
-	/*
+{
+#if defined(ARDUINO_AVR_NANO)
+    mySensorValues[ADCPos] = ADC;   // Ergebnis der Wandlung im Sensor-Array speichern
+#elif defined(ARDUINO_ARDUINO_NANO33BLE)
+#endif
+
+    /*
 	DebugSerial_print(ADCPos, DEC);
 	DebugSerial_print(F(" "));
 	DebugSerial_println(mySensorValues[ADCPos]);
 	*/
-	if(ADCPos == Switch)
+    if(ADCPos == Switch)
 		SwitchStateInterrupt = SwitchState_Idle;
 	
 	if(ADCMode == ADCMode_Block)
@@ -117,20 +131,23 @@ void WHSR::ADCInterrupt(void)
 }
 
 //
-//
+// Setze den AD-Kanal
 //
 void WHSR::SetADMUX(char pin)
-{	
-	if(pin == 8) pin = 14;
+{
+#if defined(ARDUINO_AVR_NANO)
+    if (pin == 0b1000) // 8 -> 14 TODO: Wozu das??
+        pin = 0b1110;
 
-	ADMUX &= 0xf0;
-	ADMUX |= (pin & 0b1111);
+    ADMUX &= 0xf0;              // Kanal-Bits auf null setzen
+	ADMUX |= (pin & 0b1111);    // Gewünschten Kanal wählen
+#elif defined(ARDUINO_ARDUINO_NANO33BLE)
+#endif
 }
 
 //
+// ADC-Test mit Debug-Ausgabe
 //
-//
-
 void WHSR::DoCheckADCMode(char channel)
 {
 	if(ADCMode == ADCMode_None)

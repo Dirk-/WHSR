@@ -41,13 +41,16 @@ void WHSR::switchInterruptOn(void)
 	//pinMode(Switch_On_Interrupt, INPUT);
 	//Serial.println(F(","));
 	delay(2);
-	
-	byte pin = SwitchISRPin;
-	*digitalPinToPCMSK(pin) |= bit (digitalPinToPCMSKbit(pin));  // enable pin
+
+#if defined(ARDUINO_AVR_NANO)
+    byte pin = SwitchISRPin;
+    *digitalPinToPCMSK(pin) |= bit (digitalPinToPCMSKbit(pin));  // enable pin
     PCIFR  |= bit (digitalPinToPCICRbit(pin)); // clear any outstanding interrupt
     PCICR  |= bit (digitalPinToPCICRbit(pin)); // enable interrupt for the group
-	
-	SwitchStateInterrupt = SwitchState_Idle;
+#elif defined(ARDUINO_ARDUINO_NANO33BLE)
+#endif
+
+    SwitchStateInterrupt = SwitchState_Idle;
 }
 
 //
@@ -58,10 +61,13 @@ void WHSR::switchInterruptOff(void)
 	//pinMode(Switch_On_Interrupt, OUTPUT);
 	digitalWrite(Switch_On_Interrupt, LOW);
 	delay(2);
-	
-	byte pin = SwitchISRPin;
+
+#if defined(ARDUINO_AVR_NANO)
+    byte pin = SwitchISRPin;
     PCICR  &= ~bit (digitalPinToPCICRbit(pin)); // disable interrupt for the group
 	SwitchStateInterrupt = SwitchState_None;
+#elif defined(ARDUINO_ARDUINO_NANO33BLE)
+#endif
 }
 
 //

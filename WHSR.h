@@ -111,8 +111,8 @@
 //
 // Internal Analog Referenz
 //
-#define STANDARD_INTERNAL_REFERENCE_VOLTAGE 4459L // in mV                           \
-                                                  // Kann gemessen/berechnet werden: \
+#define STANDARD_INTERNAL_REFERENCE_VOLTAGE 4459L // in mV                           
+                                                  // Kann gemessen/berechnet werden: 
                                                   //( Vcc / 1024 ) * Asuro::readVreference(void)
 
 // _____________________________________ IO Pins _____________________________________
@@ -201,7 +201,9 @@ public:
     char ADCMode = ADCMode_None;
 
     bool ADCWaitForBlock(void);
+    
     void ADCInterrupt(void);
+
     static void ADCInterruptISR(void)
     {
         if (myRobot != NULL)
@@ -212,8 +214,15 @@ public:
     {
         if (myRobot != NULL)
         {
+#if defined(ARDUINO_AVR_NANO)
             if (myRobot->ADCMode == ADCMode_Block)
-                ADCSRA |= (1 << ADSC);
+                ADCSRA |= (1 << ADSC);  // Start conversation
+#elif defined(ARDUINO_ARDUINO_NANO33BLE)
+            if (myRobot->ADCMode == ADCMode_Block)
+            {
+                ; // TODO
+            }
+#endif
         }
     }
 

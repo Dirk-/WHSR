@@ -4,13 +4,14 @@ void WHSR::TimerSet(unsigned long ms, void (*isrfunction)())
 {
 	TimerISRfunction = isrfunction;
 	TimerWaitTime = (ms == 0 ? 1 : ms);
-	
-	TCCR2A = (0<<COM2A1) | (0<<COM2A0) |	// Compare Output abschalten
-			 (0<<COM2B1) | (0<<COM2B0) | 	
-			 (0<<WGM21)  | (0<<WGM20);		// Modus 00 Einstellen
-											// Normal Operation
-	
-	TCCR2B = (0<<FOC2A) | (0<<FOC2B) |		// ???
+
+#if defined(ARDUINO_AVR_NANO)
+    TCCR2A = (0 << COM2A1) | (0 << COM2A0) | // Compare Output abschalten
+             (0 << COM2B1) | (0 << COM2B0) |
+             (0 << WGM21) | (0 << WGM20); // Modus 00 Einstellen
+                                          // Normal Operation
+
+    TCCR2B = (0<<FOC2A) | (0<<FOC2B) |		// ???
 			 (0<<WGM22) |					// siehe oeben -> Normal Operation
 			 (0<<CS22) | (0<<CS21) | (0<<CS20); // Clock Source Abschalten
 	
@@ -32,27 +33,38 @@ void WHSR::TimerSet(unsigned long ms, void (*isrfunction)())
 		TCCR2B |= (1<<CS22) | (0<<CS21) | (1<<CS20); // prescaler set to 128
 		TimerTcnt2 = 256 - (int)((float)F_CPU * 0.001 / 64);
 
-	#endif	
+	#endif
+#elif defined(ARDUINO_ARDUINO_NANO33BLE)
+#endif
 }
 
 void WHSR::TimerStart()
 {
 	TimerCount = 0;
-	TCNT2 = TimerTcnt2;
-	TIMSK2 |= (1<<TOIE2);
+#if defined(ARDUINO_AVR_NANO)
+    TCNT2 = TimerTcnt2;
+    TIMSK2 |= (1<<TOIE2);
+#elif defined(ARDUINO_ARDUINO_NANO33BLE)
+#endif
 }
 
 void WHSR::TimerStop()
 {
-	TIMSK2 &= ~(1<<TOIE2);
+#if defined(ARDUINO_AVR_NANO)
+    TIMSK2 &= ~(1 << TOIE2);
+#elif defined(ARDUINO_ARDUINO_NANO33BLE)
+#endif
 }
 
 void WHSR::TimerOverflow()
 {
-	TCNT2 = TimerTcnt2;
-	TimerCount += 1;
-	
-	if (TimerCount >= TimerWaitTime && !TimerOverflowCount)
+#if defined(ARDUINO_AVR_NANO)
+    TCNT2 = TimerTcnt2;
+#elif defined(ARDUINO_ARDUINO_NANO33BLE)
+#endif
+    TimerCount += 1;
+
+    if (TimerCount >= TimerWaitTime && !TimerOverflowCount)
 	{
 		TimerOverflowCount = 1;
 		TimerCount = TimerCount - TimerWaitTime;
