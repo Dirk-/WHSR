@@ -20,9 +20,9 @@ void loop()
 	// Communicate results
 	Serial.println("---------- Ambient Light ---------");
 	Serial.print("Left: ");
-	Serial.println(data[Sensor_Left]);
+	Serial.println(data[SENSOR_LEFT]);
 	Serial.print("Right: ");
-	Serial.println(data[Sensor_Right]);
+	Serial.println(data[SENSOR_RIGHT]);
 		
 	delay(1000);
 }

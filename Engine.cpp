@@ -10,11 +10,11 @@ void WHSR::InitEngine()
 	//
 	// Motor Dir Init
 	//
-	pinMode(Engine_Dir_Right, OUTPUT);
-	digitalWrite(Engine_Dir_Right, LOW);
+	pinMode(MOTOR_RIGHT_DIR_DPIN, OUTPUT);
+	digitalWrite(MOTOR_RIGHT_DIR_DPIN, LOW);
 	
-	pinMode(Engine_Dir_Left, OUTPUT);
-	digitalWrite(Engine_Dir_Left, LOW);
+	pinMode(MOTOR_LEFT_DIR_DPIN, OUTPUT);
+	digitalWrite(MOTOR_LEFT_DIR_DPIN, LOW);
 
 	//
 	//  Timer 1 PWM Init
@@ -92,20 +92,20 @@ void WHSR::RPMRight(void)
 /// @param data int array which contains the two sensor values upon return
 void WHSR::GetRPMSensorCount(int *data)
 {
-	data[Sensor_Left] = RPMSensorCountLeft;
-	data[Sensor_Right] = RPMSensorCountRight;
+	data[SENSOR_LEFT] = RPMSensorCountLeft;
+	data[SENSOR_RIGHT] = RPMSensorCountRight;
 
 	RPMSensorCountLeft = 0;
 	RPMSensorCountRight = 0;
 }
 
 /// Returns the rotational sensor count for the given wheel
-/// @param Side Sensor_Left or Sensor_Right
+/// @param Side SENSOR_LEFT or SENSOR_RIGHT
 unsigned long WHSR::GetRPMSensorCount(char Side)
 {
 	unsigned long tmp;
 	
-	if(Side == Sensor_Left)
+	if(Side == SENSOR_LEFT)
 	{
 		tmp = RPMSensorCountLeft;
 		RPMSensorCountLeft = 0;
@@ -127,18 +127,18 @@ unsigned long WHSR::GetRPMSensorCount(char Side)
 
 void WHSR::setMotorDirectionLeft(char dir)
 {
-	if(dir == 1)
-		digitalWrite(Engine_Dir_Left, EngineDirForward_Pegel);
-	else if (dir == -1)
-		digitalWrite(Engine_Dir_Left, EngineDirBackward_Pegel);
+	if(dir == FWD)
+		digitalWrite(MOTOR_LEFT_DIR_DPIN, LOW);
+	else if (dir == BWD)
+		digitalWrite(MOTOR_LEFT_DIR_DPIN, HIGH);
 }
 
 void WHSR::setMotorDirectionRight(char dir)
 {
-	if(dir == 1)
-		digitalWrite(Engine_Dir_Right, EngineDirForward_Pegel);
-	else if (dir == -1)
-		digitalWrite(Engine_Dir_Right, EngineDirBackward_Pegel);
+    if (dir == FWD)
+        digitalWrite(MOTOR_RIGHT_DIR_DPIN, LOW);
+    else if (dir == BWD)
+        digitalWrite(MOTOR_RIGHT_DIR_DPIN, HIGH);
 }
 
 
@@ -165,9 +165,9 @@ void WHSR::setMotorSpeedLeft(int pwm, bool ChangeDirection)
     if(ChangeDirection)
 	{
 		if(pwm < 0)
-			setMotorDirectionLeft(EngineDirForward);
+			setMotorDirectionLeft(MOTOR_FORWARD);
 		else
-			setMotorDirectionLeft(EngineDirBackward);
+			setMotorDirectionLeft(MOTOR_BACKWARD);
 			
 	}
 }
@@ -183,9 +183,9 @@ void WHSR::setMotorSpeedRight(int pwm, bool ChangeDirection)
     if(ChangeDirection)
 	{
 		if(pwm < 0)
-			setMotorDirectionRight(EngineDirForward);
+			setMotorDirectionRight(MOTOR_FORWARD);
 		else
-			setMotorDirectionRight(EngineDirBackward);
+			setMotorDirectionRight(MOTOR_BACKWARD);
 			
 	}
 }

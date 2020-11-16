@@ -6,10 +6,7 @@ void WHSR::Init(void)
 {
 	myRobot = this;
 
-#if defined(ARDUINO_AVR_NANO)
-    sei(); // Start Interrupts
-#elif defined(ARDUINO_ARDUINO_NANO33BLE)
-#endif
+    interrupts();   // Enable interrupts (probably unneccessary)
 
     // Init the WHSR parts
 	InitSerial();

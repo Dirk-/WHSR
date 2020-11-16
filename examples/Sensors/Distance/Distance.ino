@@ -15,22 +15,22 @@ void loop()
 	int data[2];
 	
 	// Read distance sensors, IR LEDs on
-	robo.readDistance(data, LEDOn);
+	robo.readDistance(data, LED_ON);
 
 	Serial.println("---------- Distance sensors, IR LEDs on -------------");
 	Serial.print("Left: ");
-	Serial.println(data[Sensor_Left]);
+	Serial.println(data[SENSOR_LEFT]);
 	Serial.print("Right: ");
-	Serial.println(data[Sensor_Right]);
+	Serial.println(data[SENSOR_RIGHT]);
 	delay(1000);
 	
 	// Read distance sensors, IR LEDs off
-	robo.readDistance(data, LEDOff); 
+	robo.readDistance(data, LED_OFF); 
 
 	Serial.println("---------- Distance sensors, IR LEDs off -------------");
 	Serial.print("Left: ");
-	Serial.println(data[Sensor_Left]);
+	Serial.println(data[SENSOR_LEFT]);
 	Serial.print("Right: ");
-	Serial.println(data[Sensor_Right]);
+	Serial.println(data[SENSOR_RIGHT]);
 	delay(1000);
 }

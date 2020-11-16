@@ -2,43 +2,43 @@
 #include "WHSR.h"
 
 //
-//	Diese Funktion initialisiert die RGB LED
+//	Diese Funktion initialisiert die RGB-LED
 //
 void WHSR::InitLEDs(void)
 {
     DebugSerial_print(F("Init LEDS"));
 	
 	pinMode(LED_Blue, OUTPUT);
-	digitalWrite(LED_Blue, LED_Status_Pegel_Off);
+	digitalWrite(LED_Blue, LOW);
 	
 	pinMode(LED_Green, OUTPUT);
-	digitalWrite(LED_Green, LED_Status_Pegel_Off);
+	digitalWrite(LED_Green, LOW);
 	
 	pinMode(LED_Red, OUTPUT);
-	digitalWrite(LED_Red, LED_Status_Pegel_Off);
+	digitalWrite(LED_Red, LOW);
 	
     DebugSerial_println(" - Finished"); 
 }
 
 //
-//	MitHilfe dieser Funkion kan die Status LED auf eine Farbe gesetzt werden
+//	MitHilfe dieser Funkion kan die Status-LED auf eine Farbe gesetzt werden
 //
 void WHSR::setStatusLED(unsigned char color)
 {
 	DebugSerial_print(F("Color: "));
 	DebugSerial_println(color, BIN);
 	
-	digitalWrite(LED_Red, (color & Color_Red) > 0 ?
-							LED_Status_Pegel_On :
-							LED_Status_Pegel_Off);
+	digitalWrite(LED_Red, (color & COLOR_RED) > 0 ?
+							HIGH :
+							LOW);
 	
-	digitalWrite(LED_Green, (color & Color_Green) > 0 ?
-							LED_Status_Pegel_On :
-							LED_Status_Pegel_Off);
+	digitalWrite(LED_Green, (color & COLOR_GREEN) > 0 ?
+							HIGH :
+							LOW);
 	
-	digitalWrite(LED_Blue, (color & Color_Blue) > 0 ?
-							LED_Status_Pegel_On :
-							LED_Status_Pegel_Off);
+	digitalWrite(LED_Blue, (color & COLOR_BLUE) > 0 ?
+							HIGH :
+							LOW);
 		
 	
 	// Pin Map LED D5 - D7... PD5 - PD7
@@ -47,8 +47,8 @@ void WHSR::setStatusLED(unsigned char color)
 }
 
 //
-//	Diese Funktion setzt die Status LED auf die verschiedenen Farben
-//	Feste reinfolge
+//	Diese Funktion setzt die Status-LED auf die verschiedenen Farben
+//	Feste Reihenfolge
 //
 void WHSR::shiftStatusLED(void)
 {
@@ -57,24 +57,24 @@ void WHSR::shiftStatusLED(void)
 }
 
 //
-//	Diese Funktion Schaltet die Front LED (LED fuer den Linienfolger) ein oder aus
+//	Diese Funktion schaltet die Front-LED (LED fuer den Linienfolger) ein oder aus
 //
 void WHSR::setFrontLED(unsigned char status)
 {
-	if(status == LEDOn)
-		digitalWrite(LineFollower_LED, LED_Sensor_Pegel_On);
+	if(status == LED_ON)
+		digitalWrite(LINE_FOLLOWER_LED_PIN, HIGH);
 	else
-		digitalWrite(LineFollower_LED, LED_Sensor_Pegel_Off);
+		digitalWrite(LINE_FOLLOWER_LED_PIN, LOW);
 
 }
 
 //
-//	Diese Funktion Schaltet die ACS LEDs (LED fuer die Fruehwarnung) ein oder aus
+//	Diese Funktion schaltet die ACS-LEDs (LED fuer die Fruehwarnung) ein oder aus
 //
 void WHSR::setIrLEDs(unsigned char status)
 {
-	if(status == LEDOn)
-		digitalWrite(ACS_IR_LED_PIN, LED_Sensor_Pegel_On);
+	if(status == LED_ON)
+		digitalWrite(ACS_IR_LED_PIN, HIGH);
 	else
-		digitalWrite(ACS_IR_LED_PIN, LED_Sensor_Pegel_Off);
+		digitalWrite(ACS_IR_LED_PIN, LOW);
 }

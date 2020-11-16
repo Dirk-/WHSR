@@ -12,21 +12,21 @@ void setup()
 void loop()
 {
 /*
-	robo.setStatusLED(Color_Red);
+	robo.setStatusLED(COLOR_RED);
 	delay(10000);
-	robo.setStatusLED(Color_Green);
+	robo.setStatusLED(COLOR_GREEN);
 	delay(10000);
-	robo.setStatusLED(Color_Blue);
+	robo.setStatusLED(COLOR_BLUE);
 	delay(10000);
-	robo.setStatusLED(Color_Yellow);
+	robo.setStatusLED(COLOR_YELLOW);
 	delay(10000);
-	robo.setStatusLED(Color_Magenta);
+	robo.setStatusLED(COLOR_MAGENTA);
 	delay(10000);
-	robo.setStatusLED(Color_Cyan);
+	robo.setStatusLED(COLOR_CYAN);
 	delay(10000);
-	robo.setStatusLED(Color_White);
+	robo.setStatusLED(COLOR_WHITE);
 	delay(10000);
-	robo.setStatusLED(Color_Black);
+	robo.setStatusLED(COLOR_BLACK);
 	delay(10000); 
 */
 	robo.shiftStatusLED();

@@ -9,7 +9,7 @@ unsigned long previousMillis = 0;
 
 void setup()
 {
-	robo.ADCMode = ADCMode_Block;
+	robo.ADCMode = ADC_MODE_BLOCK;
 	robo.Init();
 		
 	Serial.println("Block Mode Test");

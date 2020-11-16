@@ -8,13 +8,13 @@ void setup()
 	robo.Init();
 
 	// Wait some time to give the user a chance to program the robot before it starts moving
-	robo.setStatusLED(Color_Red);
+	robo.setStatusLED(COLOR_RED);
 	delay(1000);
-	robo.setStatusLED(Color_Yellow);
+	robo.setStatusLED(COLOR_YELLOW);
 	delay(1000);
-	robo.setStatusLED(Color_Green);
+	robo.setStatusLED(COLOR_GREEN);
 	delay(1000);
-  	robo.setStatusLED(Color_Off);
+  	robo.setStatusLED(COLOR_OFF);
 
 	Serial.println("Engine drive square");
 }

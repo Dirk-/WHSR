@@ -7,11 +7,11 @@
  */
 void WHSR::InitSensors(void)
 {
-	pinMode(LineFollower_LED, OUTPUT);
-	digitalWrite(LineFollower_LED, LED_Sensor_Pegel_Off);
+	pinMode(LINE_FOLLOWER_LED_PIN, OUTPUT);
+	digitalWrite(LINE_FOLLOWER_LED_PIN, LOW);
 	
 	pinMode(ACS_IR_LED_PIN, OUTPUT);
-	digitalWrite(ACS_IR_LED_PIN, LED_Sensor_Pegel_Off);
+	digitalWrite(ACS_IR_LED_PIN, LOW);
 }
 
 /**
@@ -69,11 +69,11 @@ float WHSR::readBattery(void)
  * @brief Reads out the two line sensors at the bottom of the WHSR, optionally turning on the IR LED
  * 
  * @param data array with two elements, left and right sensor values (0..1023)
- * @param LightStatus LEDOn or LEDOff
+ * @param LightStatus LED_ON or LED_OFF
  */
 void WHSR::readLinesensor(int *data, unsigned char LightStatus)
 {
-	if(LightStatus == LEDOn)
+	if(LightStatus == LED_ON)
 	{
 		setFrontLED(LightStatus);
 		delay(1);
@@ -81,7 +81,7 @@ void WHSR::readLinesensor(int *data, unsigned char LightStatus)
 	
 	readLinesensor(data);
 
-	setFrontLED(LEDOff);
+	setFrontLED(LED_OFF);
 }
 
 /**
@@ -91,22 +91,22 @@ void WHSR::readLinesensor(int *data, unsigned char LightStatus)
  */
 void WHSR::readLinesensor(int *data)
 {
-	DoCheckADCMode(LineFollower_Left);
-	DoCheckADCMode(LineFollower_Right);
+	DoCheckADCMode(LINE_FOLLOWER_LEFT_ADC);
+	DoCheckADCMode(LINE_FOLLOWER_RIGHT_ADC);
 	
-	data[Sensor_Left] = mySensorValues[LineFollower_Left];
-	data[Sensor_Right] = mySensorValues[LineFollower_Right];
+	data[SENSOR_LEFT] = mySensorValues[LINE_FOLLOWER_LEFT_ADC];
+	data[SENSOR_RIGHT] = mySensorValues[LINE_FOLLOWER_RIGHT_ADC];
 }
 
 /**
  * @brief Reads out the two distance sensors in the front of the WHSR, optionally turning on the IR LEDs
  * 
  * @param data array with two elements, left and right sensor values (0..1023)
- * @param LightStatus LEDOn or LEDOff
+ * @param LightStatus LED_ON or LED_OFF
  */
 void WHSR::readDistance(int *data, unsigned char LightStatus)
 {
-	if(LightStatus == LEDOn)
+	if(LightStatus == LED_ON)
 	{
 		setIrLEDs(LightStatus);
 		delay(100);
@@ -114,7 +114,7 @@ void WHSR::readDistance(int *data, unsigned char LightStatus)
 	
 	readDistance(data);
 	
-	setIrLEDs(LEDOff);
+	setIrLEDs(LED_OFF);
 }
 
 /**
@@ -127,8 +127,8 @@ void WHSR::readDistance(int *data)
 	DoCheckADCMode(ACS_LEFT_ADC);
 	DoCheckADCMode(ACS_RIGHT_ADC);
 	
-	data[Sensor_Left] = mySensorValues[ACS_LEFT_ADC];
-	data[Sensor_Right] = mySensorValues[ACS_RIGHT_ADC];
+	data[SENSOR_LEFT] = mySensorValues[ACS_LEFT_ADC];
+	data[SENSOR_RIGHT] = mySensorValues[ACS_RIGHT_ADC];
 }
 
 /**
@@ -138,10 +138,10 @@ void WHSR::readDistance(int *data)
  */
 void WHSR::readAmbientLight(int *data)
 {
-	DoCheckADCMode(LDR_Left);
-	DoCheckADCMode(LDR_Right);
+	DoCheckADCMode(LDR_LEFT_ADC);
+	DoCheckADCMode(LDR_RIGHT_ADC);
 	
-	data[Sensor_Left] = mySensorValues[LDR_Left];
-	data[Sensor_Right] = mySensorValues[LDR_Right];
+	data[SENSOR_LEFT] = mySensorValues[LDR_LEFT_ADC];
+	data[SENSOR_RIGHT] = mySensorValues[LDR_RIGHT_ADC];
 }
 

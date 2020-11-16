@@ -34,7 +34,6 @@ void WHSR::InitADC(void)
 			 (1<<ADPS0); 				// 111 -> 128
 										// 50KHz < FCPU / Prescaler < 200Khz
 	
-	//ADCSRA |= (1<<ADSC);				// Start ADC
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
 #endif
 
@@ -48,18 +47,19 @@ void WHSR::InitADC(void)
 void WHSR::ADCStartNext(void)
 {
 	++ADCPos;
-	if((SwitchStateInterrupt & 0b1) == 0 && ADCPos == SWITCH_ADC)
+	if((SWITCH_INTERRUPT_STATE & 0b1) == 0 
+        && ADCPos == SWITCH_ADC)    // Switches überspringen
 		++ADCPos;
 
-	if(ADCPos >= MaxADCChannels)
+	if(ADCPos >= MAX_ADC_CHANNELS)
 	{
 		ADCPos = 0;
-		if(SwitchStateInterrupt == SwitchState_Wait)
-			SwitchStateInterrupt = SwitchState_Do;
+		if(SWITCH_INTERRUPT_STATE == SWITCH_INTERRUPT_WAIT)
+			SWITCH_INTERRUPT_STATE = SWITCH_INTERRUPT_DO;
 		
 		ADCBlockPassed = true;		
 		
-		if(ADCMode == ADCMode_Block)
+		if(ADCMode == ADC_MODE_BLOCK)
 			return;
 	}
 	
@@ -72,11 +72,11 @@ void WHSR::ADCStartNext(void)
 //
 void WHSR::ADCStart(char Channel)
 {
-	ADCPos = Channel; // % MaxADCChannels;
+	ADCPos = Channel; // % MAX_ADC_CHANNELS;
 	SetADMUX(ADCPos);
 	
-	delayMicroseconds(100);
 #if defined(ARDUINO_AVR_NANO)
+    delayMicroseconds(100);
     ADCSRA |= (1 << ADSC); // Start ADC
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
     ADCvalue = analogRead(ADCPos);  // Direkt auslesen
@@ -132,9 +132,9 @@ void WHSR::ADCInterrupt(void)
 	DebugSerial_println(mySensorValues[ADCPos]);
 	*/
     if(ADCPos == SWITCH_ADC)
-		SwitchStateInterrupt = SwitchState_Idle;
+		SWITCH_INTERRUPT_STATE = SWITCH_INTERRUPT_IDLE;
 	
-	if(ADCMode == ADCMode_Block)
+	if(ADCMode == ADC_MODE_BLOCK)
 		ADCStartNext();
 }
 
@@ -158,7 +158,7 @@ void WHSR::SetADMUX(char pin)
 //
 void WHSR::DoCheckADCMode(char channel)
 {
-	if(ADCMode == ADCMode_None)
+	if(ADCMode == ADC_MODE_NONE)
 	{
 		ADCStart(channel);
 		ADCWaitForConversion();

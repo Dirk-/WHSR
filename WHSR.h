@@ -16,58 +16,51 @@
 //
 // ADC
 //
-#define MaxADCChannels 9
-#define ADCMode_None 0
-#define ADCMode_Block 1
+#define MAX_ADC_CHANNELS 8
+#define ADC_MODE_NONE 0
+#define ADC_MODE_BLOCK 1
+#define SWITCH_ADC 2 // 2. ADC-Kanal für Switches
 
 //
-// LED States
+// LED Colors
 //
-#define LED_Status_Pegel_On HIGH
-#define LED_Status_Pegel_Off LOW
+#define COLOR_OFF       0b000
+#define COLOR_ON        0b111
 
-#define Color_Off       0b000
-#define Color_On        0b111
-
-#define Color_White     Color_On
-#define Color_Black     Color_Off
-#define Color_Red       0b100
-#define Color_Green     0b010
-#define Color_Blue      0b001
-#define Color_Yellow    0b110
-#define Color_Magenta   0b101
-#define Color_Cyan      0b011
+#define COLOR_WHITE     COLOR_ON
+#define COLOR_BLACK     COLOR_OFF
+#define COLOR_RED       0b100
+#define COLOR_GREEN     0b010
+#define COLOR_BLUE      0b001
+#define COLOR_YELLOW    0b110
+#define COLOR_MAGENTA   0b101
+#define COLOR_CYAN      0b011
 
 //
-// Interrupt states of the switches
+// Interrupt states of the collision switches
 //
-#define SwitchState_None    0b01 // 1
-#define SwitchState_Idle    0b00 // 0
-#define SwitchState_Wait    0b10 // 2
-#define SwitchState_Do      0b11 // 3
+#define SWITCH_INTERRUPT_NONE    0b01 // 1, do not use interrupt, use polling
+#define SWITCH_INTERRUPT_IDLE    0b00 // 0, nothing to do
+#define SWITCH_INTERRUPT_WAIT    0b10 // 2, wait for ADC conversion to finish
+#define SWITCH_INTERRUPT_DO      0b11 // 3, start ADC conversion
 
 //
-// Sensor
+// Sensor constants
 //
-#define LED_Sensor_Pegel_On HIGH
-#define LED_Sensor_Pegel_Off LOW
-#define Sensor_Left 0
-#define Sensor_Right 1
-#define LEDOn LED_Sensor_Pegel_On
-#define LEDOff LED_Sensor_Pegel_Off
+#define SENSOR_LEFT     0   // Index for left sensor value in data array
+#define SENSOR_RIGHT    1   // Index for right sensor value in data array
+#define LED_ON HIGH
+#define LED_OFF LOW
 
 //
 // Directions
 //
-#define EngineDirForward_Pegel LOW
-#define EngineDirBackward_Pegel HIGH
+#define MOTOR_FORWARD 1
+#define FWD MOTOR_FORWARD
 
-#define EngineDirForward 1
-#define FWD EngineDirForward
-
-#define EngineDirBackward -1
-#define BWD EngineDirBackward
-#define RWD EngineDirBackward
+#define MOTOR_BACKWARD -1
+#define BWD MOTOR_BACKWARD
+#define RWD MOTOR_BACKWARD
 
 #define MAX_SPEED 255
 
@@ -132,8 +125,8 @@
 #define Engine_PWM_Left 9
 #define Engine_PWM_Right 10
 
-#define Engine_Dir_Left 13
-#define Engine_Dir_Right 12
+#define MOTOR_LEFT_DIR_DPIN 13  // D13, Pin 16
+#define MOTOR_RIGHT_DIR_DPIN 12 // D12, Pin 15
 
 //
 // LED-Ports
@@ -147,24 +140,19 @@
 //
 #define BATTERY_ADC 7 // 7. ADC-Kanal
 
-// Buttons
-#define Switch_On_Interrupt 11
-#define SWITCH_ADC 2        // 2. ADC-Kanal
-#define SWITCH_PIN A2       // A2 = D16 = ADC[2]
-
 // Anti Collision System
 #define ACS_IR_LED_PIN PD4
 #define ACS_LEFT_ADC 1 // 1. ADC-Kanal
 #define ACS_RIGHT_ADC 6    // 6. ADC-Kanal
 
 // LDR - Light Sensing
-#define LDR_Left 3  // -> A7
-#define LDR_Right 4 // -> A4
+#define LDR_LEFT_ADC 3  // 3. ADC-Kanal
+#define LDR_RIGHT_ADC 4 // 4. ADC-Kanal
 
 // Line Follower
-#define LineFollower_LED 8
-#define LineFollower_Right 5 // -> A1
-#define LineFollower_Left 0  // -> A6
+#define LINE_FOLLOWER_LED_PIN 8 // Digitaler Pin 8 ist Pin 11/PB0
+#define LINE_FOLLOWER_RIGHT_ADC 5 // 5. ADC-Kanal
+#define LINE_FOLLOWER_LEFT_ADC 0  // 0. ADC-Kanal
 
 #define REFERENCE_PIN 8 // -> A14
 
@@ -198,7 +186,7 @@ public:
 	 *
 	 * ************************************************************************************ */
 
-    char ADCMode = ADCMode_None;
+    char ADCMode = ADC_MODE_NONE;
 
     bool ADCWaitForBlock(void);
 
@@ -215,10 +203,10 @@ public:
         if (myRobot != NULL)
         {
 #if defined(ARDUINO_AVR_NANO)
-            if (myRobot->ADCMode == ADCMode_Block)
+            if (myRobot->ADCMode == ADC_MODE_BLOCK)
                 ADCSRA |= (1 << ADSC);  // Start conversation
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
-            if (myRobot->ADCMode == ADCMode_Block)
+            if (myRobot->ADCMode == ADC_MODE_BLOCK)
             {
                 ; // TODO
             }
@@ -364,10 +352,9 @@ private:
 	 *
 	 * ************************************************************************************ */
 
-    volatile unsigned char SwitchStateInterrupt = SwitchState_None;
+    volatile unsigned char SWITCH_INTERRUPT_STATE = SWITCH_INTERRUPT_NONE;
     volatile unsigned char switchValue = 0;
-    volatile unsigned char switchInterruptAktiv = 0;
-
+    
     /* ************************************************************************************
 	 *
 	 *	Battery, ADC

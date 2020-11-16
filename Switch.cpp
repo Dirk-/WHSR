@@ -1,17 +1,22 @@
 
 #include "WHSR.h"
 
+#define SWITCH_ADC_PULLUP 11  // D11, Pin 14, BINT
+#define SWITCH_PIN A2               // A2 = D16 = ADC[2], BUT
+
+// switchInterruptAktiv == 0: Kein Tastendruck erkannt
+// switchInterruptAktiv == 2: Tastendruck im Interrupt erkannt, muss noch abgearbeitet werden
+// switchInterruptAktiv == 3: Tastendruck im Interrupt erkannt, ist abgearbeitet
+volatile unsigned char switchInterruptAktiv = 0;
+
 //
 // Initialisiert die Kollisionserkennung
 //
 void WHSR::InitSwitches(void)
 {
-	DebugSerial_print(F("Init Switches"));
-	
-	pinMode(Switch_On_Interrupt, OUTPUT);
-	digitalWrite(Switch_On_Interrupt, LOW);
-	
-	DebugSerial_println(F(" - Finished"));
+    // Switch-Messschaltung aktivieren
+	pinMode(SWITCH_ADC_PULLUP, OUTPUT);
+	digitalWrite(SWITCH_ADC_PULLUP, LOW);
 }
 
 //
@@ -36,10 +41,8 @@ unsigned char WHSR::readSwitches(void)
 //
 void WHSR::switchInterruptOn(void)
 {
-	digitalWrite(Switch_On_Interrupt, HIGH);
-	//delay(1);
-	//pinMode(Switch_On_Interrupt, INPUT);
-	//Serial.println(F(","));
+    // Messschaltung deaktivieren, SWITCH_PIN wird zum digitalen Eingang
+	digitalWrite(SWITCH_ADC_PULLUP, HIGH);
 	delay(2);
 
 #if defined(ARDUINO_AVR_NANO)
@@ -48,9 +51,10 @@ void WHSR::switchInterruptOn(void)
     PCIFR  |= bit (digitalPinToPCICRbit(pin)); // clear any outstanding interrupt
     PCICR  |= bit (digitalPinToPCICRbit(pin)); // enable interrupt for the group
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
+    attachInterrupt(digitalPinToInterrupt(SWITCH_PIN), switchInterrupt, CHANGE);
 #endif
 
-    SwitchStateInterrupt = SwitchState_Idle;
+    SWITCH_INTERRUPT_STATE = SWITCH_INTERRUPT_IDLE;
 }
 
 //
@@ -58,16 +62,18 @@ void WHSR::switchInterruptOn(void)
 //
 void WHSR::switchInterruptOff(void)
 {
-	//pinMode(Switch_On_Interrupt, OUTPUT);
-	digitalWrite(Switch_On_Interrupt, LOW);
+    // Messschaltung aktivieren, SWITCH_PIN wird zum analogen Eingang
+	digitalWrite(SWITCH_ADC_PULLUP, LOW);
 	delay(2);
 
 #if defined(ARDUINO_AVR_NANO)
     byte pin = SWITCH_PIN;
     PCICR  &= ~bit (digitalPinToPCICRbit(pin)); // disable interrupt for the group
-	SwitchStateInterrupt = SwitchState_None;
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
+    detachInterrupt(digitalPinToInterrupt(SWITCH_PIN));
 #endif
+
+    SWITCH_INTERRUPT_STATE = SWITCH_INTERRUPT_NONE;
 }
 
 //
@@ -79,11 +85,12 @@ bool WHSR::switchAvailable()
 }
 
 //
-// Pin Change Interrupt Vector
+// Pin Change Interrupt Service Routine
 //
 void WHSR::switchInterrupt(void)
 {
-	DebugSerial_print(F("."));
+    // Interrupts sind deaktiviert beim Eintritt in ISR
+
 	// Interrupt verhindern wenn
 	if(switchInterruptAktiv == 3 && digitalRead(SWITCH_PIN) == HIGH)
 	{
@@ -91,13 +98,14 @@ void WHSR::switchInterrupt(void)
 		return; 
 	}
 	
-	if(switchInterruptAktiv != 0 ||					// schon einmal ein Button degrückt wurde
-	   digitalRead(SWITCH_PIN) == HIGH)	// Wenn kein Button gedrückt wurde
+	if(switchInterruptAktiv != 0 ||		// Wenn schon einmal ein Button gedrückt wurde oder
+	   digitalRead(SWITCH_PIN) == HIGH)	// wenn kein Button gedrückt wurde
 		return;
 	
 	++switchInterruptAktiv;
 	noInterrupts();
 	
+    // Ausschalten, damit der analoge Wert gelesen werden kann
 	switchInterruptOff();
 
 	switchValue = 0;
@@ -105,9 +113,11 @@ void WHSR::switchInterrupt(void)
 	//while (switchValue == 0 && (millis() - startMillis < 1000)) 
 		switchValue = readSwitches();
 
+    // Wieder einschalten
 	switchInterruptOn();	
 	
 	++switchInterruptAktiv;
-	DebugSerial_println(F("Switch Pressed"));
+
 	interrupts();
+    // Interrupts werden nach ISR aktiviert
 }
