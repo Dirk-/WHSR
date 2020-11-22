@@ -51,7 +51,7 @@ void WHSR::switchInterruptOn(void)
     PCIFR  |= bit (digitalPinToPCICRbit(pin)); // clear any outstanding interrupt
     PCICR  |= bit (digitalPinToPCICRbit(pin)); // enable interrupt for the group
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
-    attachInterrupt(digitalPinToInterrupt(SWITCH_PIN), switchInterrupt, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(SWITCH_PIN), SwitchISR, CHANGE);
 #endif
 
     SWITCH_INTERRUPT_STATE = SWITCH_INTERRUPT_IDLE;

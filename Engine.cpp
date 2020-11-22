@@ -19,8 +19,8 @@ void WHSR::InitEngine()
 	//
 	//  Timer 1 PWM Init
 	//
-	pinMode(Engine_PWM_Left, OUTPUT);
-	pinMode(Engine_PWM_Right, OUTPUT);
+	pinMode(MOTOR_LEFT_PWM_DPIN, OUTPUT);
+	pinMode(MOTOR_RIGHT_PWM_DPIN, OUTPUT);
 	InitEnginePWM();
 
 	//

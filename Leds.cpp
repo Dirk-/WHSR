@@ -8,14 +8,14 @@ void WHSR::InitLEDs(void)
 {
     DebugSerial_print(F("Init LEDS"));
 	
-	pinMode(LED_Blue, OUTPUT);
-	digitalWrite(LED_Blue, LOW);
+	pinMode(STATUSLED_BLUE_DPIN, OUTPUT);
+	digitalWrite(STATUSLED_BLUE_DPIN, LOW);
 	
-	pinMode(LED_Green, OUTPUT);
-	digitalWrite(LED_Green, LOW);
+	pinMode(STATUSLED_GREEN_DPIN, OUTPUT);
+	digitalWrite(STATUSLED_GREEN_DPIN, LOW);
 	
-	pinMode(LED_Red, OUTPUT);
-	digitalWrite(LED_Red, LOW);
+	pinMode(STATUSLED_RED_DPIN, OUTPUT);
+	digitalWrite(STATUSLED_RED_DPIN, LOW);
 	
     DebugSerial_println(" - Finished"); 
 }
@@ -28,15 +28,15 @@ void WHSR::setStatusLED(unsigned char color)
 	DebugSerial_print(F("Color: "));
 	DebugSerial_println(color, BIN);
 	
-	digitalWrite(LED_Red, (color & COLOR_RED) > 0 ?
+	digitalWrite(STATUSLED_RED_DPIN, (color & COLOR_RED) > 0 ?
 							HIGH :
 							LOW);
 	
-	digitalWrite(LED_Green, (color & COLOR_GREEN) > 0 ?
+	digitalWrite(STATUSLED_GREEN_DPIN, (color & COLOR_GREEN) > 0 ?
 							HIGH :
 							LOW);
 	
-	digitalWrite(LED_Blue, (color & COLOR_BLUE) > 0 ?
+	digitalWrite(STATUSLED_BLUE_DPIN, (color & COLOR_BLUE) > 0 ?
 							HIGH :
 							LOW);
 		
@@ -62,9 +62,9 @@ void WHSR::shiftStatusLED(void)
 void WHSR::setFrontLED(unsigned char status)
 {
 	if(status == LED_ON)
-		digitalWrite(LINE_FOLLOWER_LED_PIN, HIGH);
+		digitalWrite(LINE_FOLLOWER_LED_DPIN, HIGH);
 	else
-		digitalWrite(LINE_FOLLOWER_LED_PIN, LOW);
+		digitalWrite(LINE_FOLLOWER_LED_DPIN, LOW);
 
 }
 
@@ -74,7 +74,7 @@ void WHSR::setFrontLED(unsigned char status)
 void WHSR::setIrLEDs(unsigned char status)
 {
 	if(status == LED_ON)
-		digitalWrite(ACS_IR_LED_PIN, HIGH);
+		digitalWrite(ACS_IR_LED_DPIN, HIGH);
 	else
-		digitalWrite(ACS_IR_LED_PIN, LOW);
+		digitalWrite(ACS_IR_LED_DPIN, LOW);
 }

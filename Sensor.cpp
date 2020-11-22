@@ -7,11 +7,11 @@
  */
 void WHSR::InitSensors(void)
 {
-	pinMode(LINE_FOLLOWER_LED_PIN, OUTPUT);
-	digitalWrite(LINE_FOLLOWER_LED_PIN, LOW);
+	pinMode(LINE_FOLLOWER_LED_DPIN, OUTPUT);
+	digitalWrite(LINE_FOLLOWER_LED_DPIN, LOW);
 	
-	pinMode(ACS_IR_LED_PIN, OUTPUT);
-	digitalWrite(ACS_IR_LED_PIN, LOW);
+	pinMode(ACS_IR_LED_DPIN, OUTPUT);
+	digitalWrite(ACS_IR_LED_DPIN, LOW);
 }
 
 /**

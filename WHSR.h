@@ -11,7 +11,7 @@
 #include <Arduino.h>
 
 // _____________________________________ Library Defines _____________________________________
-// Values that you can use when calling WHRS library functions
+// Values you can use when calling WHRS library functions
 
 //
 // ADC
@@ -53,7 +53,7 @@
 #define LED_OFF LOW
 
 //
-// Directions
+// Motor
 //
 #define MOTOR_FORWARD 1
 #define FWD MOTOR_FORWARD
@@ -108,32 +108,48 @@
                                                   // Kann gemessen/berechnet werden: 
                                                   //( Vcc / 1024 ) * Asuro::readVreference(void)
 
+
 // _____________________________________ IO Pins _____________________________________
+
+/*
+Werte der Arduino-Konstanten:
+A2: 16
+A3: 17
+A7: 21
+D8/PB0: 8
+D12/PB4: 12
+D4/PD4: 4
+D5/PD5: 5
+D6/PD6: 6
+D7/PD7: 7
+
+"Pin x" im Kommentar gibt Pin-Nummer des Arduino-Boards
+*/
 
 //
 //	Bluetooth Komunikation
 //
-#define Serial_RX 0
-#define Serial_TX 1
+#define SERIAL_RX_DPIN 0    // Pin 2
+#define SERIAL_TX_DPIN 1    // Pin 1
 
 //
 //	Engine, H-Bridge, Odometry
 //
-#define Revolution_Speed_Left 2
-#define Revolution_Speed_Right 3
+#define ROTATIONAL_SPEED_LEFT_DPIN 2 // Pin 5
+#define ROTATIONAL_SPEED_RIGHT_DPIN 3    // Pin 6
 
-#define Engine_PWM_Left 9
-#define Engine_PWM_Right 10
+#define MOTOR_LEFT_PWM_DPIN 9   // Pin 12
+#define MOTOR_RIGHT_PWM_DPIN 10 // Pin 13
 
-#define MOTOR_LEFT_DIR_DPIN 13  // D13, Pin 16
-#define MOTOR_RIGHT_DIR_DPIN 12 // D12, Pin 15
+#define MOTOR_LEFT_DIR_DPIN 13  // Pin 16
+#define MOTOR_RIGHT_DIR_DPIN 12 // Pin 15
 
 //
 // LED-Ports
 //
-#define LED_Green   PD5
-#define LED_Red     PD6
-#define LED_Blue    PD7
+#define STATUSLED_GREEN_DPIN   5  // Pin 8
+#define STATUSLED_RED_DPIN     6  // Pin 9
+#define STATUSLED_BLUE_DPIN    7  // Pin 10
 
 //
 // Sensors
@@ -141,20 +157,20 @@
 #define BATTERY_ADC 7 // 7. ADC-Kanal
 
 // Anti Collision System
-#define ACS_IR_LED_PIN PD4
-#define ACS_LEFT_ADC 1 // 1. ADC-Kanal
-#define ACS_RIGHT_ADC 6    // 6. ADC-Kanal
+#define ACS_IR_LED_DPIN 4   // Pin 7
+#define ACS_LEFT_ADC 1      // 1. ADC-Kanal
+#define ACS_RIGHT_ADC 6     // 6. ADC-Kanal
 
 // LDR - Light Sensing
 #define LDR_LEFT_ADC 3  // 3. ADC-Kanal
 #define LDR_RIGHT_ADC 4 // 4. ADC-Kanal
 
 // Line Follower
-#define LINE_FOLLOWER_LED_PIN 8 // Digitaler Pin 8 ist Pin 11/PB0
+#define LINE_FOLLOWER_LED_DPIN 8 // Pin 11
 #define LINE_FOLLOWER_RIGHT_ADC 5 // 5. ADC-Kanal
 #define LINE_FOLLOWER_LEFT_ADC 0  // 0. ADC-Kanal
 
-#define REFERENCE_PIN 8 // -> A14
+#define REFERENCE_PIN 8 // -> A14????
 
 // _____________________________________ Robot Class _____________________________________
 class WHSR
