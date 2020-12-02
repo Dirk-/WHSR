@@ -23,17 +23,24 @@ For Arduino Nano 33 BLE:
 
 ## TODO
 
-Arduino Nano 33 BLE support:
-- Line follower works
-- Status LED works
-- Switches work
-- Motors just drive forward
-- Interrupts do not work
-- Odometry does not work
-- Ambient light works
-- Distance sensors work
+### Arduino Nano 33 BLE support
 
-Documentation
+Works:
+- Line follower
+- Status LED
+- Switches
+- Ambient light sensors
+- Distance sensors
+- Motor speed control
+
+Does not work:
+- Motors just drive forward
+- Interrupts
+- Odometry
+
+### Documentation
+
+- Clean up library and examples
 
 ## Hints
 
