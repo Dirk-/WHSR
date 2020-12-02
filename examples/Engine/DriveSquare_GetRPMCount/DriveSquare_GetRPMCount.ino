@@ -34,7 +34,7 @@ void loop()
     	delay (timeForOneEdge);
 
 		// Get rotational sensor values
-		robo.GetRPMSensorCount(data);
+		robo.getRPMSensorCount(data);
 		Serial.print("Left: ");
 		Serial.print(data[SENSOR_LEFT]);
 		Serial.print("; Right: ");
@@ -48,7 +48,7 @@ void loop()
     	delay (timeForTurning);
 		
 		// Get rotational sensor values
-		robo.GetRPMSensorCount(data);
+		robo.getRPMSensorCount(data);
 		Serial.print("Left: ");
 		Serial.print(data[SENSOR_LEFT]);
 		Serial.print("; Right: ");

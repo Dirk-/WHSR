@@ -15,20 +15,26 @@ void loop()
 	int data[2];
 	
 	// Read line sensors, LEDs on
-	robo.readLinesensor(data, LED_ON);
-	Serial.print("Linefollower; Light On ");
-	Serial.print("Left: ");
-	Serial.println(data[SENSOR_LEFT]);
-	Serial.print("Right: ");
-	Serial.println(data[SENSOR_RIGHT]);
-	delay(1000);
-	
-	// Read line sensors, LEDs off
-	robo.readLinesensor(data, LED_OFF);
-	Serial.print("Linefollower; Light Off ");
-	Serial.print("Left: ");
-	Serial.println(data[SENSOR_LEFT]);
-	Serial.print("Right: ");
-	Serial.println(data[SENSOR_RIGHT]);
-	delay(1000);
+    Serial.println("Linefollower; Light On ");
+    for (int i = 0; i < 5; i++)
+    {
+        robo.readLinesensor(data, LED_ON);
+        Serial.print("Left: ");
+        Serial.print(data[SENSOR_LEFT]);
+        Serial.print("  Right: ");
+        Serial.println(data[SENSOR_RIGHT]);
+        delay(500);
+    }
+
+    // Read line sensors, LEDs off
+    Serial.println("Linefollower; Light Off ");
+    for (int i = 0; i < 5; i++)
+    {
+        robo.readLinesensor(data, LED_OFF);
+        Serial.print("Left: ");
+        Serial.print(data[SENSOR_LEFT]);
+        Serial.print("  Right: ");
+        Serial.println(data[SENSOR_RIGHT]);
+        delay(500);
+    }
 }

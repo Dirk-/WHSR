@@ -284,8 +284,8 @@ public:
 
     void setMotorSpeed(int speedLeft, int speedRight);
 
-    void GetRPMSensorCount(int *data);
-    unsigned long GetRPMSensorCount(char Side);
+    void getRPMSensorCount(int *data);
+    unsigned long getRPMSensorCount(char Side);
 
     /* ************************************************************************************
 	 *

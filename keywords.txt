@@ -46,8 +46,8 @@ setMotorDirection	KEYWORD2
 setMotorSpeedLeft	KEYWORD2
 setMotorSpeedRight	KEYWORD2
 setMotorSpeed	KEYWORD2
-GetRPMSensorCount	KEYWORD2
-GetRPMSensorCount	KEYWORD2
+getRPMSensorCount	KEYWORD2
+getRPMSensorCount	KEYWORD2
 readSwitches	KEYWORD2
 switchAvailable	KEYWORD2
 switchInterruptOn	KEYWORD2

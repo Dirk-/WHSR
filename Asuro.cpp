@@ -3,10 +3,10 @@
 
 void WHSR::readOdometry(int *data)
 {
-	GetRPMSensorCount(data);
+	getRPMSensorCount(data);
 }
 
 unsigned long WHSR::readOdometry(char Side)
 {
-	return GetRPMSensorCount(Side);
+	return getRPMSensorCount(Side);
 }

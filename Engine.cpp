@@ -6,14 +6,13 @@
 //
 void WHSR::initEngine()
 {
-	DebugSerial_print(F("Init Motor"));
 	//
 	// Motor Dir Init
 	//
 	pinMode(MOTOR_RIGHT_DIR_DPIN, OUTPUT);
-	digitalWrite(MOTOR_RIGHT_DIR_DPIN, LOW);
-	
-	pinMode(MOTOR_LEFT_DIR_DPIN, OUTPUT);
+    digitalWrite(MOTOR_RIGHT_DIR_DPIN, LOW);
+
+    pinMode(MOTOR_LEFT_DIR_DPIN, OUTPUT);
 	digitalWrite(MOTOR_LEFT_DIR_DPIN, LOW);
 
 	//
@@ -36,8 +35,6 @@ void WHSR::initEngine()
     EIMSK = (1 << INT1) | (1 << INT0); // Enable Interrupt
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
 #endif
-
-    DebugSerial_println(F(" - Finsihed"));
 }
 
 //
@@ -88,9 +85,10 @@ void WHSR::RPMRight(void)
 	++RPMSensorCountRight;
 }
 
+
 /// Returns the rotational sensor count for both wheels
 /// @param data int array which contains the two sensor values upon return
-void WHSR::GetRPMSensorCount(int *data)
+void WHSR::getRPMSensorCount(int *data)
 {
 	data[SENSOR_LEFT] = RPMSensorCountLeft;
 	data[SENSOR_RIGHT] = RPMSensorCountRight;
@@ -99,9 +97,10 @@ void WHSR::GetRPMSensorCount(int *data)
 	RPMSensorCountRight = 0;
 }
 
+
 /// Returns the rotational sensor count for the given wheel
 /// @param Side SENSOR_LEFT or SENSOR_RIGHT
-unsigned long WHSR::GetRPMSensorCount(char Side)
+unsigned long WHSR::getRPMSensorCount(char Side)
 {
 	unsigned long tmp;
 	
@@ -119,13 +118,17 @@ unsigned long WHSR::GetRPMSensorCount(char Side)
 	return tmp;
 }
 
-/* ******************************************************************************************
- * 
- * Mit diesen Funkionen kann die Drehrichtung der Motoren gesetzt werden
- * 
- * ****************************************************************************************** */
+
+/// Set the direction of rotation of the motors
+/// @param dirLeft FWD or BWD
+/// @param dirRight FWD or BWD
 void WHSR::setMotorDirection(char dirLeft, char dirRight)
 {
+    // Zur Sicherheit, nutzt nichts
+    pinMode(MOTOR_LEFT_DIR_DPIN, OUTPUT);
+    pinMode(MOTOR_RIGHT_DIR_DPIN, OUTPUT);
+    setMotorSpeed(0, 0);
+    
     if (dirLeft == FWD)
         digitalWrite(MOTOR_LEFT_DIR_DPIN, LOW);
     else if (dirLeft == BWD)
@@ -137,13 +140,11 @@ void WHSR::setMotorDirection(char dirLeft, char dirRight)
         digitalWrite(MOTOR_RIGHT_DIR_DPIN, HIGH);
 }
 
-/* ******************************************************************************************
- * 
- * Mit diesen Funktionen kam man die Motorgeschwindigkeit einstellen
- * 
- * ****************************************************************************************** */
 
-void WHSR::setMotorSpeed (int speedLeft, int speedRight)
+/// Set the speed of the motors
+/// @param speedLeft 0..255
+/// @param speedRight 0..255
+void WHSR::setMotorSpeed(int speedLeft, int speedRight)
 {
     char tmp = constrain(abs(speedLeft), 0, 255);
 #if defined(ARDUINO_AVR_NANO)
