@@ -23,6 +23,10 @@ For Arduino Nano 33 BLE:
 - Arduino Nano 33 BLE support
 - Documentation
 
+## Hints
+
+- The F() macro used in the DebugSerial_print statements is for saving RAM (https://www.baldengineer.com/arduino-f-macro.html)
+
 ## Credits
 
 Library written by Maximilian Richter, based on the ASURINO library for the ASURO robot.

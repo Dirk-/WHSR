@@ -73,7 +73,7 @@
 // to use DebugSerial_print and DebugSerial_println in your own sketches.
 // You can leave these calls in your final sketch, if you set DEBUG to false,
 // they will not send anything.
-#define DEBUG false
+#define DEBUG true
 
 #if DEBUG == true
 // Use the regular Serial port
@@ -89,7 +89,7 @@
 #define DEBUG_BAUDRATE 9600
 
 // Baud rate for regular communication, e.g. via USB or Bluetooth
-#define REGULAR_BAUDRATE 115200
+#define REGULAR_BAUDRATE 9600 // 115200
 
 // _____________________________________ WHSR-board specific values _____________________________________
 
@@ -280,13 +280,9 @@ public:
             myRobot->RPMRight();
     }
 
-    void setMotorDirectionLeft(char dir);
-    void setMotorDirectionRight(char dir);
-    void setMotorDirection(char left, char right);
+    void setMotorDirection(char dirLeft, char dirRight);
 
-    void setMotorSpeedLeft(int pwm, bool ChangeDirection = false);
-    void setMotorSpeedRight(int pwm, bool ChangeDirection = false);
-    void setMotorSpeed(int left, int right, bool ChangeDirection = false);
+    void setMotorSpeed(int speedLeft, int speedRight);
 
     void GetRPMSensorCount(int *data);
     unsigned long GetRPMSensorCount(char Side);
@@ -353,14 +349,14 @@ private:
 	 *
 	 * ************************************************************************************ */
 
-    void InitSerial(void);
-    void InitLEDs(void);
-    void InitADC(void);
-    void InitEngine(void);
-    void InitEnginePWM(void);
+    void initSerial(void);
+    void initLEDs(void);
+    void initADC(void);
+    void initEngine(void);
+    void initEnginePWM(void);
 
-    void InitSwitches(void);
-    void InitSensors(void);
+    void initSwitches(void);
+    void initSensors(void);
 
     /* ************************************************************************************
 	 *

@@ -2,7 +2,7 @@
 #include "WHSR.h"
 
 // Hier wird der ADC-Wert gespeichert, wenn wir die Arduino-Routinen für Nano 33 BLE nutzen
-// (Aquivalent zum ADC-Register des Nano)
+// (Äquivalent zum ADC-Register des Nano)
 int ADCvalue = 0;
 
 /* ************************************************************************************
@@ -14,7 +14,7 @@ int ADCvalue = 0;
 //
 //	Init ADC
 //
-void WHSR::InitADC(void)
+void WHSR::initADC(void)
 {
 	DebugSerial_print(F("Init ADC"));
 

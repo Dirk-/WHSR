@@ -4,7 +4,7 @@
 //
 //	Initialisiert die beiden H-Brücken
 //
-void WHSR::InitEngine()
+void WHSR::initEngine()
 {
 	DebugSerial_print(F("Init Motor"));
 	//
@@ -21,7 +21,7 @@ void WHSR::InitEngine()
 	//
 	pinMode(MOTOR_LEFT_PWM_DPIN, OUTPUT);
 	pinMode(MOTOR_RIGHT_PWM_DPIN, OUTPUT);
-	InitEnginePWM();
+	initEnginePWM();
 
 	//
 	// Init Drehzahl
@@ -46,7 +46,7 @@ void WHSR::InitEngine()
 //	
 //	Wird auch für den ADC im Block Modus verwendet!!!
 //
-void WHSR::InitEnginePWM()
+void WHSR::initEnginePWM()
 {
 #if defined(ARDUINO_AVR_NANO)
     TIMSK1 &= ~(1 << OCIE1A); // Timer Interrupt abschalten
@@ -124,28 +124,17 @@ unsigned long WHSR::GetRPMSensorCount(char Side)
  * Mit diesen Funkionen kann die Drehrichtung der Motoren gesetzt werden
  * 
  * ****************************************************************************************** */
-
-void WHSR::setMotorDirectionLeft(char dir)
+void WHSR::setMotorDirection(char dirLeft, char dirRight)
 {
-	if(dir == FWD)
-		digitalWrite(MOTOR_LEFT_DIR_DPIN, LOW);
-	else if (dir == BWD)
-		digitalWrite(MOTOR_LEFT_DIR_DPIN, HIGH);
-}
+    if (dirLeft == FWD)
+        digitalWrite(MOTOR_LEFT_DIR_DPIN, LOW);
+    else if (dirLeft == BWD)
+        digitalWrite(MOTOR_LEFT_DIR_DPIN, HIGH);
 
-void WHSR::setMotorDirectionRight(char dir)
-{
-    if (dir == FWD)
+    if (dirRight == FWD)
         digitalWrite(MOTOR_RIGHT_DIR_DPIN, LOW);
-    else if (dir == BWD)
+    else if (dirRight == BWD)
         digitalWrite(MOTOR_RIGHT_DIR_DPIN, HIGH);
-}
-
-
-void WHSR::setMotorDirection (char left, char right)
-{
-	setMotorDirectionLeft(left);
-	setMotorDirectionRight(right);
 }
 
 /* ******************************************************************************************
@@ -154,45 +143,20 @@ void WHSR::setMotorDirection (char left, char right)
  * 
  * ****************************************************************************************** */
 
-void WHSR::setMotorSpeedLeft(int pwm, bool ChangeDirection)
+void WHSR::setMotorSpeed (int speedLeft, int speedRight)
 {
-	char tmp = constrain(abs(pwm), 0, 255);
+    char tmp = constrain(abs(speedLeft), 0, 255);
 #if defined(ARDUINO_AVR_NANO)
     OCR1A = tmp;
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
+    analogWrite(MOTOR_LEFT_PWM_DPIN, tmp);
 #endif
 
-    if(ChangeDirection)
-	{
-		if(pwm < 0)
-			setMotorDirectionLeft(MOTOR_FORWARD);
-		else
-			setMotorDirectionLeft(MOTOR_BACKWARD);
-			
-	}
-}
-
-void WHSR::setMotorSpeedRight(int pwm, bool ChangeDirection)
-{
-	char tmp = constrain(abs(pwm), 0, 255);
+    tmp = constrain(abs(speedRight), 0, 255);
 #if defined(ARDUINO_AVR_NANO)
     OCR1B = tmp;
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
+    analogWrite(MOTOR_RIGHT_PWM_DPIN, tmp);
 #endif
-
-    if(ChangeDirection)
-	{
-		if(pwm < 0)
-			setMotorDirectionRight(MOTOR_FORWARD);
-		else
-			setMotorDirectionRight(MOTOR_BACKWARD);
-			
-	}
-}
-
-void WHSR::setMotorSpeed (int left, int right, bool ChangeDirection)
-{
-	setMotorSpeedLeft(left, ChangeDirection);
-	setMotorSpeedRight(right, ChangeDirection);
 }
 

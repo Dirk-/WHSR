@@ -13,13 +13,13 @@ WHSR	KEYWORD1
 #######################################
 
 Init	KEYWORD2
-InitSerial	KEYWORD2
-InitLeds	KEYWORD2
-InitADC	KEYWORD2
-InitEngine	KEYWORD2
+initSerial	KEYWORD2
+initLEDs	KEYWORD2
+initADC	KEYWORD2
+initEngine	KEYWORD2
 InitEnginePWM	KEYWORD2
-InitSwitches	KEYWORD2
-InitSensors	KEYWORD2
+initSwitches	KEYWORD2
+initSensors	KEYWORD2
 SetADMUX	KEYWORD2
 ADCStartNext	KEYWORD2
 ADCStart	KEYWORD2

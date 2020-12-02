@@ -4,7 +4,7 @@
 //
 //	Diese Funktion initialisiert die RGB-LED
 //
-void WHSR::InitLEDs(void)
+void WHSR::initLEDs(void)
 {
     DebugSerial_print(F("Init LEDS"));
 	

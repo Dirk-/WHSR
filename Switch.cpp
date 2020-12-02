@@ -1,6 +1,11 @@
 
 #include "WHSR.h"
 
+// For copy & paste
+#if defined(ARDUINO_AVR_NANO)
+#elif defined(ARDUINO_ARDUINO_NANO33BLE)
+#endif
+
 #define SWITCH_ADC_PULLUP 11  // D11, Pin 14, BINT
 #define SWITCH_PIN A2               // A2 = D16 = ADC[2], BUT
 
@@ -12,7 +17,7 @@ volatile unsigned char switchInterruptAktiv = 0;
 //
 // Initialisiert die Kollisionserkennung
 //
-void WHSR::InitSwitches(void)
+void WHSR::initSwitches(void)
 {
     // Switch-Messschaltung aktivieren
 	pinMode(SWITCH_ADC_PULLUP, OUTPUT);
@@ -31,9 +36,13 @@ unsigned char WHSR::readSwitches(void)
 	}
 	else
 	{
-		DoCheckADCMode(SWITCH_ADC);
-		return (unsigned char)(( ( 10160000L / mySensorValues[SWITCH_ADC] - 10000L ) * SwitchFactor + 5000L ) / 10000);
-	}
+#if defined(ARDUINO_AVR_NANO)
+        DoCheckADCMode(SWITCH_ADC);
+        return (unsigned char)(((10160000L / mySensorValues[SWITCH_ADC] - 10000L) * SwitchFactor + 5000L) / 10000);
+#elif defined(ARDUINO_ARDUINO_NANO33BLE)
+        return (unsigned char)(((10160000L / analogRead(SWITCH_ADC) - 10000L) * SwitchFactor + 5000L) / 10000);
+#endif
+    }
 }
 
 //

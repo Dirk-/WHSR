@@ -6,7 +6,7 @@
 //	RobotSerial - Bluetooth Serial
 //	DebugSerial - Debug Serial
 //
-void WHSR::InitSerial()
+void WHSR::initSerial()
 {
 	RobotSerial.begin(REGULAR_BAUDRATE);
 	

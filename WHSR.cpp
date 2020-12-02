@@ -9,12 +9,12 @@ void WHSR::Init(void)
     interrupts();   // Enable interrupts (probably unneccessary)
 
     // Init the WHSR parts
-	InitSerial();
-	InitADC();
-	InitSwitches();
-	InitLEDs();
-	InitSensors();
-	InitEngine();
+	initSerial();
+	initADC();
+	initSwitches();
+	initLEDs();
+	initSensors();
+	initEngine();
 }
 
 
