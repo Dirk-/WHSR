@@ -41,4 +41,4 @@ Documentation
 
 ## Credits
 
-Library written by Maximilian Richter, based on the ASURINO library for the ASURO robot.
+Library written by Maximilian Richter, based on the [ASURINO library](https://github.com/Dirk-/Asurino-Library) for the ASURO robot.
