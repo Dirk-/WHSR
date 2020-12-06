@@ -124,19 +124,14 @@ unsigned long WHSR::getRPMSensorCount(char Side)
 /// @param dirRight FWD or BWD
 void WHSR::setMotorDirection(char dirLeft, char dirRight)
 {
-    // Zur Sicherheit, nutzt nichts
-    pinMode(MOTOR_LEFT_DIR_DPIN, OUTPUT);
-    pinMode(MOTOR_RIGHT_DIR_DPIN, OUTPUT);
-    setMotorSpeed(0, 0);
-    
     if (dirLeft == FWD)
         digitalWrite(MOTOR_LEFT_DIR_DPIN, LOW);
-    else if (dirLeft == BWD)
+    else
         digitalWrite(MOTOR_LEFT_DIR_DPIN, HIGH);
 
     if (dirRight == FWD)
         digitalWrite(MOTOR_RIGHT_DIR_DPIN, LOW);
-    else if (dirRight == BWD)
+    else
         digitalWrite(MOTOR_RIGHT_DIR_DPIN, HIGH);
 }
 
@@ -148,14 +143,16 @@ void WHSR::setMotorSpeed(int speedLeft, int speedRight)
 {
     char tmp = constrain(abs(speedLeft), 0, 255);
 #if defined(ARDUINO_AVR_NANO)
-    OCR1A = tmp;
+    //OCR1A = tmp;
+    analogWrite(MOTOR_LEFT_PWM_DPIN, tmp);
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
     analogWrite(MOTOR_LEFT_PWM_DPIN, tmp);
 #endif
 
     tmp = constrain(abs(speedRight), 0, 255);
 #if defined(ARDUINO_AVR_NANO)
-    OCR1B = tmp;
+    //OCR1B = tmp;
+    analogWrite(MOTOR_RIGHT_PWM_DPIN, tmp);
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
     analogWrite(MOTOR_RIGHT_PWM_DPIN, tmp);
 #endif
