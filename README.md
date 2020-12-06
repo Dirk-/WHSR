@@ -31,10 +31,9 @@ Works:
 - Switches
 - Ambient light sensors
 - Distance sensors
-- Motor speed control
+- Motor speed and dircection control
 
 Does not work:
-- Motors just drive forward
 - Interrupts
 - Odometry
 
