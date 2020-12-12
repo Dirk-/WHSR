@@ -98,8 +98,8 @@
 #define STANDARD_SWITCH_FACTOR 65L
 
 // Resistor values for battery voltage devider
-#define STANDARD_RESISTOR_OBEN 33000.0  // top resistor (R6)
-#define STANDARD_RESISTOR_UNTEN 10000.0 // bottom resistor (R7)
+#define STANDARD_RESISTOR_TOP 33000.0  // top resistor (R6)
+#define STANDARD_RESISTOR_BOTTOM 10000.0 // bottom resistor (R7)
 
 //
 // Internal Analog Referenz
@@ -185,8 +185,8 @@ public:
     long SwitchFactor = STANDARD_SWITCH_FACTOR;
     long InternalReferenceVoltage = STANDARD_INTERNAL_REFERENCE_VOLTAGE;
 
-    double ResistorOben = STANDARD_RESISTOR_OBEN;       // R6
-    double ResistorUnten = STANDARD_RESISTOR_UNTEN;     // R7
+    double ResistorOben = STANDARD_RESISTOR_TOP;       // R6
+    double ResistorUnten = STANDARD_RESISTOR_BOTTOM;     // R7
 
     /* ************************************************************************************
 	 *

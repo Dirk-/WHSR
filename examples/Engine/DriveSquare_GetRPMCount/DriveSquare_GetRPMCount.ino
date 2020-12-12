@@ -21,7 +21,7 @@ void setup()
 
 void loop()
 {
-	int data[2];
+	unsigned long data[2];
 	int timeForTurning = 800;	// Estimated time for making a right turn
 	int timeForOneEdge = 3000;	// Drive straight on for three seconds
 	int speed = 120;

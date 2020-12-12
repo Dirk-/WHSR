@@ -45,9 +45,9 @@ void loop()
         unsigned long data[2];
         robo.getRPMSensorCount(data);
         Serial.print("Left odometry count: ");
-        Serial.println(data[LEFT]);
+        Serial.println(data[SENSOR_LEFT]);
         Serial.print("Right odometry count: ");
-        Serial.println(data[RIGHT]);
+        Serial.println(data[SENSOR_RIGHT]);
 
         delay(250);
         speed = 100;

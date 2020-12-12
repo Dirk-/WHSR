@@ -31,11 +31,13 @@ Works:
 - Switches
 - Ambient light sensors
 - Distance sensors
-- Motor speed and dircection control
+- Motor speed and direction control
+- Odometry
 
 Does not work:
 - Interrupts
-- Odometry
+- Voltage sensors
+- Timer
 
 ### Documentation
 
