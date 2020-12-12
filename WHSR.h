@@ -135,8 +135,8 @@ D7/PD7: 7
 //
 //	Engine, H-Bridge, Odometry
 //
-#define ROTATIONAL_SPEED_LEFT_DPIN 2 // Pin 5
-#define ROTATIONAL_SPEED_RIGHT_DPIN 3    // Pin 6
+#define ROT_TICKS_LEFT_DPIN 2 // Pin 5
+#define ROT_TICKS_RIGHT_DPIN 3 // Pin 6
 
 #define MOTOR_LEFT_PWM_DPIN 9   // Pin 12
 #define MOTOR_RIGHT_PWM_DPIN 10 // Pin 13
@@ -284,8 +284,7 @@ public:
 
     void setMotorSpeed(int speedLeft, int speedRight);
 
-    void getRPMSensorCount(int *data);
-    unsigned long getRPMSensorCount(char Side);
+    void getRPMSensorCount(unsigned long *data);
 
     /* ************************************************************************************
 	 *
@@ -329,14 +328,6 @@ public:
     void TimerStop();
     void TimerOverflow();
 
-    /* ************************************************************************************
-	 *
-	 *	Kompatibilität mit dem ASURO
-	 *
-	 * ************************************************************************************ */
-
-    void readOdometry(int *data);
-    unsigned long readOdometry(char Side);
 
 private:
     static WHSR *myRobot;
@@ -383,15 +374,6 @@ private:
 
     volatile char ADCPos = 0;
     volatile bool ADCBlockPassed = false;
-
-    /* ************************************************************************************
-	 *
-	 *	Motor
-	 *
-	 * ************************************************************************************ */
-
-    volatile unsigned long RPMSensorCountRight = 0;
-    volatile unsigned long RPMSensorCountLeft = 0;
 
     /* ************************************************************************************
 	 *

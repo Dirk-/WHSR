@@ -1,6 +1,9 @@
 
 #include "WHSR.h"
 
+volatile unsigned long RPMSensorCountRight = 0;
+volatile unsigned long RPMSensorCountLeft = 0;
+
 //
 //	Initialisiert die beiden H-Brücken
 //
@@ -34,6 +37,9 @@ void WHSR::initEngine()
 
     EIMSK = (1 << INT1) | (1 << INT0); // Enable Interrupt
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
+    // Interrupts an die Odometrie-Pins hängen
+    attachInterrupt(digitalPinToInterrupt(ROT_TICKS_LEFT_DPIN), WHSR::RPMLeftISR, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(ROT_TICKS_RIGHT_DPIN), WHSR::RPMRightISR, CHANGE);
 #endif
 }
 
@@ -66,6 +72,7 @@ void WHSR::initEnginePWM()
 	
 	TIMSK1 |= (1 << TOIE1);
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
+    // Nichts nötig
 #endif
 }
 
@@ -86,36 +93,12 @@ void WHSR::RPMRight(void)
 }
 
 
-/// Returns the rotational sensor count for both wheels
+/// Returns the rotational sensor count for both wheels.
 /// @param data int array which contains the two sensor values upon return
-void WHSR::getRPMSensorCount(int *data)
+void WHSR::getRPMSensorCount(unsigned long *data)
 {
 	data[SENSOR_LEFT] = RPMSensorCountLeft;
 	data[SENSOR_RIGHT] = RPMSensorCountRight;
-
-	RPMSensorCountLeft = 0;
-	RPMSensorCountRight = 0;
-}
-
-
-/// Returns the rotational sensor count for the given wheel
-/// @param Side SENSOR_LEFT or SENSOR_RIGHT
-unsigned long WHSR::getRPMSensorCount(char Side)
-{
-	unsigned long tmp;
-	
-	if(Side == SENSOR_LEFT)
-	{
-		tmp = RPMSensorCountLeft;
-		RPMSensorCountLeft = 0;
-	}
-	else
-	{
-		tmp = RPMSensorCountRight;
-		RPMSensorCountRight = 0;
-	}
-	
-	return tmp;
 }
 
 
