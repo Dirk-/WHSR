@@ -40,7 +40,7 @@ void timerISR()
 void setup()
 {
     // Initialize all functional modules of the robot
-	robo.Init();
+    robo.Init();
     robo.TimerSet(2000, timerISR);              // Set timer to two seconds
     robo.TimerStart();
 
