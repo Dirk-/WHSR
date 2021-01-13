@@ -1,4 +1,3 @@
-
 /*
   AmbientLight
 
@@ -16,7 +15,8 @@ WHSR robo = WHSR();
 
 void setup()
 {
-	robo.Init();    // Initialize all functional modules of the robot
+	// Initialize all functional modules of the robot
+	robo.Init();
 
 	Serial.println("Ambient Light Test");
 }
@@ -36,6 +36,6 @@ void loop()
 	Serial.print("Right: ");
 	Serial.println(data[SENSOR_RIGHT]);
 		
-    // Pause for a second
-	delay(1000);
+	// Pause for a second	
+	delay(1000);	
 }

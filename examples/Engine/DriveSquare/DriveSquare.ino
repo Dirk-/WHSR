@@ -1,10 +1,21 @@
+/*
+  DriveSquare
+
+  This example for the Westphalian University's WHSR lerning robot shows how to
+  drive a square with the robot.
+
+  This example code is in the public domain. For more information, see
+  https://github.com/Dirk-/WHSR
+*/
 
 #include <WHSR.h>
 
+// We need one instance of the WHSR class to handle the robot
 WHSR robo = WHSR();
 
 void setup()
 {
+	// Initialize all functional modules of the robot
 	robo.Init();
 
 	// Wait some time to give the user a chance to program the robot before it starts moving
