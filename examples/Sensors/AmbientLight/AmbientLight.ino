@@ -17,7 +17,6 @@ void setup()
 {
 	// Initialize all functional modules of the robot
 	robo.Init();
-
 	Serial.println("Ambient Light Test");
 }
 
