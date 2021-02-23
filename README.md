@@ -1,6 +1,6 @@
 # WHSR
 
-![alt text](https://github.com/Dirk-/WHSR/blob/master/images/WHSR2.0.png "WHSR v2.0")
+![alt text](https://github.com/KavinSethukumar/WHSR/tree/master/images/WHSR2.0.png "WHSR v2.0")
 
 Firmware for an educational robot of Westfälische Hochschule (Westphalian University of Applied Sciences, Gelsenkirchen, Germany). The WHSR ("Wizzer") is a successor for the ASURO robot at our university. It has similar but enhanced features compared to the ASURO, such as Arduino Nano or Maple Mini compatibility and Bluetooth connection.
 
