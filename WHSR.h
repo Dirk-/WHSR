@@ -138,8 +138,8 @@ D7/PD7: 7
 #define ROT_TICKS_LEFT_DPIN 2 // Pin 5
 #define ROT_TICKS_RIGHT_DPIN 3 // Pin 6
 
-#define MOTOR_LEFT_PWM_DPIN 9   // Pin 12
-#define MOTOR_RIGHT_PWM_DPIN 10 // Pin 13
+#define MOTOR_LEFT_PWM_DPIN 10 // Pin 13
+#define MOTOR_RIGHT_PWM_DPIN 9 // Pin 12
 
 #define MOTOR_LEFT_DIR_DPIN 13  // Pin 16
 #define MOTOR_RIGHT_DIR_DPIN 12 // Pin 15
