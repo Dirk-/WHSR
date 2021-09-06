@@ -328,12 +328,17 @@ float WHSR::readBattery(void)
     DebugSerial_print(result);
     DebugSerial_print(F("; "));
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
-    Serial.print("AR_VDD: ");
-    Serial.println(AR_VDD);
-    Serial.print(" BATTERY_ADC: ");
-    Serial.println(analogRead(BATTERY_ADC));
-    float VAdc = (3.3 / 1023) * analogRead(BATTERY_ADC);
-    float result = VAdc * ((ResistorOben + ResistorUnten) / ResistorUnten);
+    DebugSerial_print("AR_VDD: ");
+    DebugSerial_println(AR_VDD);
+    DebugSerial_print(" BATTERY_ADC: ");
+    DebugSerial_println(analogRead(BATTERY_ADC));
+
+  // Voltage calulation with measurements:
+  // 4.69 V => BATTERY_ADC = 978
+  // 8.12 V => BATTERY_ADC = 782
+  float result = -0.0175 * analogRead(BATTERY_ADC) + 21.805;
+  DebugSerial_print(" Result: ");
+  DebugSerial_println(result);
 #endif
 
     return (result);

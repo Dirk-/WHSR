@@ -33,10 +33,10 @@ Works:
 - Distance sensors
 - Motor speed and direction control
 - Odometry
+- Voltage sensor
 
 Does not work:
 - Interrupts
-- Voltage sensors
 - Timer
 
 ### Documentation
