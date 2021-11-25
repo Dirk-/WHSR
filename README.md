@@ -43,9 +43,6 @@ Does not work:
 
 - Clean up library and examples
 
-## Hints
-
-- The F() macro used in the DebugSerial_print statements is for saving RAM (https://www.baldengineer.com/arduino-f-macro.html)
 
 ## Credits
 

@@ -16,7 +16,7 @@ int ADCvalue = 0;
 //
 void WHSR::initADC(void)
 {
-	DebugSerial_print(F("Init ADC"));
+	DebugSerial_print("Init ADC");
 
 #if defined(ARDUINO_AVR_NANO)
     ADCPos = 0;
@@ -37,7 +37,7 @@ void WHSR::initADC(void)
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
 #endif
 
-    DebugSerial_println(F(" - Finished"));
+    DebugSerial_println(" - Finished");
 }
 
 //
@@ -128,7 +128,7 @@ void WHSR::ADCInterrupt(void)
 
     /*
 	DebugSerial_print(ADCPos, DEC);
-	DebugSerial_print(F(" "));
+	DebugSerial_print(" ");
 	DebugSerial_println(mySensorValues[ADCPos]);
 	*/
     if(ADCPos == SWITCH_ADC)
@@ -163,11 +163,11 @@ void WHSR::DoCheckADCMode(char channel)
 		ADCStart(channel);
 		ADCWaitForConversion();
 		
-		DebugSerial_print(F(" "));
+		DebugSerial_print(" ");
 		DebugSerial_print(channel, DEC);
-		DebugSerial_print(F(": "));
+		DebugSerial_print(": ");
 		DebugSerial_print(mySensorValues[channel]);
-		DebugSerial_print(F(". "));
+		DebugSerial_print(". ");
 	}
 }
 

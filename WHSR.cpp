@@ -301,7 +301,7 @@ float WHSR::readVref(void)
     DebugSerial_print(readVreference());
     DebugSerial_print(" Vref: ");
     DebugSerial_print(result);
-    DebugSerial_print(F("; "));
+    DebugSerial_print("; ");
 
     return result;
 }
@@ -320,13 +320,13 @@ float WHSR::readBattery(void)
     float VAdc = (vref / 1023) * mySensorValues[BATTERY_ADC];
     float result = VAdc * ((ResistorOben + ResistorUnten) / ResistorUnten);
 
-    DebugSerial_print(F(" B1: "));
+    DebugSerial_print(" B1: ");
     DebugSerial_print(mySensorValues[BATTERY_ADC]);
-    DebugSerial_print(F(" B2: "));
+    DebugSerial_print(" B2: ");
     DebugSerial_print(VAdc);
-    DebugSerial_print(F(" ->: "));
+    DebugSerial_print(" ->: ");
     DebugSerial_print(result);
-    DebugSerial_print(F("; "));
+    DebugSerial_print("; ");
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
     DebugSerial_print("AR_VDD: ");
     DebugSerial_println(AR_VDD);
