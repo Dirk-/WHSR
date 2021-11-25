@@ -372,7 +372,7 @@ private:
 
     void DoCheckADCMode(char channel);
 
-    volatile char ADCPos = 0;
+    volatile byte ADCPos = 0;
     volatile bool ADCBlockPassed = false;
 
     /* ************************************************************************************
