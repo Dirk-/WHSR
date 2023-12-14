@@ -229,9 +229,6 @@ void WHSR::setMotorDirection(char dirLeft, char dirRight)
         digitalWrite(MOTOR_RIGHT_DIR_DPIN, HIGH);
 }
 
-/// Set the motor speed
-/// @param speedLeft 0..255
-/// @param speedRight 0..255
 void WHSR::setMotorSpeed(int speedLeft, int speedRight)
 {
     char tmp = constrain(abs(speedLeft), 0, 255);

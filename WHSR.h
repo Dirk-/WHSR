@@ -280,8 +280,14 @@ public:
             myRobot->RPMRight();
     }
 
+    /// @brief Sets the direction of rotation of the two motors
+    /// @param dirLeft MOTOR_FORWARD or MOTOR_BACKWARD
+    /// @param dirRight MOTOR_FORWARD or MOTOR_BACKWARD
     void setMotorDirection(char dirLeft, char dirRight);
 
+    /// @brief Sets the motor speed
+    /// @param speedLeft 0..MAX_SPEED
+    /// @param speedRight 0..MAX_SPEED
     void setMotorSpeed(int speedLeft, int speedRight);
 
     void getRPMSensorCount(unsigned long *data);
