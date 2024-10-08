@@ -331,9 +331,10 @@ float WHSR::readBattery(void)
     DebugSerial_println(analogRead(BATTERY_ADC));
 
   // Voltage calulation with measurements:
-  // 4.69 V => BATTERY_ADC = 978
-  // 8.12 V => BATTERY_ADC = 782
-  float result = -0.0175 * analogRead(BATTERY_ADC) + 21.805;
+  // 7,11 V => BATTERY_ADC = 338
+  // 6,48 V => BATTERY_ADC = 412
+  //float result = -0.0175 * analogRead(BATTERY_ADC) + 21.805;
+  float result = (338 - analogRead(BATTERY_ADC))/74.0 * 0.63 + 7.11;
   DebugSerial_print(" Result: ");
   DebugSerial_println(result);
 #endif
