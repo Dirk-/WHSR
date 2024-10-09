@@ -311,6 +311,8 @@ public:
     void switchInterruptOff(void);
     void switchInterrupt(void);
 
+    // Von hinten durch die Brust ins Auge,
+    // damit man hier eine andere Funktion aufrufen könnte
     static void SwitchISR(void)
     {
         if (myRobot != NULL)

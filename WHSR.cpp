@@ -2,6 +2,10 @@
 
 WHSR * WHSR::myRobot = NULL;
 
+void blink() {
+  WHSR::SwitchISR();
+}
+
 void WHSR::Init(void)
 {
 	myRobot = this;
@@ -17,7 +21,6 @@ void WHSR::Init(void)
 	initEngine();
 }
 
-
 // Attach the default Interrupt Service Routines to the interrupts
 #if defined(ARDUINO_AVR_NANO)
 ISR(ADC_vect) { WHSR::ADCInterruptISR(); }
@@ -27,6 +30,7 @@ ISR(INT1_vect) { WHSR::RPMRightISR(); }
 ISR(TIMER2_OVF_vect) { WHSR::TimerOverflowISR(); }
 ISR(PCINT1_vect) { WHSR::SwitchISR(); }
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
+//ISR(PCINT1_vect) { WHSR::SwitchISR(); }
 #endif
 
 // ----------------------------------------- Serial Port ------------------------------------------
