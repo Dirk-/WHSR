@@ -73,7 +73,7 @@
 // to use DebugSerial_print and DebugSerial_println in your own sketches.
 // You can leave these calls in your final sketch, if you set DEBUG to false,
 // they will not send anything.
-#define DEBUG true
+#define DEBUG false
 
 #if DEBUG == true
 // Use the regular Serial port

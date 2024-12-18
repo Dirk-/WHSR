@@ -38,11 +38,11 @@ unsigned char WHSR::readSwitches(void)
 	{
 #if defined(ARDUINO_AVR_NANO)
     DoCheckADCMode(SWITCH_ADC);
-	int adcValue = mySensorValues[SWITCH_ADC];
+	long adcValue = mySensorValues[SWITCH_ADC];
 	adcValue = adcValue == 0 ? 1 : adcValue; // Don't divide by zero
     return (unsigned char)(((10160000L / adcValue - 10000L) * SwitchFactor + 5000L) / 10000);
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
-	int adcValue = analogRead(SWITCH_ADC);
+	long adcValue = analogRead(SWITCH_ADC);
     DebugSerial_print("SWITCH_ADC: ");
     DebugSerial_println(adcValue);
 	adcValue = adcValue == 0 ? 1 : adcValue; // Don't divide by zero
