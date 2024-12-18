@@ -148,8 +148,8 @@ D7/PD7: 7
 // LED-Ports
 //
 #define STATUSLED_GREEN_DPIN   5  // Pin 8
-#define STATUSLED_RED_DPIN     6  // Pin 9
-#define STATUSLED_BLUE_DPIN    7  // Pin 10
+#define STATUSLED_BLUE_DPIN    6  // Pin 9, not according to documentation
+#define STATUSLED_RED_DPIN     7  // Pin 10, not according to documentation
 
 //
 // Sensors
