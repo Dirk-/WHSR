@@ -283,9 +283,10 @@ unsigned int WHSR::readVreference(void)
     DoCheckADCMode(REFERENCE_PIN);
     return mySensorValues[REFERENCE_PIN];
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
-    // TODO: REFERENCE_PIN gibt es nicht beim 33 BLE
-    //return analogRead(REFERENCE_PIN);
-    return 0;
+    // TODO: REFERENCE_PIN not available on 33 BLE
+    // We return the value for 3,26 V
+    // https://docs.arduino.cc/language-reference/en/functions/analog-io/analogReference/
+    return 1011;
 #endif
 }
 
@@ -294,7 +295,7 @@ unsigned int WHSR::readVreference(void)
  * 
  * @return reference voltage [V]
  */
-float WHSR::readVref(void)
+float WHSR::readReferenceVoltage(void)
 {
     float result = (InternalReferenceVoltage * (readVreference() / 1023.0)) / 1000;
 
@@ -312,14 +313,14 @@ float WHSR::readVref(void)
  * 
  * @return battery voltage [V] 
  */
-float WHSR::readBattery(void)
+float WHSR::readBatteryVoltage(void)
 {
 #if defined(ARDUINO_AVR_NANO)
-    float vref = readVref();
+    float vref = readReferenceVoltage();
 
     DoCheckADCMode(BATTERY_ADC);
     float VAdc = (vref / 1023) * mySensorValues[BATTERY_ADC];
-    float result = VAdc * ((ResistorOben + ResistorUnten) / ResistorUnten);
+    float batteryVoltage = VAdc * ((ResistorOben + ResistorUnten) / ResistorUnten);
 
     DebugSerial_print(" B1: ");
     DebugSerial_print(mySensorValues[BATTERY_ADC]);
@@ -329,21 +330,20 @@ float WHSR::readBattery(void)
     DebugSerial_print(result);
     DebugSerial_print("; ");
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
-    DebugSerial_print("AR_VDD: ");
-    DebugSerial_println(AR_VDD);
+    int batteryADC = analogRead(BATTERY_ADC);
     DebugSerial_print(" BATTERY_ADC: ");
-    DebugSerial_println(analogRead(BATTERY_ADC));
+    DebugSerial_println(batteryADC);
 
   // Voltage calulation with measurements:
-  // 7,11 V => BATTERY_ADC = 338
-  // 6,48 V => BATTERY_ADC = 412
-  //float result = -0.0175 * analogRead(BATTERY_ADC) + 21.805;
-  float result = (338 - analogRead(BATTERY_ADC))/74.0 * 0.63 + 7.11;
-  DebugSerial_print(" Result: ");
-  DebugSerial_println(result);
+  // V1 = 4,66 V => adc1 = 334
+  // V2 = 8,13 V => adc2 = 584
+  // V = (adc - adc1) / (adc2 - adc1) * (V2 - V1) + V1
+  float batteryVoltage = (batteryADC - 334) * 0.01388 + 4.66;
+  DebugSerial_print(" batteryVoltage: ");
+  DebugSerial_println(batteryVoltage);
 #endif
 
-    return (result);
+    return (batteryVoltage);
 }
 
 /**

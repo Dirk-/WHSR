@@ -104,10 +104,11 @@
 //
 // Internal Analog Referenz
 //
+#if defined(ARDUINO_AVR_NANO)
 #define STANDARD_INTERNAL_REFERENCE_VOLTAGE 4459L // in mV                           
-                                                  // Kann gemessen/berechnet werden: 
-                                                  //( Vcc / 1024 ) * Asuro::readVreference(void)
-
+#elif defined(ARDUINO_ARDUINO_NANO33BLE)
+#define STANDARD_INTERNAL_REFERENCE_VOLTAGE 3300L // in mV                           
+#endif
 
 // _____________________________________ IO Pins _____________________________________
 
@@ -237,8 +238,8 @@ public:
 	 * ************************************************************************************ */
 
     unsigned int readVreference(void);
-    float readBattery(void);
-    float readVref(void);
+    float readBatteryVoltage(void);
+    float readReferenceVoltage(void);
 
     void readLinesensor(int *data, unsigned char LightStatus);
     void readLinesensor(int *data);

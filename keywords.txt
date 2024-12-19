@@ -27,8 +27,8 @@ ADCWaitForConversion	KEYWORD2
 DoCheckADCMode	KEYWORD2
 
 readVreference	KEYWORD2
-readBattery	KEYWORD2
-readVref	KEYWORD2
+readBatteryVoltage	KEYWORD2
+readReferenceVoltage	KEYWORD2
 readLinesensor	KEYWORD2
 readDistance	KEYWORD2
 readAmbientLight	KEYWORD2

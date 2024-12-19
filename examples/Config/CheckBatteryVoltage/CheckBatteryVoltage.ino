@@ -14,10 +14,10 @@ void setup()
 void loop()
 {
  Serial.print("Vref: ");
-  Serial.println(robo.readVref());
+  Serial.println(robo.readReferenceVoltage());
   
   Serial.print("Vbat: ");
-  Serial.println(robo.readBattery());
+  Serial.println(robo.readBatteryVoltage());
   delay(1000);
 	
 }

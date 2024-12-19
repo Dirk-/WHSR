@@ -22,13 +22,11 @@ void setup()
 
 void loop()
 {
-#if defined(ARDUINO_AVR_NANO)
 	Serial.print("Vref: ");
-	Serial.println(robo.readVref());				// Read reference voltage
-#elif defined(ARDUINO_ARDUINO_NANO33BLE)
-	Serial.println("Vref nicht definiert");			// Not defined
-#endif
+	Serial.println(robo.readReferenceVoltage());
+
 	Serial.print("Vbat: ");
-	Serial.println(robo.readBattery());				// Read battery voltage
-	delay(1000);									// Pause for a second
+	Serial.println(robo.readBatteryVoltage());
+
+	delay(1000);	// Pause for a second
 }
