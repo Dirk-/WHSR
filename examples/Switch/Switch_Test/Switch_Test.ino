@@ -1,5 +1,5 @@
 /*
-  Switch_Interrupt
+  Switch_Test.ino - Example for the WHSR library
 
   This example for the Westphalian University's WHSR lerning robot shows how to 
   read out the value of the switch of the robot. It is also used to check which 
@@ -23,15 +23,18 @@ void setup()
 
 void loop()
 {
-  // Communicate value
+  // Get joint value of all switches
   int switchvalue = robo.readSwitches();
 
-  //Print switch input value in binary form, should show a 1 for each pressed switch
-  // This is not compatible with the Arduino Nano 33 BLE.
+  // Print switch input value in binary form, should show a 1 for each pressed switch
+  // This does not yet work properly on the Arduino Nano 33 BLE.
   Serial.print(switchvalue, BIN);
+
+  // Print switch input value in decimal form
   Serial.print(" (");
   Serial.print(switchvalue);
   Serial.println(")");
   
-  delay(100);                            // Pause for 100 milliseconds
+  // Pause for 200 milliseconds
+  delay(200);
 }
