@@ -3,8 +3,7 @@
 
   This example for the Westphalian University's WHSR lerning robot shows how to 
   change the color of the LED with the help of a timer. The timer is called again 
-  after the specified time has elapsed. It does not work properly on the Arduino 
-  Nano 33 BLE. 
+  after the specified time has elapsed. 
 
   This example code is in the public domain. For more information, see
   https://github.com/Dirk-/WHSR
@@ -15,8 +14,12 @@
 // We need one instance of the WHSR class to handle the robot
 WHSR robo = WHSR();
 
-volatile int color = COLOR_BLUE;            // Sets the first color of the LED
+// This variable gets changed in the timer ISR, so you have to signal the compiler that it is volatile, 
+// otherwise the compiler might optimize it away and your timer will not work as expected.
+volatile int color = COLOR_BLUE;
 
+// This is your timer Interrupt service routine. It is called every time the timer overflows, 
+// in this case every 3000 ms.
 void timerISR()
 {
     switch (color)
@@ -41,7 +44,7 @@ void setup()
 {
     // Initialize all functional modules of the robot
     robo.Init();
-    robo.TimerSet(2000, timerISR);              // Set timer to two seconds
+    robo.TimerSet(3000, timerISR);              // Set timer to three seconds
     robo.TimerStart();
 
     Serial.println("Timer Test");

@@ -34,10 +34,10 @@ Works:
 - Motor speed and direction control
 - Odometry
 - Voltage sensor
+- Timer
 
 Does not work:
-- Interrupts
-- Timer
+- External interrupts
 
 ### Documentation
 

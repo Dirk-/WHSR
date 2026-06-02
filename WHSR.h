@@ -323,6 +323,16 @@ public:
     /* ************************************************************************************
 	 *
 	 *	Timer
+     *
+     *  Use robo.TimerSet(2000, timerISR); to define your own timer functionality
+     *  in your sketch.
+     * 
+     *  void timerISR()
+     *  {
+     *   // do something every 2000 ms
+     *  }
+     * 
+     *  WHSR uses TIMER3 on the Nano 33 BLE.
 	 *
 	 * ************************************************************************************ */
 
