@@ -35,6 +35,11 @@ void WHSR::initADC(void)
 										// 50KHz < FCPU / Prescaler < 200Khz
 	
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
+    // The nRF52840 ADC defaults to 12-bit resolution (0-4095).
+    // All library calculations assume 10-bit (0-1023), so force 10-bit here.
+    analogReadResolution(10);
+    // Reference is VDD (3.3V) by default; make it explicit.
+    analogReference(AR_VDD);
 #endif
 
     DebugSerial_println(" - Finished");
