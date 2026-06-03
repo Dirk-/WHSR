@@ -155,6 +155,8 @@ void WHSR::SetADMUX(char pin)
     ADMUX &= 0xf0;              // Kanal-Bits auf null setzen
 	ADMUX |= (pin & 0b1111);    // Gewünschten Kanal wählen
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
+	// Bei der Nano 33 BLE wird der Kanal direkt an analogRead übergeben, 
+	// hier muss nichts eingestellt werden
 #endif
 }
 
