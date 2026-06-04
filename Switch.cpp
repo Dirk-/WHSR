@@ -14,7 +14,9 @@
 #define SWITCH_PRESS_WAIT        1  // ISR fired, ADC read pending (Nano 33 BLE)
 #define SWITCH_PRESS_READY       2  // ADC read done, value available for sketch
 #define SWITCH_PRESS_DONE        3  // Value consumed by sketch
-volatile unsigned char switchInterruptState = SWITCH_PRESS_NONE;
+// Das ist nicht das gleiche wie switchInterruptState:
+volatile unsigned char switchInterruptAktiv = 0;
+volatile unsigned char warDrin = 0;
 
 //
 // Initialisiert die Kollisionserkennung
@@ -31,9 +33,11 @@ void WHSR::initSwitches(void)
 //
 unsigned char WHSR::readSwitches(void)
 {
-	if(switchInterruptState == SWITCH_PRESS_READY)
+	DebugSerial_print("readSwitches() war drin: ");
+    DebugSerial_println(warDrin);
+	if(switchInterruptAktiv == SWITCH_PRESS_READY)
 	{
-		switchInterruptState = SWITCH_PRESS_DONE;
+		switchInterruptAktiv = SWITCH_PRESS_DONE;
 		return switchValue;
 	}
 #if defined(ARDUINO_AVR_NANO)
@@ -45,7 +49,7 @@ unsigned char WHSR::readSwitches(void)
     return (unsigned char)(((10160000L / adcValue - 10000L) * SwitchFactor + 5000L) / 10000);
 	}
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
-    if(switchInterruptState == SWITCH_PRESS_WAIT)
+    if(switchInterruptAktiv == SWITCH_PRESS_WAIT)
     {
         // ISR already set D11 LOW; just wait for settling and read.
         delay(2);
@@ -54,16 +58,18 @@ unsigned char WHSR::readSwitches(void)
     DebugSerial_println(adcValue);
         adcValue = adcValue == 0 ? 1 : adcValue;
         switchValue = (unsigned char)(((10160000L / adcValue - 10000L) * SwitchFactor + 5000L) / 10000);
-        switchInterruptState = SWITCH_PRESS_READY;
+        switchInterruptAktiv = SWITCH_PRESS_READY;
         switchInterruptOn(); // re-arm: sets D11 HIGH and re-attaches interrupt (same as AVR)
+		switchInterruptAktiv = SWITCH_PRESS_DONE;
         return switchValue;
     }
 
     // Direct polling read (interrupt mode not active)
 	long adcValue = analogRead(SWITCH_PIN); // use pin constant, not channel index
-    DebugSerial_print("SWITCH_ADC: ");
+    DebugSerial_print("SWITCH_ADC ohne Interrupt: ");
     DebugSerial_println(adcValue);
 	adcValue = adcValue == 0 ? 1 : adcValue; // Don't divide by zero
+	switchInterruptAktiv = SWITCH_PRESS_DONE;
     return (unsigned char)(((10160000L / adcValue - 10000L) * SwitchFactor + 5000L) / 10000);
 #endif
 }
@@ -91,7 +97,7 @@ void WHSR::switchInterruptOn(void)
     attachInterrupt(digitalPinToInterrupt(SWITCH_PIN), SwitchISR, CHANGE);
 #endif
 
-    SWITCH_INTERRUPT_STATE = SWITCH_INTERRUPT_IDLE;
+    switchInterruptState = SWITCH_INTERRUPT_IDLE;
 }
 
 //
@@ -110,7 +116,7 @@ void WHSR::switchInterruptOff(void)
     detachInterrupt(digitalPinToInterrupt(SWITCH_PIN));
 #endif
 
-    SWITCH_INTERRUPT_STATE = SWITCH_INTERRUPT_NONE;
+    switchInterruptState = SWITCH_INTERRUPT_NONE;
 }
 
 //
@@ -121,9 +127,9 @@ bool WHSR::switchAvailable()
 #if defined(ARDUINO_ARDUINO_NANO33BLE)
     // PRESS_WAIT: ISR fired, readSwitches() still needs to do the ADC read
     // PRESS_READY: ADC read done, value is waiting for the sketch
-    return switchInterruptState == SWITCH_PRESS_WAIT || switchInterruptState == SWITCH_PRESS_READY;
+    return switchInterruptAktiv == SWITCH_PRESS_WAIT || switchInterruptAktiv == SWITCH_PRESS_READY;
 #else
-	return switchInterruptState == SWITCH_PRESS_READY;
+	return switchInterruptAktiv == SWITCH_PRESS_READY;
 #endif
 }
 
@@ -135,13 +141,13 @@ void WHSR::switchInterruptSeviceRoutine(void)
     // Interrupts sind deaktiviert beim Eintritt in ISR
 
     // - On release (DONE + pin HIGH): reset state
-	if(switchInterruptState == SWITCH_PRESS_DONE && digitalRead(SWITCH_PIN) == HIGH)
+	if(switchInterruptAktiv == SWITCH_PRESS_DONE && digitalRead(SWITCH_PIN) == HIGH)
 	{
-		switchInterruptState = SWITCH_PRESS_NONE;
+		switchInterruptAktiv = SWITCH_PRESS_NONE;
 		return; 
 	}
 	
-	if(switchInterruptState != SWITCH_PRESS_NONE ||		// Wenn schon einmal ein Button gedrückt wurde oder
+	if(switchInterruptAktiv != SWITCH_PRESS_NONE ||		// Wenn schon einmal ein Button gedrückt wurde oder
 	   digitalRead(SWITCH_PIN) == HIGH)	// wenn kein Button gedrückt wurde
 		return;
 
@@ -153,10 +159,10 @@ void WHSR::switchInterruptSeviceRoutine(void)
     // detachInterrupt() and digitalWrite() are safe to call from ISR context on mbed.
     detachInterrupt(digitalPinToInterrupt(SWITCH_PIN)); // disable, same as AVR switchInterruptOff()
     digitalWrite(SWITCH_ADC_PULLUP, LOW);               // switch to measurement mode
-    switchInterruptState = SWITCH_PRESS_WAIT;
+    switchInterruptAktiv = SWITCH_PRESS_WAIT;
 #else
 	
-	++switchInterruptState;
+	switchInterruptAktiv = SWITCH_PRESS_WAIT;
 	noInterrupts();
 	
     // Ausschalten, damit der analoge Wert gelesen werden kann
@@ -170,7 +176,7 @@ void WHSR::switchInterruptSeviceRoutine(void)
     // Wieder einschalten
 	switchInterruptOn();	
 	
-	++switchInterruptState;
+	switchInterruptAktiv = SWITCH_PRESS_READY;
 
 	interrupts();
     // Interrupts werden nach ISR aktiviert

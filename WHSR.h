@@ -37,14 +37,6 @@
 #define COLOR_CYAN      0b011
 
 //
-// Interrupt states of the collision switches
-//
-#define SWITCH_INTERRUPT_NONE    0b01 // 1, do not use interrupt, use polling
-#define SWITCH_INTERRUPT_IDLE    0b00 // 0, nothing to do
-#define SWITCH_INTERRUPT_WAIT    0b10 // 2, wait for ADC conversion to finish
-#define SWITCH_INTERRUPT_DO      0b11 // 3, start ADC conversion
-
-//
 // Sensor constants
 //
 #define SENSOR_LEFT     0   // Index for left sensor value in data array
@@ -102,7 +94,8 @@
 #define STANDARD_RESISTOR_BOTTOM 10000.0 // bottom resistor (R7)
 
 //
-// Internal Analog Referenz
+// Internal analog reference voltage in mV, used for battery voltage calculation 
+// and as reference for the ADC
 //
 #if defined(ARDUINO_AVR_NANO)
 #define STANDARD_INTERNAL_REFERENCE_VOLTAGE 4459L // in mV                           
@@ -347,7 +340,9 @@ public:
     void TimerStop();
     void TimerOverflow();
 
-
+// ------------------------------------------------------------------------------------
+// -------------------- End of public functions, variables and ISRs -------------------
+// ------------------------------------------------------------------------------------
 private:
     static WHSR *myRobot;
     volatile int mySensorValues[9];
@@ -364,7 +359,6 @@ private:
     void initADC(void);
     void initEngine(void);
     void initEnginePWM(void);
-
     void initSwitches(void);
     void initSensors(void);
 
@@ -374,7 +368,16 @@ private:
 	 *
 	 * ************************************************************************************ */
 
-    volatile unsigned char SWITCH_INTERRUPT_STATE = SWITCH_INTERRUPT_NONE;
+    //
+    // Interrupt states of the collision switches
+    //
+#define SWITCH_INTERRUPT_NONE    0b01 // 1, do not use interrupt, use polling
+#define SWITCH_INTERRUPT_IDLE    0b00 // 0, nothing to do
+#define SWITCH_INTERRUPT_WAIT    0b10 // 2, wait for ADC conversion to finish
+#define SWITCH_INTERRUPT_DO      0b11 // 3, start ADC conversion
+
+    // We need this here, because Switch.cpp and ADC.cpp both need it.
+    volatile unsigned char switchInterruptState = SWITCH_INTERRUPT_NONE;
     volatile unsigned char switchValue = 0;
     
     /* ************************************************************************************
@@ -403,6 +406,7 @@ private:
     volatile unsigned long TimerCount = 0;
     volatile unsigned int TimerOverflowCount = 0;
     volatile unsigned int TimerTcnt2 = 0;
+    
     unsigned long TimerWaitTime = 0;
 
     void (*TimerISRfunction)();

@@ -3,7 +3,7 @@
 
 // Hier wird der ADC-Wert gespeichert, wenn wir die Arduino-Routinen für Nano 33 BLE nutzen
 // (Äquivalent zum ADC-Register des Nano)
-int ADCvalue = 0;
+volatile int ADCvalue = 0;
 
 /* ************************************************************************************
  *
@@ -16,8 +16,6 @@ int ADCvalue = 0;
 //
 void WHSR::initADC(void)
 {
-	DebugSerial_print("Init ADC");
-
 #if defined(ARDUINO_AVR_NANO)
     ADCPos = 0;
 	ADMUX = (0<<REFS1) | (1<<REFS0) | 	// ReferenzSpannung 01 -> Extern
@@ -41,8 +39,6 @@ void WHSR::initADC(void)
     // Reference is VDD (3.3V) by default; make it explicit.
     analogReference(AR_VDD);
 #endif
-
-    DebugSerial_println(" - Finished");
 }
 
 //
@@ -52,15 +48,15 @@ void WHSR::initADC(void)
 void WHSR::ADCStartNext(void)
 {
 	++ADCPos;
-	if((SWITCH_INTERRUPT_STATE & 0b1) == 0 
+	if((switchInterruptState & 0b1) == 0 
         && ADCPos == SWITCH_ADC)    // Switches überspringen
 		++ADCPos;
 
 	if(ADCPos >= MAX_ADC_CHANNELS)
 	{
 		ADCPos = 0;
-		if(SWITCH_INTERRUPT_STATE == SWITCH_INTERRUPT_WAIT)
-			SWITCH_INTERRUPT_STATE = SWITCH_INTERRUPT_DO;
+		if(switchInterruptState == SWITCH_INTERRUPT_WAIT)
+			switchInterruptState = SWITCH_INTERRUPT_DO;
 		
 		ADCBlockPassed = true;		
 		
@@ -137,7 +133,7 @@ void WHSR::ADCInterrupt(void)
 	DebugSerial_println(mySensorValues[ADCPos]);
 	*/
     if(ADCPos == SWITCH_ADC)
-		SWITCH_INTERRUPT_STATE = SWITCH_INTERRUPT_IDLE;
+		switchInterruptState = SWITCH_INTERRUPT_IDLE;
 	
 	if(ADCMode == ADC_MODE_BLOCK)
 		ADCStartNext();
