@@ -6,7 +6,7 @@
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
 #endif
 
-#define SWITCH_ADC_PULLUP 11  // D11, Pin 14, BINT
+#define SWITCH_ADC_PULLUP D11  // D11, Pin 14, BINT
 #define SWITCH_PIN A2               // A2 = D16 = ADC[2], BUT
 
 // switchInterruptState lifecycle (separate from SWITCH_INTERRUPT_STATE hardware flag in WHSR.h)
@@ -15,7 +15,7 @@
 #define SWITCH_PRESS_READY       2  // ADC read done, value available for sketch
 #define SWITCH_PRESS_DONE        3  // Value consumed by sketch
 // Das ist nicht das gleiche wie switchInterruptState:
-volatile unsigned char switchInterruptAktiv = 0;
+volatile unsigned char switchInterruptAktiv = SWITCH_PRESS_NONE;
 volatile unsigned char warDrin = 0;
 
 //
@@ -59,7 +59,7 @@ unsigned char WHSR::readSwitches(void)
         adcValue = adcValue == 0 ? 1 : adcValue;
         switchValue = (unsigned char)(((10160000L / adcValue - 10000L) * SwitchFactor + 5000L) / 10000);
         switchInterruptAktiv = SWITCH_PRESS_READY;
-        switchInterruptOn(); // re-arm: sets D11 HIGH and re-attaches interrupt (same as AVR)
+        switchInterruptOn(NULL, FALLING); // re-arm: sets D11 HIGH and re-attaches interrupt (same as AVR)
 		switchInterruptAktiv = SWITCH_PRESS_DONE;
         return switchValue;
     }
@@ -77,7 +77,7 @@ unsigned char WHSR::readSwitches(void)
 //
 // Turn On the PinChange Interrupt
 //
-void WHSR::switchInterruptOn(void)
+void WHSR::switchInterruptOn(void (*isrfunction)(), PinStatus triggerOn = FALLING)
 {
     // Messschaltung deaktivieren, SWITCH_PIN wird zum digitalen Eingang
 	digitalWrite(SWITCH_ADC_PULLUP, HIGH);
@@ -90,13 +90,21 @@ void WHSR::switchInterruptOn(void)
     PCICR  |= bit (digitalPinToPCICRbit(pin)); // enable interrupt for the group
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
 // Interrupt for switches
-// Use INPUT (no internal pullup): D11 already provides external pullup to A2.
+// Use INPUT (no internal pullup): SWITCH_ADC_PULLUP (D11) already provides external pullup to A2.
 // Adding INPUT_PULLUP would lower the effective pullup impedance and prevent
 // high-resistance switches from pulling A2 below the LOW threshold.
+    DebugSerial_println("attachInterrupt");
     pinMode(SWITCH_PIN, INPUT);
-    attachInterrupt(digitalPinToInterrupt(SWITCH_PIN), SwitchISR, CHANGE);
+    if(isrfunction == NULL) {
+        DebugSerial_println("Using default switchISR");
+        isrfunction = switchISR;
+    } else {
+        DebugSerial_println("Using custom switchISR");
+    }
+    attachInterrupt(digitalPinToInterrupt(SWITCH_PIN), isrfunction, triggerOn);
 #endif
 
+    switchInterruptAktiv = SWITCH_PRESS_NONE;
     switchInterruptState = SWITCH_INTERRUPT_IDLE;
 }
 
@@ -116,6 +124,7 @@ void WHSR::switchInterruptOff(void)
     detachInterrupt(digitalPinToInterrupt(SWITCH_PIN));
 #endif
 
+    switchInterruptAktiv = SWITCH_PRESS_NONE;
     switchInterruptState = SWITCH_INTERRUPT_NONE;
 }
 
@@ -174,7 +183,7 @@ void WHSR::switchInterruptSeviceRoutine(void)
 		switchValue = readSwitches();
 
     // Wieder einschalten
-	switchInterruptOn();	
+	switchInterruptOn(NULL, FALLING); // re-arm: sets D11 HIGH and re-attaches interrupt (same as AVR)	
 	
 	switchInterruptAktiv = SWITCH_PRESS_READY;
 

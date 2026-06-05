@@ -19,7 +19,7 @@ void setup()
 {
 	// Initialize all functional modules of the robot
 	robo.Init();
-	robo.switchInterruptOn();						   		// Turn On the PinChange Interrupt
+	robo.switchInterruptOn(NULL, FALLING);						   		// Turn On the PinChange Interrupt
 	Serial.println("Switch Interrupt Test - On _ Off");
 }
 
@@ -38,7 +38,7 @@ void loop()
 	if(wait)
 	{
 		delay(6000);										// Pause for six seconds 
-		robo.switchInterruptOn();							// Turn On the PinChange Interrupt	
+		robo.switchInterruptOn(NULL, FALLING);							// Turn On the PinChange Interrupt	
 		Serial.println("Interrupt - Turn On");
 	}
 }

@@ -3,7 +3,7 @@
 WHSR * WHSR::myRobot = NULL;
 
 void blink() {
-  WHSR::SwitchISR();
+  WHSR::switchISR();
 }
 
 void WHSR::Init(void)
@@ -28,9 +28,9 @@ ISR(TIMER1_OVF_vect) { WHSR::ADCInterruptBlockISR(); }
 ISR(INT0_vect) { WHSR::RPMLeftISR(); }
 ISR(INT1_vect) { WHSR::RPMRightISR(); }
 ISR(TIMER2_OVF_vect) { WHSR::TimerOverflowISR(); }
-ISR(PCINT1_vect) { WHSR::SwitchISR(); }
+ISR(PCINT1_vect) { WHSR::switchISR(); }
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
-//ISR(PCINT1_vect) { WHSR::SwitchISR(); }
+//ISR(PCINT1_vect) { WHSR::switchISR(); }
 #endif
 
 // ----------------------------------------- Serial Port ------------------------------------------

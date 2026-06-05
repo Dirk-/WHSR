@@ -301,16 +301,18 @@ public:
     //
     //
     bool switchAvailable(void);
-    void switchInterruptOn(void);
+    void switchInterruptOn(void (*isrfunction)(), PinStatus triggerOn = FALLING);
     void switchInterruptOff(void);
     void switchInterruptSeviceRoutine(void);
 
     // Von hinten durch die Brust ins Auge,
     // damit man hier eine andere Funktion aufrufen könnte
-    static void SwitchISR(void)
+    static void switchISR(void)
     {
-        if (myRobot != NULL)
+        if (myRobot != NULL) {
+            DebugSerial_println("Calling Switch ISR");
             myRobot->switchInterruptSeviceRoutine();
+        }
     }
 
     /* ************************************************************************************
