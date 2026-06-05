@@ -1,6 +1,10 @@
 
 #include "WHSR.h"
 
+#if defined(ARDUINO_ARDUINO_NANO33BLE)
+#include <nrf_gpio.h>  // pulls in CMSIS header with NRF_P0/NRF_P1 and GPIO_PIN_CNF_PULL_Msk
+#endif
+
 // For copy & paste
 #if defined(ARDUINO_AVR_NANO)
 #elif defined(ARDUINO_ARDUINO_NANO33BLE)
@@ -104,6 +108,17 @@ void WHSR::switchInterruptOn(void (*isrfunction)(), PinStatus triggerOn)
         DebugSerial_println("Using custom switchISR");
     }
     attachInterrupt(digitalPinToInterrupt(SWITCH_PIN), isrfunction, triggerOn);
+    // mbed's InterruptIn enables the internal pullup (~8-13kOhm) by default.
+    // With that pullup active, switches above ~5k cannot pull A2 below VIL (0.99V),
+    // so only the lowest-resistance switch triggers FALLING.
+    // Fix: clear only the PULL bits [3:2] of PIN_CNF. Do NOT touch SENSE bits [17:16] —
+    // the previous attempt used nrf_gpio_cfg_input() which also wrote SENSE=NOSENSE,
+    // disabling the interrupt entirely if mbed uses the PORT-event (SENSE) mechanism.
+    {
+        uint32_t p = (uint32_t)digitalPinToPinName(SWITCH_PIN);
+        NRF_GPIO_Type* port = (p < 32u) ? NRF_P0 : NRF_P1;
+        port->PIN_CNF[p & 0x1Fu] &= ~GPIO_PIN_CNF_PULL_Msk; // clear pull = NoPull
+    }
 #endif
 
     switchInterruptAktiv = SWITCH_PRESS_NONE;
