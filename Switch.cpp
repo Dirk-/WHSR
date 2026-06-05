@@ -77,7 +77,7 @@ unsigned char WHSR::readSwitches(void)
 //
 // Turn On the PinChange Interrupt
 //
-void WHSR::switchInterruptOn(void (*isrfunction)(), PinStatus triggerOn = FALLING)
+void WHSR::switchInterruptOn(void (*isrfunction)(), PinStatus triggerOn)
 {
     // Messschaltung deaktivieren, SWITCH_PIN wird zum digitalen Eingang
 	digitalWrite(SWITCH_ADC_PULLUP, HIGH);
