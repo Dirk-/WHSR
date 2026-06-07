@@ -35,9 +35,10 @@ Works:
 - Odometry
 - Voltage sensor
 - Timer
+- External interrupts
 
 Does not work:
-- External interrupts
+- Nothing known
 
 ### Documentation
 
