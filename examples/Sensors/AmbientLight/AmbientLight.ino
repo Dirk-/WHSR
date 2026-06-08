@@ -17,6 +17,9 @@ void setup()
 {
 	// Initialize all functional modules of the robot
 	robo.Init();
+
+	// Wait a moment to let the user open the serial monitor
+	delay(2000);
 	Serial.println("Ambient Light Test");
 }
 
