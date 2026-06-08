@@ -2,9 +2,8 @@
   Switch_Interrupt_On_Off
 
   This example for the Westphalian University's WHSR lerning robot shows that 
-  the PinChange interrupt is switched off when a switch is pressed. Afterwards 
-  the Pinchange Intrrupt is switched on again. It does not work properly on the 
-  Arduino Nano 33 BLE. 
+  the switch pin interrupt is turned off when a switch is pressed. Afterwards 
+  the switch pin interrupt is turned on again.
 
   This example code is in the public domain. For more information, see
   https://github.com/Dirk-/WHSR
@@ -19,26 +18,29 @@ void setup()
 {
 	// Initialize all functional modules of the robot
 	robo.Init();
-	robo.switchInterruptOn(NULL, FALLING);						   		// Turn On the PinChange Interrupt
-	Serial.println("Switch Interrupt Test - On _ Off");
+
+	// Turn on the switch pin interrupt, use internal callback function
+	// Trigger on a falling edge, when a switch is pressed
+	robo.switchInterruptOn(NULL, FALLING);	
+	
+	// Wait a moment to let the user open the serial monitor
+	delay(2000);
+	Serial.println("Switch Interrupt Test - Press a switch");
 }
 
 void loop()
 {
-	bool wait = false;
 	if(robo.switchAvailable())
 	{
 		Serial.println(robo.readSwitches(), BIN);
-		wait = true;
 		
-		robo.switchInterruptOff();							// Turn Off the PinChange Interrupt
-		Serial.println("Interrupt - Turn Off");
-	}
-	
-	if(wait)
-	{
-		delay(6000);										// Pause for six seconds 
-		robo.switchInterruptOn(NULL, FALLING);							// Turn On the PinChange Interrupt	
-		Serial.println("Interrupt - Turn On");
+		// Pause interrupts for six seconds
+		robo.switchInterruptOff();
+		Serial.println("Interrupt - Deactivated for 6 seconds");
+		delay(6000);
+										
+		// Turn on the switch pin interrupt again
+		robo.switchInterruptOn(NULL, FALLING);	
+		Serial.println("Interrupt - Activated");
 	}
 }
